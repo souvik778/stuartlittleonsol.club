@@ -1,0 +1,304 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: url('/stuart.jpg') center/cover no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    max-width: 600px;
+}
+
+.meme {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.meme img {
+    max-width: 100%;
+    height: auto;
+}
+
+.meme-text {
+    position: absolute;
+    width: 100%;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 5px black;
+    pointer-events: none;
+}
+
+.meme-text.top {
+    top: 10px;
+}
+
+.meme-text.bottom {
+    bottom: 10px;
+}
+.particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place behind all content */
+    pointer-events: none; /* Prevent interaction */
+}
+
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"],
+input[type="file"] {
+    padding: 10px;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: transparent;
+    color: rgb(10, 10, 11);
+    text-align: center;
+    padding: 10px;
+    position: var();
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .meme-text {
+        font-size: 1.5em;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .meme-text {
+        font-size: 1.2em;
+    }
+
+    #controls {
+        gap: 8px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 800px;
+    }
+
+    .meme-text {
+        font-size: 2.5em;
+    }
+}
+
+
+
+
+/* Topbar */
+.topbar {
+    width: 100%;
+    background-color: rgba(0, 86, 179, 0.9); /* Slight transparency */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+.topbar nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.topbar nav a:hover {
+    text-decoration: underline;
+}
+
+/* Content Section */
+.content {
+    padding-top: 80px;
+    text-align: center;
+}
+
+.content a {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 15px 30px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+
+.content a:hover {
+    background-color: #0056b3;
+}
+
+/* About and Contact Sections */
+.about-section, .contact-section {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 800px;
+    text-align: left;
+}
+
+.about-section h3, .contact-section h3 {
+    color: #007BFF;
+    font-size: 1.5em;
+}
+
+.contact-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-section form input, .contact-section form textarea {
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-section form button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.contact-section form button:hover {
+    background-color: #0056b3;
+}
+
+/* Funny Memes Section */
+.funny-memes {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 800px;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.funny-memes h3 {
+    color: #007BFF;
+    font-size: 1.5em;
+}
+
+.funny-memes ul {
+    list-style: none;
+    padding: 0;
+}
+
+.funny-memes ul li {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+/* Presale Section */
+.presale-section {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 86, 179, 0.9); /* Semi-transparent blue */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.presale-section a {
+    color: white;
+    text-decoration: underline;
+}
+
+.presale-section a:hover {
+    text-decoration: none;
+    color: #FFD700;
+}
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: center; /* Center the links horizontally */
+    align-items: right; /* Align the links vertically */
+    gap: 20px; /* Space between links */
+    background-color: #007BFF; /* Background color for the navbar */
+    padding: 15px 20px; /* Add padding for better spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
+    position: var(); /* Keep it at the top */
+    top: 10; /* Stick it to the top of the page */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Place it above other elements */
+}
+
+.navbar a {
+    color: white; /* Link color */
+    text-decoration: none; /* Remove underlines */
+    font-size: 1em; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    padding: 10px 15px; /* Add padding inside the links */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.navbar a:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
