@@ -1,69 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sloth Token</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>StuartLittleOnSol Meme Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        .meme {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .meme img {
+            max-width: 100%;
+            height: auto;
+        }
+        .meme-text {
+            position: absolute;
+            width: 100%;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 5px black;
+            pointer-events: none;
+        }
+        .meme-text.top {
+            top: 10px;
+        }
+        .meme-text.bottom {
+            bottom: 10px;
+        }
+        #controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"],
+        input[type="file"] {
+            padding: 10px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">$LOTH</div>
-    <nav>
-      <a href="#how-to-buy">How to Buy</a>
-      <a href="#faq">FAQ</a>
-      <a href="#audit">Audit</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="note">
-        <h2>$LOTH token is now live!</h2>
-        <p><strong>Token Address:</strong> HQ7D...mBh</p>
-        <button>Buy Now!</button>
-        <p>Follow our socials for announcements</p>
-        <div class="socials">
-          <a href="#"><img src="x-logo.png" alt="X"></a>
-          <a href="#"><img src="discord-logo.png" alt="Discord"></a>
+    <div class="container">
+        <h1>Create Your StuartLittleOnSol Meme</h1>
+        <div id="controls">
+            <input type="file" id="imageUpload" accept="image/*">
+            <input type="text" id="topText" placeholder="Enter top text">
+            <input type="text" id="bottomText" placeholder="Enter bottom text">
+            <button id="generateMeme">Generate Meme</button>
         </div>
-      </div>
-      <img src="sloth-character.png" alt="Sloth Character" class="sloth-image">
-    </section>
+        <div class="meme" id="memeContainer" style="display: none;">
+            <img id="memeImage" src="" alt="Meme">
+            <div class="meme-text top" id="topMemeText"></div>
+            <div class="meme-text bottom" id="bottomMemeText"></div>
+        </div>
+    </div>
 
-    <section class="features">
-      <div class="note yellow">
-        <p>Join Slothana's journey from leafy lounges to crypto riches! 🦥💸 Buy on DEX now!</p>
-      </div>
-      <div class="note pink">
-        <p>Embrace the sloth life; let your SOL soar with Slothana! 🚀 Token supply limited.</p>
-      </div>
-      <div class="note yellow">
-        <p>From 420 to $420M with Slothana! 📈 Dive into the $LOTH Project.</p>
-      </div>
-    </section>
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const topTextInput = document.getElementById('topText');
+        const bottomTextInput = document.getElementById('bottomText');
+        const generateMemeButton = document.getElementById('generateMeme');
+        const memeContainer = document.getElementById('memeContainer');
+        const memeImage = document.getElementById('memeImage');
+        const topMemeText = document.getElementById('topMemeText');
+        const bottomMemeText = document.getElementById('bottomMemeText');
 
-    <section id="how-to-buy" class="how-to-buy">
-      <div class="note">
-        <h3>How to Buy with SOL</h3>
-        <ol>
-          <li>Press 'Buy Now' above and connect wallet</li>
-          <li>Enter amount of SOL to swap for $LOTH</li>
-          <li>Hit 'Buy Now' again and confirm transaction</li>
-        </ol>
-      </div>
-    </section>
+        imageUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    memeImage.src = e.target.result;
+                    memeContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
-    <section id="faq" class="faq">
-      <h2>FAQ</h2>
-      <div class="note yellow">
-        <p>Tokens have been airdropped to wallets as the presale is now completed.</p>
-      </div>
-      <div class="note pink">
-        <p>$LOTH has now flopped into your wallet! Follow our Twitter for further announcements.</p>
-      </div>
-      <img src="sloth-suit.png" alt="Sloth in Suit">
-    </section>
-  </main>
+        generateMemeButton.addEventListener('click', () => {
+            const topText = topTextInput.value;
+            const bottomText = bottomTextInput.value;
+
+            topMemeText.textContent = topText;
+            bottomMemeText.textContent = bottomText;
+        });
+    </script>
 </body>
 </html>
