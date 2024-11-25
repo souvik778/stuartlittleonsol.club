@@ -4,24 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="StuartLittleOnSol - Your one-stop platform for creating and sharing memes.">
     <title>StuartLittleOnSol Homepage</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
             color: white;
             overflow-x: hidden;
-            position: relative;
-            background-color: #000; /* Fallback background color */
+            background-color: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
         }
 
         h1,
@@ -33,6 +36,7 @@
         a {
             color: inherit;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         a:hover {
@@ -46,8 +50,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Ensure the canvas stays behind all other content */
-            background-color: #0d0d0d; /* Fallback background color */
+            z-index: -1;
+            background-color: #0d0d0d;
         }
 
         /* Top Bar */
@@ -55,7 +59,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.7); /* Darker and more opaque */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 15px 30px;
             position: fixed;
             top: 0;
@@ -65,22 +69,32 @@
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
             transition: background-color 0.3s ease;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px); /* Adds a blur effect */
-            -webkit-backdrop-filter: blur(10px); /* For Safari support */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: slideDown 1s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -100px;
+            }
+
+            to {
+                top: 0;
+            }
         }
 
         .topbar h1 {
             font-size: 2rem;
             font-weight: bold;
             text-transform: uppercase;
-            color: #FFD700; /* Gold color for prominence */
+            color: #FFD700;
             text-shadow:
-                -2px -2px 0 #ffffff,
-                2px -2px 0 #ffffff,
-                -2px 2px 0 #ffffff,
-                2px 2px 0 #ffffff,
-                4px 4px 0 #ffffff;
+                -2px -2px 0 #fff,
+                2px -2px 0 #fff,
+                -2px 2px 0 #fff,
+                2px 2px 0 #fff,
+                4px 4px 0 #fff;
             position: relative;
             animation: wobble 4s infinite;
             padding: 5px 10px;
@@ -88,7 +102,8 @@
         }
 
         @keyframes wobble {
-            0% {
+            0%,
+            100% {
                 transform: rotate(0deg);
             }
 
@@ -103,10 +118,6 @@
             75% {
                 transform: rotate(2deg);
             }
-
-            100% {
-                transform: rotate(0deg);
-            }
         }
 
         .topbar h1:hover {
@@ -117,83 +128,193 @@
         .topbar nav {
             display: flex;
             gap: 20px;
-            justify-content: center;
-            align-items: center;
             flex-wrap: wrap;
+            animation: fadeInRight 1s ease forwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .topbar nav a {
             font-size: 1rem;
             padding: 10px 20px;
             border-radius: 30px;
-            background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
-            color: #FFFFFF; /* White text for better contrast */
-            text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: rgba(255, 215, 0, 0.1);
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topbar nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 215, 0, 0.3);
+            transition: width 0.3s;
+            z-index: -1;
+        }
+
+        .topbar nav a:hover::after {
+            width: 100%;
         }
 
         .topbar nav a:hover {
-            background-color: #FFD700; /* Gold on hover */
-            color: #000000; /* Black text on hover for contrast */
+            color: #000;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Presale Section */
-        .presale-section {
+        /* Presale Popup */
+        .presale-popup {
             position: fixed;
             top: 50%;
-            right: -400px; /* Hide off-screen initially */
-            transform: translateY(-50%);
-            width: 350px;
-            max-width: 90%;
-            background-color: rgba(0, 0, 0, 0.85);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: rgba(0, 0, 0, 0.95);
             color: #FFD700;
-            padding: 20px;
-            border-radius: 10px 0 0 10px;
-            box-shadow: -4px 4px 15px rgba(0, 0, 0, 0.5);
-            z-index: 1100; /* Above topbar */
-            transition: right 0.6s ease, opacity 0.6s ease;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            z-index: 1100;
+            transition: opacity 0.6s ease;
             opacity: 0;
-            pointer-events: none; /* Prevent interactions when hidden */
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .presale-section.active {
-            right: 0; /* Slide in */
+        .presale-popup.active {
             opacity: 1;
-            pointer-events: auto; /* Enable interactions when visible */
+            pointer-events: auto;
+            animation: fadeInPopup 0.6s forwards;
         }
 
-        .presale-section h2 {
-            margin-top: 0;
+        @keyframes fadeInPopup {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .presale-popup h2 {
             color: #FFD700;
+            margin-top: 0;
+            animation: fadeInDown 1s ease forwards;
         }
 
-        .presale-section p {
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .presale-popup p {
             margin: 10px 0;
+            text-align: center;
+            animation: fadeInUp 1s ease forwards;
         }
 
-        .presale-section iframe {
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .presale-popup iframe {
             width: 100%;
-            height: 200px;
+            height: 300px;
             border: none;
-            border-radius: 8px;
-            margin-top: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+            animation: fadeIn 1s ease forwards;
         }
 
-        .presale-section .close-btn {
+        .presale-popup .close-btn {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 15px;
+            right: 15px;
             background: transparent;
             border: none;
             color: #FFD700;
-            font-size: 1.5rem;
+            font-size: 2rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
+            z-index: 1200;
         }
 
-        .presale-section .close-btn:hover {
+        .presale-popup .close-btn:hover {
             color: #fff;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            animation: fadeIn 1.2s ease forwards;
+            width: 100%;
+        }
+
+        .countdown div {
+            text-align: center;
+        }
+
+        .countdown div span {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Learn More Button */
+        .presale-popup button.learn-more {
+            background-color: #FFD700;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 15px;
+            font-size: 1rem;
+            animation: fadeIn 1.4s ease forwards;
+        }
+
+        .presale-popup button.learn-more:hover {
+            background-color: #e6c200;
+            transform: scale(1.05);
         }
 
         /* Sticky Note Styling */
@@ -211,7 +332,8 @@
             color: #333;
             margin-left: 40px;
             transform: rotate(-2deg);
-            z-index: 800; /* Below presale-section */
+            z-index: 800;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .sticky-note::before {
@@ -222,6 +344,10 @@
             font-size: 2.5rem;
             transform: rotate(-15deg);
             z-index: 10;
+            background: url('sticky-note-icon.png') no-repeat center center;
+            background-size: contain;
+            width: 30px;
+            height: 30px;
         }
 
         .sticky-note::after {
@@ -251,9 +377,10 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding: 100px 20px 50px 20px; /* Top padding to avoid navbar overlap */
+            padding: 120px 20px 50px;
             box-sizing: border-box;
-            z-index: 850; /* Above presale-section and sticky notes */
+            z-index: 850;
+            animation: fadeIn 1.5s ease forwards;
         }
 
         .hero-image {
@@ -261,11 +388,61 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: bounceIn 1s ease forwards, glow 3s ease-in-out infinite;
+            position: relative;
+            --glow-x: 0px;
+            --glow-y: 0px;
+            --glow-color: #FFD700;
+            box-shadow:
+                0 0 10px var(--glow-color),
+                0 0 20px var(--glow-color),
+                0 0 30px var(--glow-color);
+        }
+
+        /* Glowing Animation */
+        @keyframes glow {
+            0% {
+                box-shadow:
+                    0 0 10px var(--glow-color),
+                    0 0 20px var(--glow-color),
+                    0 0 30px var(--glow-color);
+            }
+
+            50% {
+                box-shadow:
+                    var(--glow-x) var(--glow-y) 15px #FFD700,
+                    var(--glow-x) var(--glow-y) 25px #FF69B4,
+                    var(--glow-x) var(--glow-y) 35px #00BFFF;
+            }
+
+            100% {
+                box-shadow:
+                    0 0 10px var(--glow-color),
+                    0 0 20px var(--glow-color),
+                    0 0 30px var(--glow-color);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .hero-image:hover {
             transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
         }
 
         /* Footer */
@@ -279,15 +456,168 @@
             bottom: 0;
             width: 100%;
             z-index: 1000;
+            animation: fadeInUp 1.5s ease forwards;
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .presale-section {
-                width: 300px;
-                max-width: 80%;
-                right: -300px; /* Adjust to match new width */
+        @media (max-width: 1200px) {
+            .presale-popup {
+                width: 650px;
             }
+        }
+
+        @media (max-width: 1024px) {
+            .presale-popup {
+                width: 550px;
+            }
+
+            .sticky-note {
+                max-width: 550px;
+                margin-left: 30px;
+            }
+
+            .hero-image {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presale-popup {
+                width: 80%;
+            }
+
+            .sticky-note {
+                margin: 100px 0;
+                padding: 20px 25px;
+                max-width: 90%;
+                margin-left: 20px;
+                transform: rotate(0deg);
+            }
+
+            .countdown {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .topbar {
+                padding: 10px 20px;
+            }
+
+            .topbar h1 {
+                font-size: 1.5rem;
+            }
+
+            .topbar nav a {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .presale-popup iframe {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .presale-popup {
+                width: 90%;
+            }
+
+            .countdown {
+                font-size: 1.2rem;
+            }
+
+            .countdown div span {
+                font-size: 1.5rem;
+            }
+
+            .sticky-note {
+                padding: 15px 20px;
+            }
+
+            .hero-section {
+                padding: 100px 10px 40px;
+            }
+
+            .hero-image {
+                max-width: 100%;
+            }
+        }
+
+        /* Contact Form Styles */
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            border-color: #FFD700;
+            outline: none;
+        }
+
+        #contact-form button {
+            background-color: #FFD700;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1rem;
+            align-self: flex-start;
+        }
+
+        #contact-form button:hover {
+            background-color: #e6c200;
+            transform: scale(1.05);
+        }
+
+        /* Additional Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -307,19 +637,43 @@
     </header>
 
     <!-- Hero Section with Stuart Image -->
-    <section class="hero-section">
-        <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image">
+    <section class="hero-section animate-on-scroll">
+        <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
     </section>
 
-    <!-- Presale Section (Initially Hidden) -->
-    <div class="presale-section" id="presale-section">
-        <button class="close-btn" id="presale-close" aria-label="Close Presale Window">&times;</button>
-        <h2>Presale Launch</h2>
+    <!-- Presale Popup (Initially Hidden) -->
+    <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
+        <button class="close-btn" id="presale-close" aria-label="Close Presale Popup">&times;</button>
+        <h2 id="presale-title">Presale Launch</h2>
         <p>Join the StuartLittleOnSol Presale launching on December 1st!</p>
+
+        <!-- Countdown Timer -->
+        <div class="countdown" id="countdown">
+            <div>
+                <span id="days">0</span>
+                Days
+            </div>
+            <div>
+                <span id="hours">0</span>
+                Hours
+            </div>
+            <div>
+                <span id="minutes">0</span>
+                Minutes
+            </div>
+            <div>
+                <span id="seconds">0</span>
+                Seconds
+            </div>
+        </div>
+
         <iframe src="https://jup.ag/" title="Jupiter Aggregator Homepage"></iframe>
+
+        <button class="learn-more" id="learn-more-btn">Learn More</button>
+        <button class="connect-wallet" id="connect-wallet-btn">Connect Wallet</button>
     </div>
 
-    <section id="about" class="sticky-note about-section" aria-labelledby="about-title">
+    <section id="about" class="sticky-note animate-on-scroll" aria-labelledby="about-title">
         <h3 id="about-title">About Us</h3>
         <p>
             StuartLittleOnSol is a creative platform designed for meme enthusiasts.
@@ -328,19 +682,14 @@
         </p>
     </section>
 
-    <section id="contact" class="sticky-note contact-section" aria-labelledby="contact-title">
+    <section id="contact" class="sticky-note animate-on-scroll" aria-labelledby="contact-title">
         <h3 id="contact-title">Contact Us</h3>
         <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
         <form id="contact-form" action="mailto:info@stuartlittleonsol.com" method="post" enctype="text/plain">
-            <input type="text" placeholder="Your Name" required aria-label="Your Name"
-                style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-            <input type="email" placeholder="Your Email" required aria-label="Your Email"
-                style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-            <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"
-                style="width: 100%; padding: 10px; border-radius: 5px;"></textarea>
-            <button type="submit"
-                style="background-color: #FFD700; color: black; font-weight: bold; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 10px;">Send
-                Message</button>
+            <input type="text" placeholder="Your Name" required aria-label="Your Name">
+            <input type="email" placeholder="Your Email" required aria-label="Your Email">
+            <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+            <button type="submit">Send Message</button>
         </form>
     </section>
 
@@ -348,34 +697,75 @@
         <p>&copy; 2024 StuartLittleOnSol. All Rights Reserved.</p>
     </footer>
 
-    <!-- JavaScript for Presale Section Interactivity -->
+    <!-- JavaScript for Presale Popup Interactivity and Interactive Background -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" integrity="sha384-vTjP6zVYk2A6a8gFLdG3sWkJhlQ5kKgQRBQnXZpKXa/BF+9xGhqYQPrIyKdPPA2B" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const presaleSection = document.getElementById("presale-section");
+            // Presale Popup Interactivity
+            const presalePopup = document.getElementById("presale-popup");
             const presaleCloseBtn = document.getElementById("presale-close");
-            const contactSection = document.getElementById("contact");
+            const learnMoreBtn = document.getElementById("learn-more-btn");
+            const connectWalletBtn = document.getElementById("connect-wallet-btn");
+            const aboutSection = document.getElementById("about");
+            const countdownElement = document.getElementById("countdown");
+            const heroImage = document.getElementById("hero-image");
 
-            // Function to show presale section
-            const showPresale = () => {
-                presaleSection.classList.add("active");
+            // Countdown Timer Setup
+            const launchDate = new Date("December 1, 2024 00:00:00").getTime();
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                if (distance < 0) {
+                    countdownElement.innerHTML = "<div>Presale Launched!</div>";
+                    clearInterval(countdownInterval);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
             };
 
-            // Function to hide presale section
-            const hidePresale = () => {
-                presaleSection.classList.remove("active");
-            };
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Initial call
+
+            // Function to show presale popup
+            const showPresale = () => presalePopup.classList.add("active");
+
+            // Function to hide presale popup
+            const hidePresale = () => presalePopup.classList.remove("active");
 
             // Close button event
             presaleCloseBtn.addEventListener("click", hidePresale);
 
-            // Intersection Observer to detect when Contact Us section is in view
+            // Learn More button event
+            learnMoreBtn.addEventListener("click", () => {
+                window.open("https://stuartlittleonsol.com/presale-info", "_blank");
+            });
+
+            // Close popup when clicking outside of it
+            window.addEventListener("click", (e) => {
+                if (e.target === presalePopup) {
+                    hidePresale();
+                }
+            });
+
+            // Intersection Observer to detect when About Us section is in view
             const observerOptions = {
                 root: null, // viewport
                 rootMargin: '0px',
-                threshold: 0.5 // 50% of the contact section is visible
+                threshold: 0.1 // Trigger when 10% of the About Us section is visible
             };
 
-            const observerCallback = (entries, observer) => {
+            const observerCallback = (entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         showPresale();
@@ -384,132 +774,90 @@
             };
 
             const observer = new IntersectionObserver(observerCallback, observerOptions);
-            observer.observe(contactSection);
-        });
-    </script>
+            observer.observe(aboutSection);
 
-    <!-- Interactive Background Script -->
-    <script>
-        // Interactive Background Script
-        document.addEventListener("DOMContentLoaded", () => {
+            // Interactive Background Script
             const canvas = document.getElementById('interactive-background');
             const ctx = canvas.getContext('2d');
             let particlesArray = [];
             const numberOfParticles = 100;
-            const mouse = {
-                x: null,
-                y: null,
-                radius: 100
-            };
+            const mouse = { x: null, y: null, radius: 100 };
 
-            // Resize canvas to fit the window
-            function resizeCanvas() {
+            const resizeCanvas = () => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-            }
+            };
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
-            // Update mouse position
-            window.addEventListener('mousemove', (event) => {
-                mouse.x = event.x;
-                mouse.y = event.y;
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
             });
 
-            // Particle class
             class Particle {
-                constructor(x, y, directionX, directionY, size, color) {
+                constructor(x, y, dx, dy, size, color) {
                     this.x = x;
                     this.y = y;
-                    this.directionX = directionX;
-                    this.directionY = directionY;
+                    this.dx = dx;
+                    this.dy = dy;
                     this.size = size;
                     this.color = color;
                 }
 
-                // Draw the particle
                 draw() {
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
                     ctx.fill();
                 }
 
-                // Update particle position
                 update() {
-                    // Move particle
-                    this.x += this.directionX;
-                    this.y += this.directionY;
+                    this.x += this.dx;
+                    this.y += this.dy;
 
                     // Bounce off edges
-                    if (this.x + this.size > canvas.width || this.x - this.size < 0) {
-                        this.directionX = -this.directionX;
-                    }
-                    if (this.y + this.size > canvas.height || this.y - this.size < 0) {
-                        this.directionY = -this.directionY;
-                    }
+                    if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
+                    if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
 
-                    // Interactivity - move particles away from the mouse
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    // Move away from mouse
+                    const dxMouse = mouse.x - this.x;
+                    const dyMouse = mouse.y - this.y;
+                    const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
                     if (distance < mouse.radius + this.size) {
-                        if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                            this.x += 3;
-                        }
-                        if (mouse.x > this.x && this.x > this.size * 10) {
-                            this.x -= 3;
-                        }
-                        if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                            this.y += 3;
-                        }
-                        if (mouse.y > this.y && this.y > this.size * 10) {
-                            this.y -= 3;
-                        }
+                        const angle = Math.atan2(dyMouse, dxMouse);
+                        const moveX = Math.cos(angle) * 3;
+                        const moveY = Math.sin(angle) * 3;
+                        this.x -= moveX;
+                        this.y -= moveY;
                     }
 
                     this.draw();
                 }
             }
 
-            // Initialize particles
-            function init() {
+            const initParticles = () => {
                 particlesArray = [];
                 for (let i = 0; i < numberOfParticles; i++) {
-                    let size = Math.random() * 3 + 1;
-                    let x = Math.random() * (canvas.width - size * 2) + size * 2;
-                    let y = Math.random() * (canvas.height - size * 2) + size * 2;
-                    let directionX = (Math.random() * 0.4) - 0.2;
-                    let directionY = (Math.random() * 0.4) - 0.2;
-                    let color = '#FFD700'; // Gold color for particles
-
-                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                    const size = Math.random() * 3 + 1;
+                    const x = Math.random() * (canvas.width - size * 2) + size;
+                    const y = Math.random() * (canvas.height - size * 2) + size;
+                    const dx = (Math.random() * 0.4) - 0.2;
+                    const dy = (Math.random() * 0.4) - 0.2;
+                    const color = '#FFD700';
+                    particlesArray.push(new Particle(x, y, dx, dy, size, color));
                 }
-            }
+            };
 
-            // Animate particles
-            function animate() {
-                requestAnimationFrame(animate);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                for (let i = 0; i < particlesArray.length; i++) {
-                    particlesArray[i].update();
-                }
-
-                connectParticles();
-            }
-
-            // Connect particles with lines if they are close to each other
-            function connectParticles() {
-                let opacityValue = 1;
+            const connectParticles = () => {
                 for (let a = 0; a < particlesArray.length; a++) {
                     for (let b = a + 1; b < particlesArray.length; b++) {
-                        let dx = particlesArray[a].x - particlesArray[b].x;
-                        let dy = particlesArray[a].y - particlesArray[b].y;
-                        let distance = Math.sqrt(dx * dx + dy * dy);
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
                         if (distance < 100) {
-                            opacityValue = 1 - distance / 100;
-                            ctx.strokeStyle = `rgba(255,215,0,${opacityValue})`; // Gold lines
+                            const opacity = 1 - distance / 100;
+                            ctx.strokeStyle = `rgba(255,215,0,${opacity})`;
                             ctx.lineWidth = 1;
                             ctx.beginPath();
                             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -518,10 +866,84 @@
                         }
                     }
                 }
-            }
+            };
 
-            init();
-            animate();
+            const animateParticles = () => {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesArray.forEach(particle => particle.update());
+                connectParticles();
+            };
+
+            initParticles();
+            animateParticles();
+
+            // Glowing Hero Image Responsive to Cursor
+            heroImage.addEventListener('mousemove', (e) => {
+                const rect = heroImage.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                // Normalize the values
+                const maxOffset = 30; // Maximum offset for glow
+                const offsetX = (x / (rect.width / 2)) * maxOffset;
+                const offsetY = (y / (rect.height / 2)) * maxOffset;
+
+                // Update CSS variables
+                heroImage.style.setProperty('--glow-x', `${offsetX}px`);
+                heroImage.style.setProperty('--glow-y', `${offsetY}px`);
+            });
+
+            heroImage.addEventListener('mouseleave', () => {
+                // Reset CSS variables
+                heroImage.style.setProperty('--glow-x', `0px`);
+                heroImage.style.setProperty('--glow-y', `0px`);
+            });
+
+            // Debounce function to limit how often scrollAnimations is called
+            const debounce = (func, delay = 100) => {
+                let timer;
+                return (...args) => {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        func.apply(this, args);
+                    }, delay);
+                };
+            };
+
+            // Scroll Animations for Sections
+            const scrollAnimations = () => {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', debounce(scrollAnimations));
+            scrollAnimations(); // Initial call
+
+            // Connect Wallet Functionality
+            const connectWallet = async () => {
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        const provider = new ethers.providers.Web3Provider(window.ethereum);
+                        await provider.send("eth_requestAccounts", []);
+                        const signer = provider.getSigner();
+                        const address = await signer.getAddress();
+                        alert(`Connected Wallet: ${address}`);
+                    } catch (error) {
+                        console.error(error);
+                        alert("Failed to connect wallet.");
+                    }
+                } else {
+                    alert("Please install MetaMask to connect your wallet.");
+                }
+            };
+
+            connectWalletBtn.addEventListener("click", connectWallet);
         });
     </script>
 </body>
