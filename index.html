@@ -3,60 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StuartLittleOnSol Homepage</title>
     <link rel="stylesheet" href="styles.css">
-    <title>StuartLittleOnSol Meme Creator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        .container {
-            text-align: center;
-            max-width: 600px;
-        }
-        .meme {
-            position: relative;
-            display: inline-block;
-            margin: 20px 0;
-        }
-        .meme img {
-            max-width: 100%;
-            height: auto;
-        }
-        .meme-text {
-            position: absolute;
+        .topbar {
             width: 100%;
+            background-color: #007BFF;
             color: white;
-            font-size: 2em;
-            font-weight: bold;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .topbar h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .topbar nav {
+            display: flex;
+            gap: 20px;
+        }
+        .topbar nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .topbar nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding-top: 60px;
             text-align: center;
-            text-shadow: 2px 2px 5px black;
-            pointer-events: none;
         }
-        .meme-text.top {
-            top: 10px;
+        .content a {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
         }
-        .meme-text.bottom {
-            bottom: 10px;
+        .content a:hover {
+            background-color: #0056b3;
         }
-        #controls {
+        .about-section, .contact-section {
+            margin: 40px auto;
+            padding: 20px;
+            max-width: 800px;
+            text-align: left;
+        }
+        .about-section h3, .contact-section h3 {
+            color: #007BFF;
+            font-size: 1.5em;
+        }
+        .contact-section form {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        input[type="text"],
-        input[type="file"] {
+        .contact-section form input, .contact-section form textarea {
             padding: 10px;
             font-size: 1em;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        button {
+        .contact-section form button {
             padding: 10px 20px;
             font-size: 1em;
             background-color: #007BFF;
@@ -64,56 +81,42 @@
             border: none;
             cursor: pointer;
         }
-        button:hover {
+        .contact-section form button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Create Your StuartLittleOnSol Meme</h1>
-        <div id="controls">
-            <input type="file" id="imageUpload" accept="image/*">
-            <input type="text" id="topText" placeholder="Enter top text">
-            <input type="text" id="bottomText" placeholder="Enter bottom text">
-            <button id="generateMeme">Generate Meme</button>
-        </div>
-        <div class="meme" id="memeContainer" style="display: none;">
-            <img id="memeImage" src="" alt="Meme">
-            <div class="meme-text top" id="topMemeText"></div>
-            <div class="meme-text bottom" id="bottomMemeText"></div>
-        </div>
-    </div>
+    <header class="topbar">
+        <h1>StuartLittleOnSol</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="meme.html">Create Meme</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-    <script>
-        const imageUpload = document.getElementById('imageUpload');
-        const topTextInput = document.getElementById('topText');
-        const bottomTextInput = document.getElementById('bottomText');
-        const generateMemeButton = document.getElementById('generateMeme');
-        const memeContainer = document.getElementById('memeContainer');
-        const memeImage = document.getElementById('memeImage');
-        const topMemeText = document.getElementById('topMemeText');
-        const bottomMemeText = document.getElementById('bottomMemeText');
+    <main class="content">
+        <h2>Welcome to StuartLittleOnSol</h2>
+        <p>Your one-stop platform for creating and sharing memes!</p>
+        <a href="meme.html">Start Creating Memes</a>
+    </main>
 
-        imageUpload.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    memeImage.src = e.target.result;
-                    memeContainer.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+    <section id="about" class="about-section">
+        <h3>About Us</h3>
+        <p>StuartLittleOnSol is a creative platform designed for meme enthusiasts. Whether you're looking to create, share, or discover memes, our platform has you covered. Our mission is to bring humor and creativity to everyone’s life through easy-to-use tools and a vibrant community.</p>
+    </section>
 
-        generateMemeButton.addEventListener('click', () => {
-            const topText = topTextInput.value;
-            const bottomText = bottomTextInput.value;
-
-            topMemeText.textContent = topText;
-            bottomMemeText.textContent = bottomText;
-        });
-    </script>
+    <section id="contact" class="contact-section">
+        <h3>Contact Us</h3>
+        <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
 </body>
 </html>
