@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StuartLittleOnSol Meme Creator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: #000; /* Fallback background color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #FFD700;
+        }
+
+        /* Interactive Background Styling */
+        #interactive-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Ensure the canvas stays behind all other content */
+            background-color: #0d0d0d; /* Fallback background color */
+        }
+
+        /* Top Bar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7); /* Darker and more opaque */
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px); /* Adds a blur effect */
+            -webkit-backdrop-filter: blur(10px); /* For Safari support */
+        }
+
+        .topbar h1 a {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700; /* Gold color for prominence */
+            text-transform: uppercase;
+            text-shadow:
+                -2px -2px 0 #ffffff,
+                2px -2px 0 #ffffff,
+                -2px 2px 0 #ffffff,
+                2px 2px 0 #ffffff,
+                4px 4px 0 #ffffff;
+            padding: 5px 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .topbar h1 a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Top Bar Navigation */
+        .topbar nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex: 1; /* Allow navigation to take remaining space for centering */
+        }
+
+        /* Navigation Links */
+        .topbar nav a {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
+            color: #FFFFFF; /* White text for better contrast */
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Hover Effect for Navigation Links */
+        .topbar nav a:hover {
+            background-color: #FFD700; /* Gold on hover */
+            color: black; /* Black text on hover for contrast */
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mobile Styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #FFD700; /* Changed to gold for visibility */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Mobile Navigation (Hidden by default) */
+        .nav-links.mobile {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background-color: rgba(0, 0, 0, 0.9); /* Darker background for mobile menu */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            align-items: flex-start;
+            width: 200px;
+        }
+
+        .nav-links.mobile a {
+            padding: 10px 20px;
+            width: 100%;
+            color: #FFD700; /* Gold text for visibility */
+        }
+
+        .nav-links.mobile a:hover {
+            background-color: #FFD700;
+            color: black;
+            box-shadow: none;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .topbar {
+                padding: 15px 20px;
+            }
+
+            .topbar nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+        }
+
+        /* Meme Container Styling */
+        .container {
+            text-align: center;
+            max-width: 600px;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 100px; /* Spacing below the navbar */
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            color: #FFD700; /* Gold color for headings */
+        }
+
+        .meme {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .meme canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 2px solid #FFD700; /* Gold border for inputs */
+            background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
+            color: #FFFFFF; /* White text */
+        }
+
+        input[type="text"]::placeholder,
+        input[type="file"]::placeholder {
+            color: #CCCCCC; /* Light grey placeholders */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #FFD700; /* Gold background */
+            color: black; /* Black text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #B8860B; /* Darker gold on hover */
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            text-align: center;
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Interactive Background Canvas -->
+    <canvas id="interactive-background"></canvas>
+
+    <header class="topbar" role="banner">
+        <h1><a href="index.html">StuartLittleOnSol</a></h1>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Create Your StuartLittleOnSol Meme</h1>
+        <div id="controls">
+            <input type="file" id="imageUpload" accept="image/*">
+            <input type="text" id="topText" placeholder="Enter top text">
+            <input type="text" id="bottomText" placeholder="Enter bottom text">
+            <button id="generateMeme">Generate Meme</button>
+        </div>
+        <div class="meme" id="memeContainer" style="display: none;">
+            <canvas id="memeCanvas"></canvas>
+        </div>
+        <a id="downloadMeme" href="#" download="meme.png" style="display: none;">
+            <button type="button">Download Meme</button>
+        </a>
+    </div>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 StuartLittleOnSol. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Mobile Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+
+    <!-- JavaScript for Meme Generation -->
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const topTextInput = document.getElementById('topText');
+        const bottomTextInput = document.getElementById('bottomText');
+        const generateMemeButton = document.getElementById('generateMeme');
+        const downloadMemeButton = document.getElementById('downloadMeme');
+        const memeContainer = document.getElementById('memeContainer');
+        const memeCanvas = document.getElementById('memeCanvas');
+        const ctx = memeCanvas.getContext('2d');
+
+        let image = new Image(); // Store the uploaded image
+
+        // Handle image upload
+        imageUpload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Wait for image to load before displaying it on canvas
+        image.onload = () => {
+            memeContainer.style.display = 'block';
+            memeCanvas.width = image.width;
+            memeCanvas.height = image.height;
+
+            // Draw the uploaded image to the canvas
+            ctx.drawImage(image, 0, 0, memeCanvas.width, memeCanvas.height);
+        };
+
+        // Generate Meme
+        generateMemeButton.addEventListener('click', () => {
+            const topText = topTextInput.value.toUpperCase();
+            const bottomText = bottomTextInput.value.toUpperCase();
+
+            // Set canvas dimensions again in case the image was not ready initially
+            memeCanvas.width = image.width;
+            memeCanvas.height = image.height;
+
+            // Draw the image on the canvas
+            ctx.drawImage(image, 0, 0, memeCanvas.width, memeCanvas.height);
+
+            // Set dynamic styles for text based on image height
+            const fontSize = memeCanvas.height / 10; // Set font size to 1/10 of the image height
+            ctx.font = `${fontSize}px Impact`;
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2;
+            ctx.textAlign = 'center';
+
+            // Draw the top text
+            ctx.textBaseline = 'top';
+            ctx.fillText(topText, memeCanvas.width / 2, 10);
+            ctx.strokeText(topText, memeCanvas.width / 2, 10);
+
+            // Draw the bottom text
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(bottomText, memeCanvas.width / 2, memeCanvas.height - 10);
+            ctx.strokeText(bottomText, memeCanvas.width / 2, memeCanvas.height - 10);
+
+            // Show the download button
+            const dataUrl = memeCanvas.toDataURL('image/png');
+            downloadMemeButton.href = dataUrl;
+            downloadMemeButton.style.display = 'block';
+        });
+    </script>
+
+    <!-- Interactive Background Script -->
+    <script>
+        // Interactive Background Script
+        document.addEventListener("DOMContentLoaded", () => {
+            const canvas = document.getElementById('interactive-background');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 100;
+            const mouse = {
+                x: null,
+                y: null,
+                radius: 100
+            };
+
+            // Resize canvas to fit the window
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Update mouse position
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = event.x;
+                mouse.y = event.y;
+            });
+
+            // Particle class
+            class Particle {
+                constructor(x, y, directionX, directionY, size, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.directionX = directionX;
+                    this.directionY = directionY;
+                    this.size = size;
+                    this.color = color;
+                }
+
+                // Draw the particle
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+
+                // Update particle position
+                update() {
+                    // Move particle
+                    this.x += this.directionX;
+                    this.y += this.directionY;
+
+                    // Bounce off edges
+                    if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                        this.directionX = -this.directionX;
+                    }
+                    if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+                        this.directionY = -this.directionY;
+                    }
+
+                    // Interactivity - move particles away from the mouse
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius + this.size) {
+                        if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                            this.x += 3;
+                        }
+                        if (mouse.x > this.x && this.x > this.size * 10) {
+                            this.x -= 3;
+                        }
+                        if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                            this.y += 3;
+                        }
+                        if (mouse.y > this.y && this.y > this.size * 10) {
+                            this.y -= 3;
+                        }
+                    }
+
+                    this.draw();
+                }
+            }
+
+            // Initialize particles
+            function init() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = Math.random() * 3 + 1;
+                    let x = Math.random() * (canvas.width - size * 2) + size * 2;
+                    let y = Math.random() * (canvas.height - size * 2) + size * 2;
+                    let directionX = (Math.random() * 0.4) - 0.2;
+                    let directionY = (Math.random() * 0.4) - 0.2;
+                    let color = '#FFD700'; // Gold color for particles
+
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                }
+            }
+
+            // Animate particles
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                }
+
+                connectParticles();
+            }
+
+            // Connect particles with lines if they are close to each other
+            function connectParticles() {
+                let opacityValue = 1;
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a + 1; b < particlesArray.length; b++) {
+                        let dx = particlesArray[a].x - particlesArray[b].x;
+                        let dy = particlesArray[a].y - particlesArray[b].y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 100) {
+                            opacityValue = 1 - distance / 100;
+                            ctx.strokeStyle = `rgba(255,215,0,${opacityValue})`; // Gold lines
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            init();
+            animate();
+        });
+    </script>
+</body>
+
+</html>
