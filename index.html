@@ -91,7 +91,13 @@
                 <p><strong>Airdrop:</strong> All tokens will be airdropped to respective wallets by 12 am EST (same day)</p>
                 <p><strong>Contract Address:</strong></p>
                 <div class="contract-address">
-                    HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
+                    
+                    SOL- HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
+                  
+                </div>
+                <div class="contract-address"> 
+                    USDC- HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
+
                 </div>
                 <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
                 <p>Follow us on socials to stay updated:</p>
@@ -116,7 +122,7 @@
  <!-- Token Price Calculation Section with Animation Class -->
  <section class="presale-section" id="token-price">
     <h2>Token Price Calculator</h2>
-    <p><strong>Current Token Price:</strong> 1 STUART = 0.00001 USD</p>
+    <p><strong>Current Token Price:</strong> 1 $lilstu = 0.0001 USDC</p>
     <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span> SOL</p>
 
     <!-- Calculator Form -->
@@ -124,9 +130,9 @@
         <h3>Calculate Tokens You'll Receive</h3>
         <form id="token-calculator">
             <label for="amount-input">Enter Amount:</label>
-            <input type="number" id="amount-input" placeholder="Amount in USD or SOL" min="0" step="any" required>
+            <input type="number" id="amount-input" placeholder="Amount in USDC or SOL" min="0" step="any" required>
             <select id="currency-select">
-                <option value="USD">USD</option>
+                <option value="USDC">USDC</option>
                 <option value="SOL">SOL</option>
             </select>
             <button type="submit">Calculate</button>
@@ -678,98 +684,136 @@
             });
         });
 
-         // Fetch Real-Time SOL Price
-         async function fetchSolPrice() {
-                try {
-                    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
-                    const data = await response.json();
-                    const solPriceInUsd = data.solana.usd;
-                    const tokenPriceInSol = (0.00001 / solPriceInUsd).toFixed(8);
-                    document.getElementById('token-price-sol').innerText = `${tokenPriceInSol} SOL`;
-                } catch (error) {
-                    console.error('Error fetching SOL price:', error);
-                    document.getElementById('token-price-sol').innerText = 'Error fetching price';
-                }
+      // Fetch Real-Time SOL Price in USDC using CoinGecko API
+async function fetchSolPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usdc');
+        const data = await response.json();
+        
+        // Ensure the API response contains the expected data
+        if (!data.solana || !data.solana.usdc) {
+            throw new Error('Invalid data received from CoinGecko API.');
+        }
+        
+        const solPriceInUsdc = parseFloat(data.solana.usdc);
+        
+        // Validate the fetched price
+        if (isNaN(solPriceInUsdc) || solPriceInUsdc <= 0) {
+            throw new Error('Invalid SOL price fetched from CoinGecko.');
+        }
+        
+        // Calculate the token price in SOL based on USDC
+        const tokenPriceInSol = (0.0001 / solPriceInUsdc).toFixed(8);
+        
+        // Update the DOM element with the fetched price
+        document.getElementById('token-price-sol').innerText = `${tokenPriceInSol} SOL`;
+    } catch (error) {
+        console.error('Error fetching SOL price:', error);
+        document.getElementById('token-price-sol').innerText = 'Error fetching price';
+    }
+}
+
+fetchSolPrice();
+// Optionally, update the SOL price every minute (60000 milliseconds)
+setInterval(fetchSolPrice, 60000);
+
+// Token Calculator Logic
+const tokenCalculatorForm = document.getElementById('token-calculator');
+const amountInput = document.getElementById('amount-input');
+const currencySelect = document.getElementById('currency-select');
+const calculationResult = document.getElementById('calculation-result');
+
+tokenCalculatorForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const amount = parseFloat(amountInput.value);
+    const currency = currencySelect.value;
+
+    // Input Validation
+    if (isNaN(amount) || amount <= 0) {
+        calculationResult.innerText = 'Please enter a valid amount.';
+        return;
+    }
+
+    let tokensReceived;
+
+    if (currency === 'USDC') {
+        // Calculation for USDC
+        tokensReceived = amount / 0.0001; // Ensured consistency with fetchSolPrice
+    } else if (currency === 'SOL') {
+        try {
+            // Fetch SOL price in USDC from Binance API
+            const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDC');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            fetchSolPrice();
-            // Optionally, update the SOL price every minute
-            setInterval(fetchSolPrice, 60000);
+            const data = await response.json();
+            const solPriceInUsdc = parseFloat(data.price); // Correct property access
 
-            // Token Calculator Logic
-            const tokenCalculatorForm = document.getElementById('token-calculator');
-            const amountInput = document.getElementById('amount-input');
-            const currencySelect = document.getElementById('currency-select');
-            const calculationResult = document.getElementById('calculation-result');
-
-            tokenCalculatorForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const amount = parseFloat(amountInput.value);
-                const currency = currencySelect.value;
-
-                if (isNaN(amount) || amount <= 0) {
-                    calculationResult.innerText = 'Please enter a valid amount.';
-                    return;
-                }
-
-                let tokensReceived;
-                if (currency === 'USD') {
-                    tokensReceived = amount / 0.00001;
-                } else if (currency === 'SOL') {
-                    try {
-                        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
-                        const data = await response.json();
-                        const solPriceInUsd = data.solana.usd;
-                        const amountInUsd = amount * solPriceInUsd;
-                        tokensReceived = amountInUsd / 0.00001;
-                    } catch (error) {
-                        console.error('Error fetching SOL price:', error);
-                        calculationResult.innerText = 'Error calculating tokens. Please try again.';
-                        return;
-                    }
-                }
-
-                calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString()} STUART tokens.`;
-            });
-
-            // Chart Toggle Logic
-            const toggleChartBtn = document.getElementById('toggle-chart-btn');
-            const priceChartContainer = document.getElementById('price-chart-container');
-            let tradingViewWidgetInitialized = false;
-
-            toggleChartBtn.addEventListener('click', () => {
-                if (!tradingViewWidgetInitialized) {
-                    initializeTradingViewWidget();
-                    tradingViewWidgetInitialized = true;
-                }
-                if (priceChartContainer.style.display === 'none') {
-                    priceChartContainer.style.display = 'block';
-                    toggleChartBtn.innerText = 'Hide Price Chart';
-                } else {
-                    priceChartContainer.style.display = 'none';
-                    toggleChartBtn.innerText = 'Show Price Chart';
-                }
-            });
-
-            // Initialize TradingView Widget
-            function initializeTradingViewWidget() {
-                new TradingView.widget({
-                    "width": "100%",
-                    "height": 500,
-                    "symbol": "BINANCE:SOLUSD",
-                    "interval": "D",
-                    "timezone": "Etc/UTC",
-                    "theme": "dark",
-                    "style": "1",
-                    "locale": "en",
-                    "toolbar_bg": "#f1f3f6",
-                    "enable_publishing": false,
-                    "withdateranges": true,
-                    "hide_side_toolbar": false,
-                    "allow_symbol_change": true,
-                    "container_id": "tradingview-widget"
-                });
+            // Validate the fetched price
+            if (isNaN(solPriceInUsdc) || solPriceInUsdc <= 0) {
+                throw new Error('Invalid SOL price received from Binance API.');
             }
+
+            // Calculate tokens received based on SOL input
+            const amountInUsdc = amount * solPriceInUsdc;
+            tokensReceived = amountInUsdc / 0.0001; // Ensured consistency with fetchSolPrice
+        } catch (error) {
+            console.error('Error fetching SOL price:', error);
+            calculationResult.innerText = 'Error calculating tokens. Please try again.';
+            return;
+        }
+    } else {
+        // Handle unsupported currencies if any
+        calculationResult.innerText = 'Unsupported currency selected.';
+        return;
+    }
+
+    // Display the result with comma separators for readability
+    calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString()} STUART tokens.`;
+});
+
+// Chart Toggle Logic
+const toggleChartBtn = document.getElementById('toggle-chart-btn');
+const priceChartContainer = document.getElementById('price-chart-container');
+let tradingViewWidgetInitialized = false;
+
+toggleChartBtn.addEventListener('click', () => {
+    if (!tradingViewWidgetInitialized) {
+        initializeTradingViewWidget();
+        tradingViewWidgetInitialized = true;
+    }
+    if (priceChartContainer.style.display === 'none' || priceChartContainer.style.display === '') {
+        priceChartContainer.style.display = 'block';
+        toggleChartBtn.innerText = 'Hide Price Chart';
+    } else {
+        priceChartContainer.style.display = 'none';
+        toggleChartBtn.innerText = 'Show Price Chart';
+    }
+});
+
+// Initialize TradingView Widget
+function initializeTradingViewWidget() {
+    new TradingView.widget({
+        "width": "100%",
+        "height": 500,
+        "symbol": "BINANCE:SOLUSDC",
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "withdateranges": true,
+        "hide_side_toolbar": false,
+        "allow_symbol_change": true,
+        "container_id": "tradingview-widget"
+    });
+}
+
 
             // Scroll Animations for Sections (Updated)
             const scrollAnimations = () => {
