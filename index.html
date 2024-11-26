@@ -684,36 +684,62 @@
             });
         });
 
-      // Fetch Real-Time SOL Price in USDC using CoinGecko API
+     // Fetch Real-Time SOL Price in USDC using Binance API
 async function fetchSolPrice() {
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usdc');
-        const data = await response.json();
+        const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDC');
         
-        // Ensure the API response contains the expected data
-        if (!data.solana || !data.solana.usdc) {
-            throw new Error('Invalid data received from CoinGecko API.');
+        // Check if the response is OK (status code 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
-        const solPriceInUsdc = parseFloat(data.solana.usdc);
-        
+
+        const data = await response.json();
+
+        // Debugging: Log the fetched data
+        console.log('Binance API Response:', data);
+
+        // Ensure the API response contains the expected data
+        if (!data.price) {
+            throw new Error('Invalid data received from Binance API.');
+        }
+
+        const solPriceInUsdc = parseFloat(data.price);
+
         // Validate the fetched price
         if (isNaN(solPriceInUsdc) || solPriceInUsdc <= 0) {
-            throw new Error('Invalid SOL price fetched from CoinGecko.');
+            throw new Error('Invalid SOL price fetched from Binance.');
         }
-        
+
         // Calculate the token price in SOL based on USDC
         const tokenPriceInSol = (0.0001 / solPriceInUsdc).toFixed(8);
-        
+
+        // Get the DOM element
+        const priceElement = document.getElementById('token-price-sol');
+
+        // Ensure the DOM element exists
+        if (!priceElement) {
+            throw new Error('Element with ID "token-price-sol" not found in the DOM.');
+        }
+
         // Update the DOM element with the fetched price
-        document.getElementById('token-price-sol').innerText = `${tokenPriceInSol} SOL`;
+        priceElement.innerText = `${tokenPriceInSol} SOL`;
     } catch (error) {
         console.error('Error fetching SOL price:', error);
-        document.getElementById('token-price-sol').innerText = 'Error fetching price';
+
+        // Get the DOM element
+        const priceElement = document.getElementById('token-price-sol');
+
+        // If the element exists, update its text to show an error message
+        if (priceElement) {
+            priceElement.innerText = 'Error fetching price';
+        }
     }
 }
 
+// Initial fetch when the page loads
 fetchSolPrice();
+
 // Optionally, update the SOL price every minute (60000 milliseconds)
 setInterval(fetchSolPrice, 60000);
 
