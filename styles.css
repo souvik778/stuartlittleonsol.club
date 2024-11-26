@@ -305,7 +305,7 @@ a:hover {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(0.7);
     width: 80%;
     max-width: 800px;
     background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
@@ -313,7 +313,7 @@ a:hover {
     padding: 60px 80px;
     border-radius: 25px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-    z-index: -1;
+    z-index: 3000;
     transition: opacity 0.6s ease, transform 0.6s ease;
     opacity: 0;
     pointer-events: none;
@@ -326,7 +326,7 @@ a:hover {
 
 .presale-popup.active {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events:auto;
     transform: translate(-50%, -50%) scale(1);
     animation: fadeInPopup 0.6s forwards;
 }
@@ -369,7 +369,7 @@ a:hover {
 }
 
 .presale-popup p {
-    margin: 20px 0;
+    margin: 40px 0;
     text-align: center;
     font-size: 1.2rem;
     animation: fadeInUp 1s ease forwards;
