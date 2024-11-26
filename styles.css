@@ -1422,6 +1422,7 @@ footer {
     }
 }
 
+
 /* Adjust presale-popup for smaller screens */
 @media (max-width: 768px) {
     .presale-popup {
@@ -1705,4 +1706,32 @@ body {
 .visible {
     opacity: 1 !important;
     transform: translateY(0) !important;
+}
+/* Disable the presale popup on mobile devices */
+/* Show the mobile presale section on mobile devices */
+@media (max-width: 768px) {
+    .mobile-presale-section {
+        display: block !important;
+    }
+}
+
+/* Hide the mobile presale section on larger screens */
+@media (min-width: 769px) {
+    .mobile-presale-section {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .presale-popup {
+        display: none !important;
+    }
+    /* Hide the minimized presale button if it exists */
+    .presale-minimized {
+        display: none !important;
+    }
+    /* Hide any popup backdrops or overlays */
+    .popup-backdrop {
+        display: none !important;
+    }
 }
