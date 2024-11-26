@@ -1,0 +1,1166 @@
+/* Reset and Base Styles */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #FFD700;
+}
+
+/* Interactive Background Styling */
+#interactive-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-color: #0d0d0d;
+    opacity: 0.8; /* Increased opacity for better visibility */
+    overflow: hidden;
+}
+
+/* Top Bar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: slideDown 1s ease forwards;
+}
+
+@keyframes slideDown {
+    from {
+        top: -100px;
+    }
+    to {
+        top: 0;
+    }
+}
+
+.topbar h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #FFD700;
+    text-shadow:
+        -3px -3px 0 #fff,
+        3px -3px 0 #fff,
+        -3px 3px 0 #fff,
+        3px 3px 0 #fff,
+        6px 6px 0 #fff;
+    position: relative;
+    animation: wobble 6s infinite;
+    padding: 5px 10px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+@keyframes wobble {
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(3deg);
+    }
+}
+
+.topbar h1:hover {
+    transform: scale(1.2);
+    text-shadow:
+        0 0 20px #FFD700,
+        0 0 30px #FF69B4,
+        0 0 40px #00BFFF;
+}
+
+/* Navigation */
+.topbar nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: fadeInRight 1s ease forwards;
+    align-items: center;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.topbar nav a {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 30px;
+    background-color: rgba(255, 215, 0, 0.3); /* Increased background opacity */
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.topbar nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 215, 0, 0.4);
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+.topbar nav a:hover::after {
+    width: 100%;
+}
+
+.topbar nav a:hover {
+    color: #000;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 80px; /* To account for the fixed topbar */
+    padding: 20px;
+    gap: 40px; /* Increased gap for better spacing */
+}
+
+/* Presale Section */
+.presale-section {
+    background-color: rgba(255, 215, 0, 0.1);
+    padding: 30px 20px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-width: 800px; /* Limit the width for better readability */
+    width: 100%;
+    text-align: center; /* Center the text */
+    animation: fadeIn 2s ease forwards;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    margin: auto;
+}
+
+.presale-section:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+}
+
+.presale-section h2 {
+    color: #FFD700;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #FFD700;
+}
+
+.presale-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.presale-section .contract-address {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    word-break: break-all;
+    margin-bottom: 15px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.presale-section .social-links a {
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: #FFD700;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.presale-section .social-links a:hover {
+    color: #FF69B4;
+    transform: scale(1.2);
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    padding: 0 20px;
+    max-width: 1200px; /* Set a maximum width for better readability */
+    width: 100%;
+    animation: fadeIn 2s ease forwards;
+}
+
+/* Presale Popup */
+.presale-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 80%;
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.95); /* Increased opacity */
+    color: #FFD700;
+    padding: 60px 80px;
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    z-index: 1100;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.presale-popup.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    animation: fadeInPopup 0.6s forwards;
+}
+
+@keyframes fadeInPopup {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.presale-popup h2 {
+    color: #FFD700;
+    margin-top: 0;
+    font-size: 2rem;
+    text-align: center;
+    animation: fadeInDown 1s ease forwards;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.presale-popup h2:hover {
+    color: #FF69B4;
+    text-shadow: 0 0 15px #FF69B4;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.presale-popup p {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.2rem;
+    animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.presale-popup img.token-image {
+    width: 100%;
+    max-width: 500px; /* Increased size */
+    height: auto;
+    border-radius: 15px;
+    margin-top: 20px;
+    animation: fadeIn 1s ease forwards;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+}
+
+.presale-popup img.token-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px rgba(255, 215, 0, 1);
+}
+
+.presale-popup .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    color: #FFD700;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 1200;
+}
+
+.presale-popup .close-btn:hover {
+    color: #fff;
+}
+
+/* Countdown Timer */
+.countdown {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    font-size: 1.8rem;
+    animation: fadeIn 1.2s ease forwards;
+    width: 100%;
+}
+
+.countdown div {
+    text-align: center;
+    flex: 1;
+}
+
+.countdown div span {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700;
+}
+
+/* Tokenomics Section */
+.tokenomics-section {
+    width: 100%;
+    padding: 100px 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Increased opacity for better visibility */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.tokenomics-section h2 {
+    color: #FFD700;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px #FFD700;
+    animation: slideInFromLeft 1.5s ease forwards;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.tokenomics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px; /* Increased max-width to accommodate the king image */
+    position: relative;
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.tokenomics-item {
+    background-color: rgba(255, 215, 0, 0.3); /* Increased opacity */
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 30%;
+    min-width: 250px;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+    transition: transform 0.4s, background-color 0.4s, box-shadow 0.4s;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    animation: slideInUp 1.5s ease forwards;
+}
+
+.tokenomics-item:hover {
+    transform: translateY(-15px);
+    background-color: rgba(255, 215, 0, 0.4); /* Further increased opacity on hover */
+    box-shadow: 0 12px 25px rgba(255, 215, 0, 0.5);
+}
+
+.tokenomics-item h3 {
+    margin-bottom: 15px;
+    color: #FFD700;
+    font-size: 1.8rem;
+    text-shadow: 0 0 5px #FFD700;
+}
+
+.tokenomics-item p {
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* King Image Styling within Tokenomics Section */
+.tokenomics-section .king-image-tokenomics {
+    position: relative;
+    width: 600px; /* Increased size */
+    height: auto;
+    z-index: 2;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+    animation: float 6s ease-in-out infinite, bounce 2s infinite;
+    filter: brightness(1.5);
+    margin-top: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
+}
+
+.tokenomics-section .king-image-tokenomics:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.7);
+    filter: brightness(1.8);
+}
+
+/* Floating Animation for King Image */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+/* Bounce Animation for King Image */
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Pie Chart Section */
+.piechart-section {
+    width: 100%;
+    padding: 150px 20px; /* Increased padding for larger size */
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease forwards;
+    position: relative;
+}
+
+.piechart-section h2 {
+    color: #FFD700;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px #FFD700;
+    animation: slideInFromRight 1.5s ease forwards;
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 900px; /* Increased max-width */
+    position: relative;
+    padding: 40px;
+    background-color: transparent; /* Made transparent */
+    border-radius: 25px;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    animation: fadeInUp 2s ease forwards;
+    height: 400px; /* Fixed height for better responsiveness */
+}
+
+/* Features Section */
+.features-section {
+    width: 100%;
+    padding: 100px 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Similar to tokenomics-section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.features-section h2 {
+    color: #FFD700;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px #FFD700;
+    animation: slideInFromLeft 1.5s ease forwards;
+}
+
+.features-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px; /* Consistent with tokenomics-section */
+    position: relative;
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.feature-card {
+    background-color: rgba(255, 215, 0, 0.3); /* Increased opacity */
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 30%;
+    min-width: 250px;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+    transition: transform 0.4s, background-color 0.4s, box-shadow 0.4s;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    animation: slideInUp 1.5s ease forwards;
+}
+
+.feature-card:hover {
+    transform: translateY(-15px);
+    background-color: rgba(255, 215, 0, 0.4); /* Further increased opacity on hover */
+    box-shadow: 0 12px 25px rgba(255, 215, 0, 0.5);
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+    color: #FFD700;
+    font-size: 1.8rem;
+    text-shadow: 0 0 5px #FFD700;
+}
+
+.feature-card p {
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq-section {
+    width: 100%;
+    padding: 100px 20px;
+    background-color: rgba(17, 17, 17, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease forwards;
+}
+
+.faq-section h2 {
+    color: #FFD700;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px #FFD700;
+}
+
+.faq-container {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.faq-item {
+    background-color: rgba(255, 215, 0, 0.3); /* Increased opacity */
+    border-radius: 20px;
+    padding: 25px 35px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1.5s ease forwards;
+}
+
+.faq-item:hover {
+    background-color: rgba(255, 215, 0, 0.4); /* Further increased opacity on hover */
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(255, 215, 0, 0.5);
+}
+
+.faq-item h3 {
+    color: #FFD700;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    position: relative;
+}
+
+.faq-item h3::after {
+    content: '\25BC'; /* Down arrow */
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s;
+}
+
+.faq-item.active h3::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.faq-item p {
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.faq-item.active p {
+    display: block;
+}
+
+/* Contact Section */
+.contact-section {
+    width: 100%;
+    padding: 100px 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease forwards;
+}
+
+.contact-section h2 {
+    color: #FFD700;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px #FFD700;
+}
+
+/* Sticky Note Styling */
+.sticky-note {
+    position: relative;
+    margin: 0 auto;
+    padding: 35px 45px;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1); /* Increased opacity */
+    border-radius: 20px;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.3rem;
+    color: #fff;
+    transform: rotate(-2deg);
+    z-index: 800;
+    animation: fadeInUp 2s ease forwards;
+}
+
+.sticky-note::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: 40px;
+    font-size: 3rem;
+    transform: rotate(-15deg);
+    z-index: 10;
+    background: url('sticky-note-icon.png') no-repeat center center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+.sticky-note::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 100% 30px;
+    pointer-events: none;
+}
+
+.sticky-note ul {
+    list-style-type: disc;
+    padding-left: 50px;
+    margin-top: 15px;
+}
+
+.sticky-note li {
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* Contact Form Styles */
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 2s ease forwards;
+    gap: 15px;
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+    transition: box-shadow 0.3s;
+    background-color: rgba(255, 255, 255, 0.15); /* Increased opacity */
+    color: #fff;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    box-shadow: 0 0 10px #FFD700;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.25); /* Further increased opacity on focus */
+}
+
+#contact-form button {
+    background-color: #FFD700;
+    color: #000;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-size: 1.1rem;
+    align-self: flex-start;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5);
+}
+
+#contact-form button:hover {
+    background-color: #e6c200;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.7);
+}
+
+/* Hero Section */
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 150px 20px 80px;
+    box-sizing: border-box;
+    z-index: 850;
+    animation: fadeIn 2s ease forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    transition: transform 0.4s, box-shadow 0.4s;
+    animation: bounceIn 1.5s ease forwards, glow 4s ease-in-out infinite;
+    position: relative;
+    --glow-x: 0px;
+    --glow-y: 0px;
+    --glow-color: #FFD700;
+    box-shadow:
+        0 0 15px var(--glow-color),
+        0 0 30px var(--glow-color),
+        0 0 45px var(--glow-color);
+}
+
+/* Glowing Animation */
+@keyframes glow {
+    0% {
+        box-shadow:
+            0 0 15px var(--glow-color),
+            0 0 30px var(--glow-color),
+            0 0 45px var(--glow-color);
+    }
+    50% {
+        box-shadow:
+            var(--glow-x) var(--glow-y) 20px #FFD700,
+            var(--glow-x) var(--glow-y) 30px #FF69B4,
+            var(--glow-x) var(--glow-y) 40px #00BFFF;
+    }
+    100% {
+        box-shadow:
+            0 0 15px var(--glow-color),
+            0 0 30px var(--glow-color),
+            0 0 45px var(--glow-color);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.hero-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9);
+}
+
+/* Additional Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Disclaimer Section */
+.disclaimer-section {
+    width: 100%;
+    padding: 50px 20px;
+    background-color: rgba(0, 0, 0, 0.85);
+    text-align: center;
+    font-size: 1rem;
+    color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 2s ease forwards;
+}
+
+.disclaimer-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #FFD700;
+    text-align: center;
+    padding: 20px 30px;
+    font-size: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    animation: fadeInUp 2s ease forwards;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations for Interactive Sidebar Elements */
+.presale-section .social-links a {
+    display: inline-block;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.presale-section .social-links a:hover {
+    transform: rotate(360deg);
+}
+
+/* Add more subtle animations to presale-section elements */
+.presale-section p,
+.presale-section .contract-address {
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.presale-section .contract-address {
+    animation-delay: 1s;
+}
+
+.presale-section .social-links a {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1.5s;
+}
+
+/* Media Queries for Responsive Design */
+
+/* Mobile Phones (up to 480px) */
+@media (max-width: 480px) {
+    .topbar nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .topbar h1 {
+        font-size: 1.8rem;
+    }
+
+    .main-container {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .presale-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .presale-section p {
+        font-size: 1rem;
+    }
+
+    .tokenomics-section h2,
+    .piechart-section h2,
+    .features-section h2,
+    .faq-section h2,
+    .contact-section h2 {
+        font-size: 2rem;
+    }
+
+    .tokenomics-item,
+    .feature-card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .hero-section {
+        padding: 100px 10px 60px;
+    }
+
+    .hero-image {
+        max-width: 100%;
+    }
+
+    .tokenomics-section .king-image-tokenomics {
+        display: none;
+    }
+
+    .countdown {
+        font-size: 1.2rem;
+    }
+
+    .countdown div span {
+        font-size: 1.8rem;
+    }
+
+    #contact-form input,
+    #contact-form textarea {
+        font-size: 1rem;
+    }
+
+    .sticky-note {
+        padding: 20px 25px;
+        font-size: 1rem;
+    }
+
+    .sticky-note h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Tablets and Small Laptops (481px to 1024px) */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .topbar nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .topbar h1 {
+        font-size: 2rem;
+    }
+
+    .tokenomics-item,
+    .feature-card {
+        width: 45%;
+    }
+
+    .tokenomics-section .king-image-tokenomics {
+        width: 400px;
+        margin-top: 30px;
+    }
+
+    .hero-section {
+        padding: 120px 20px 60px;
+    }
+
+    .hero-image {
+        max-width: 80%;
+    }
+
+    .countdown {
+        font-size: 1.5rem;
+    }
+
+    .countdown div span {
+        font-size: 2rem;
+    }
+}
+
+/* Medium Laptops (1025px to 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 500px;
+    }
+
+    .feature-card {
+        width: 30%;
+    }
+
+    .hero-image {
+        max-width: 85%;
+    }
+}
+
+/* Large Laptops and Desktops (1441px and up) */
+@media (min-width: 1441px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 600px;
+    }
+
+    .hero-image {
+        max-width: 90%;
+    }
+}
+
+/* Adjustments for Specific Laptop Sizes */
+
+/* 13" Laptop (Typical width: 1280px) */
+@media (max-width: 1280px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 450px;
+    }
+}
+
+/* 14" Laptop (Typical width: 1366px) */
+@media (max-width: 1366px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 500px;
+    }
+}
+
+/* 15" Laptop (Typical width: 1440px) */
+@media (max-width: 1440px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 550px;
+    }
+}
+
+/* 16" Laptop (Typical width: 1536px) */
+@media (max-width: 1536px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 600px;
+    }
+}
+
+/* 17" Laptop and Above */
+@media (min-width: 1600px) {
+    .tokenomics-section .king-image-tokenomics {
+        width: 650px;
+    }
+}
+
+/* Ensure the canvas covers the entire viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+/* Smooth transitions for visibility */
+.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
