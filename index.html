@@ -833,6 +833,59 @@
         window.addEventListener('resize', adjustPopupSize);
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const presalePopup = document.querySelector('.presale-popup');
+    const closeButton = document.querySelector('.presale-popup .close-btn');
+
+    if (presalePopup) {
+        // Function to adjust popup size dynamically based on aspect ratio
+        const adjustPopupSize = () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const aspectRatio = width / height;
+
+            if (aspectRatio > 1.6) {
+                // Wide screens (e.g., 16:9 or wider)
+                presalePopup.style.width = '60vw';
+                presalePopup.style.maxWidth = '1200px';
+                presalePopup.style.padding = '50px';
+            } else if (aspectRatio > 1.4) {
+                // Moderate wide screens (e.g., 3:2)
+                presalePopup.style.width = '70vw';
+                presalePopup.style.maxWidth = '1000px';
+                presalePopup.style.padding = '40px';
+            } else {
+                // Square or tall screens
+                presalePopup.style.width = '80vw';
+                presalePopup.style.maxWidth = '800px';
+                presalePopup.style.padding = '30px';
+            }
+        };
+
+        // Function to close the popup
+        const closePopup = () => {
+            presalePopup.classList.remove('active');
+        };
+
+        // Close popup when clicking outside of it
+        document.addEventListener('click', (event) => {
+            if (presalePopup.classList.contains('active') && !presalePopup.contains(event.target)) {
+                closePopup();
+            }
+        });
+
+        // Close popup when the close button is clicked
+        if (closeButton) {
+            closeButton.addEventListener('click', closePopup);
+        }
+
+        // Initial size adjustment
+        adjustPopupSize();
+
+        // Adjust size on window resize
+        window.addEventListener('resize', adjustPopupSize);
+    }
+});
 
     </script>
     
