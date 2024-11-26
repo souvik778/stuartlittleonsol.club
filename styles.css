@@ -51,6 +51,7 @@ a:hover {
 }
 
 /* Top Bar */
+
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -242,6 +243,53 @@ a:hover {
     color: #FF69B4;
     transform: scale(1.2);
 }
+
+/* Hide navigation links and show menu toggle on mobile */
+@media (max-width: 768px) {
+    .topbar {
+        flex-wrap: wrap;
+        height: auto;
+    }
+
+    .topbar nav {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.95);
+        width: 100%;
+        padding: 10px 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 999;
+    }
+
+    .topbar.nav-active nav {
+        display: flex;
+    }
+
+    .topbar .menu-toggle {
+        display: block;
+        font-size: 2rem;
+        color: #FFD700;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .topbar nav a {
+        padding: 15px;
+        font-size: 1.2rem;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* Hide menu toggle on larger screens */
+@media (min-width: 769px) {
+    .topbar .menu-toggle {
+        display: none;
+    }
+}
+
 
 /* Main Content */
 .content {
