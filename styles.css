@@ -1522,6 +1522,21 @@ footer {
     overflow-y: auto;
 }
 
+/* Add responsive adjustments for 16-inch and 17-inch laptops */
+@media (min-width: 1536px) {
+    .presale-popup {
+        width: 70vw;
+        max-width: 1000px; /* Increase max-width for larger screens */
+    }
+}
+
+@media (min-width: 1600px) {
+    .presale-popup {
+        width: 60vw;
+        max-width: 1200px;
+        padding: 50px;
+    }
+}
 /* Media Queries for Responsive Design */
 
 /* Mobile Phones (up to 480px) */
