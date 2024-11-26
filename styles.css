@@ -671,6 +671,157 @@ a:hover {
     font-size: 1.1rem;
     line-height: 1.6;
 }
+/* Animate on Scroll */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Token Price Section */
+.token-price-section {
+    background-color: #121212;
+    color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.token-price-section h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.token-price-section p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.calculator-container {
+    margin: 40px auto;
+    max-width: 500px;
+    text-align: left;
+}
+
+.calculator-container h3 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.calculator-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculator-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.calculator-container input,
+.calculator-container select {
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.calculator-container button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calculator-container button:hover {
+    background-color: #e6c200;
+}
+
+#calculation-result {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#toggle-chart-btn {
+    margin-top: 30px;
+    padding: 12px 24px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#toggle-chart-btn:hover {
+    background-color: #e6c200;
+}
+
+.price-chart-container {
+    margin-top: 40px;
+    max-width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+.price-chart-container #tradingview-widget {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Additional Button Animation */
+.calculator-container button,
+#toggle-chart-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.calculator-container button::after,
+#toggle-chart-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-45deg);
+    transition: left 0.5s;
+}
+
+.calculator-container button:hover::after,
+#toggle-chart-btn:hover::after {
+    left: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calculator-container {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .token-price-section h2 {
+        font-size: 2rem;
+    }
+
+    .calculator-container h3 {
+        font-size: 1.5rem;
+    }
+}
 
 /* FAQ Section */
 .faq-section {
