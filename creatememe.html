@@ -5,22 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StuartLittleOnSol Meme Creator</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- External Stylesheet (Optional for Further Customization) -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            color: white;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #FFFFFF;
             overflow-x: hidden; /* Prevent horizontal scroll */
             background-color: #000; /* Fallback background color */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             position: relative;
+            animation: fadeIn 1s ease-in-out;
         }
 
         h1,
@@ -32,6 +40,7 @@
         a {
             color: inherit;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         a:hover {
@@ -47,6 +56,7 @@
             height: 100%;
             z-index: -1; /* Ensure the canvas stays behind all other content */
             background-color: #0d0d0d; /* Fallback background color */
+            opacity: 0.8; /* Increased opacity for better visibility */
         }
 
         /* Top Bar */
@@ -54,7 +64,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.7); /* Darker and more opaque */
+            background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
             padding: 15px 30px;
             position: fixed;
             top: 0;
@@ -64,9 +74,19 @@
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
             transition: background-color 0.3s ease;
-            box-sizing: border-box;
             backdrop-filter: blur(10px); /* Adds a blur effect */
             -webkit-backdrop-filter: blur(10px); /* For Safari support */
+            animation: slideDown 1s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -100px;
+            }
+
+            to {
+                top: 0;
+            }
         }
 
         .topbar h1 a {
@@ -82,10 +102,15 @@
                 4px 4px 0 #ffffff;
             padding: 5px 10px;
             transition: transform 0.3s ease-in-out;
+            cursor: pointer;
         }
 
         .topbar h1 a:hover {
             transform: scale(1.1);
+            text-shadow:
+                0 0 20px #FFD700,
+                0 0 30px #FF69B4,
+                0 0 40px #00BFFF;
         }
 
         /* Top Bar Navigation */
@@ -96,6 +121,19 @@
             align-items: center;
             flex-wrap: wrap;
             flex: 1; /* Allow navigation to take remaining space for centering */
+            animation: fadeInRight 1s ease forwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* Navigation Links */
@@ -103,17 +141,38 @@
             font-size: 1rem;
             padding: 10px 20px;
             border-radius: 30px;
-            background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
+            background-color: rgba(255, 215, 0, 0.3); /* Increased background opacity */
             color: #FFFFFF; /* White text for better contrast */
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            cursor: pointer;
         }
 
         /* Hover Effect for Navigation Links */
+        .topbar nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 215, 0, 0.4);
+            transition: width 0.3s;
+            z-index: -1;
+            border-radius: 30px;
+        }
+
+        .topbar nav a:hover::after {
+            width: 100%;
+        }
+
         .topbar nav a:hover {
-            background-color: #FFD700; /* Gold on hover */
-            color: black; /* Black text on hover for contrast */
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            color: #000;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
         }
 
         /* Mobile Styling */
@@ -128,6 +187,7 @@
             width: 25px;
             height: 3px;
             background-color: #FFD700; /* Changed to gold for visibility */
+            transition: all 0.3s ease;
         }
 
         .nav-links {
@@ -148,12 +208,14 @@
             flex-direction: column;
             align-items: flex-start;
             width: 200px;
+            padding: 10px 0;
         }
 
         .nav-links.mobile a {
             padding: 10px 20px;
             width: 100%;
             color: #FFD700; /* Gold text for visibility */
+            border-radius: 0;
         }
 
         .nav-links.mobile a:hover {
@@ -164,10 +226,6 @@
 
         /* Responsive Breakpoints */
         @media (max-width: 1024px) {
-            .topbar {
-                padding: 15px 20px;
-            }
-
             .topbar nav {
                 display: none;
             }
@@ -184,24 +242,61 @@
         /* Meme Container Styling */
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             color: #ffffff;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            margin-top: 100px; /* Spacing below the navbar */
+            background-color: rgba(0, 0, 0, 0.8); /* Increased opacity */
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            margin: 120px 20px 60px; /* Spacing below the navbar and above footer */
+            position: relative;
+            animation: fadeInUp 1.5s ease forwards;
         }
 
         .container h1 {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #FFD700; /* Gold color for headings */
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #FFD700;
+            animation: slideInFromLeft 1s ease forwards;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .meme {
             position: relative;
             display: inline-block;
             margin: 20px 0;
+            max-width: 100%;
+            border: 5px solid #FFD700; /* Gold border for meme */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 10px #FFD700;
+            }
+
+            50% {
+                box-shadow: 0 0 20px #FFD700;
+            }
+
+            100% {
+                box-shadow: 0 0 10px #FFD700;
+            }
         }
 
         .meme canvas {
@@ -213,18 +308,37 @@
         #controls {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 20px;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         input[type="text"],
         input[type="file"] {
-            padding: 10px;
+            padding: 12px 15px;
             font-size: 1em;
-            border-radius: 5px;
+            border-radius: 8px;
             border: 2px solid #FFD700; /* Gold border for inputs */
             background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
             color: #FFFFFF; /* White text */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus {
+            background-color: rgba(255, 215, 0, 0.2); /* Slightly darker on focus */
+            border-color: #FF69B4; /* Pink border on focus */
+            outline: none;
         }
 
         input[type="text"]::placeholder,
@@ -233,30 +347,138 @@
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 1em;
             background-color: #FFD700; /* Gold background */
             color: black; /* Black text */
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
         }
 
         button:hover {
-            background-color: #B8860B; /* Darker gold on hover */
+            background-color: #FFB700; /* Darker gold on hover */
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Download Button */
+        #downloadMeme {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #downloadMeme button {
+            background-color: #00BFFF; /* Deep Sky Blue for contrast */
+            color: white;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+        }
+
+        #downloadMeme button:hover {
+            background-color: #009ACD; /* Darker blue on hover */
+            transform: scale(1.05);
         }
 
         /* Footer */
         footer {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             color: #FFD700;
             text-align: center;
             padding: 15px 20px;
             font-size: 0.9rem;
-            position: var();
-            bottom: 0;
+            position: relative;
             width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        /* Note Styling */
+        .contest-note {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #FFD700;
+            animation: fadeIn 2s ease forwards;
+            text-align: left;
+            position: relative;
+        }
+
+        .contest-note::before {
+            content: '*';
+            color: #FF69B4; /* Pink asterisk */
+            margin-right: 5px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Additional Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 140px 15px 60px; /* Adjusted spacing for mobile */
+            }
+
+            .meme {
+                border-width: 3px;
+            }
+
+            .contest-note {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar h1 a {
+                font-size: 1.5rem;
+            }
+
+            .topbar nav a {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+
+            .hamburger div {
+                width: 20px;
+                height: 2px;
+            }
+
+            .container h1 {
+                font-size: 2rem;
+            }
+
+            input[type="text"],
+            input[type="file"],
+            button {
+                font-size: 0.9em;
+                padding: 10px 15px;
+            }
+
+            #downloadMeme button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
@@ -265,25 +487,34 @@
     <!-- Interactive Background Canvas -->
     <canvas id="interactive-background"></canvas>
 
+    <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1><a href="index.html">StuartLittleOnSol</a></h1>
-        <div class="hamburger">
+        <div class="hamburger" aria-label="Toggle navigation" aria-expanded="false" role="button" tabindex="0">
             <div></div>
             <div></div>
             <div></div>
         </div>
         <nav class="nav-links">
             <a href="index.html#about">About</a>
-            <a href="index.html">Contact</a>
+            <a href="index.html#contact">Contact</a>
+            <!-- Added Twitter and Telegram Links -->
+            <a href="https://twitter.com/yourtwitterhandle" target="_blank" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://t.me/yourtelegramhandle" target="_blank" aria-label="Telegram">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
         </nav>
     </header>
 
+    <!-- Meme Creator Container -->
     <div class="container">
         <h1>Create Your StuartLittleOnSol Meme</h1>
         <div id="controls">
-            <input type="file" id="imageUpload" accept="image/*">
-            <input type="text" id="topText" placeholder="Enter top text">
-            <input type="text" id="bottomText" placeholder="Enter bottom text">
+            <input type="file" id="imageUpload" accept="image/*" aria-label="Upload Image">
+            <input type="text" id="topText" placeholder="Enter top text" aria-label="Top Text">
+            <input type="text" id="bottomText" placeholder="Enter bottom text" aria-label="Bottom Text">
             <button id="generateMeme">Generate Meme</button>
         </div>
         <div class="meme" id="memeContainer" style="display: none;">
@@ -292,8 +523,14 @@
         <a id="downloadMeme" href="#" download="meme.png" style="display: none;">
             <button type="button">Download Meme</button>
         </a>
+        <!-- Contest Note -->
+        <div class="contest-note">
+            To win the contest it is not necessary to use this feature but this will act as an option.
+            <li> Thank you</li>
+        </div>
     </div>
 
+    <!-- Footer -->
     <footer role="contentinfo">
         <p>&copy; 2024 StuartLittleOnSol. All Rights Reserved.</p>
     </footer>
@@ -304,8 +541,17 @@
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
 
-            hamburger.addEventListener('click', () => {
+            const toggleNav = () => {
                 navLinks.classList.toggle('show');
+                const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                hamburger.setAttribute('aria-expanded', !isExpanded);
+            };
+
+            hamburger.addEventListener('click', toggleNav);
+            hamburger.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    toggleNav();
+                }
             });
         });
     </script>
@@ -389,7 +635,7 @@
             const canvas = document.getElementById('interactive-background');
             const ctx = canvas.getContext('2d');
             let particlesArray = [];
-            const numberOfParticles = 100;
+            const numberOfParticles = 150; // Increased number for denser background
             const mouse = {
                 x: null,
                 y: null,
@@ -473,8 +719,8 @@
                     let size = Math.random() * 3 + 1;
                     let x = Math.random() * (canvas.width - size * 2) + size * 2;
                     let y = Math.random() * (canvas.height - size * 2) + size * 2;
-                    let directionX = (Math.random() * 0.4) - 0.2;
-                    let directionY = (Math.random() * 0.4) - 0.2;
+                    let directionX = (Math.random() * 0.5) - 0.25;
+                    let directionY = (Math.random() * 0.5) - 0.25;
                     let color = '#FFD700'; // Gold color for particles
 
                     particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
@@ -501,7 +747,7 @@
                         let dx = particlesArray[a].x - particlesArray[b].x;
                         let dy = particlesArray[a].y - particlesArray[b].y;
                         let distance = Math.sqrt(dx * dx + dy * dy);
-                        if (distance < 100) {
+                        if (distance < 100) { // Adjusted distance for optimal connections
                             opacityValue = 1 - distance / 100;
                             ctx.strokeStyle = `rgba(255,215,0,${opacityValue})`; // Gold lines
                             ctx.lineWidth = 1;
