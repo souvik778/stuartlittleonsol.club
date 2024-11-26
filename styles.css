@@ -1024,6 +1024,39 @@ footer {
     animation-delay: 1.5s;
 }
 
+/* Adjust presale-popup for smaller screens */
+@media (max-width: 768px) {
+    .presale-popup {
+        padding: 20px 15px; /* Reduce padding */
+        max-height: 90vh; /* Limit height */
+        overflow-y: auto; /* Enable scrolling if content overflows */
+    }
+
+    .presale-popup .close-btn {
+        font-size: 2rem; /* Reduce font size */
+        top: 10px; /* Adjust position */
+        right: 10px;
+    }
+
+    .presale-popup h2 {
+        font-size: 1.8rem; /* Reduce font size */
+    }
+
+    .presale-popup p {
+        font-size: 1rem; /* Reduce font size */
+    }
+
+    .presale-popup img.token-image {
+        max-width: 100%; /* Ensure image fits */
+    }
+}
+
+/* Ensure presale-popup does not exceed viewport height */
+.presale-popup {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
 /* Media Queries for Responsive Design */
 
 /* Mobile Phones (up to 480px) */
