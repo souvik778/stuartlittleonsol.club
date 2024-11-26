@@ -301,6 +301,71 @@ a:hover {
 }
 
 /* Presale Popup */
+/* Hide the presale popup on mobile devices */
+@media (max-width: 768px) {
+    .presale-popup {
+        display: none;
+    }
+
+    /* If you have a backdrop or overlay, hide it as well */
+    .popup-backdrop {
+        display: none;
+    }
+}
+/* Hide the mobile presale section on desktop */
+.mobile-presale-section {
+    display: none;
+}
+
+/* Show and style the mobile presale section on mobile devices */
+@media (max-width: 768px) {
+    .mobile-presale-section {
+        display: block;
+        background-color: rgba(255, 215, 0, 0.1);
+        padding: 30px 20px;
+        border-radius: 15px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        margin: 20px auto;
+        animation: fadeIn 2s ease forwards;
+    }
+
+    .mobile-presale-section h2 {
+        color: #FFD700;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        text-shadow: 0 0 10px #FFD700;
+    }
+
+    .mobile-presale-section p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .mobile-presale-section .presale-content {
+        margin-bottom: 20px;
+    }
+
+    .mobile-presale-section .token-image {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        border-radius: 15px;
+        margin-top: 20px;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .mobile-presale-section .token-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 35px rgba(255, 215, 0, 1);
+    }
+}
+
 .presale-popup {
     position: fixed;
     top: 50%;
