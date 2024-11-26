@@ -1595,7 +1595,15 @@ footer {
     .sticky-note h3 {
         font-size: 1.5rem;
     }
+}@media (max-width: 768px) {
+    .presale-section {
+        background-color: rgba(255, 215, 0, 0.1); /* Adjusted background for presale section */
+    }
+    .token-price-section {
+        background-color: rgba(18, 18, 18, 0.7); /* Adjusted background for token price calculator */
+    }
 }
+
 
 /* Tablets and Small Laptops (481px to 1024px) */
 @media (min-width: 481px) and (max-width: 1024px) {
