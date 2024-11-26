@@ -308,12 +308,12 @@ a:hover {
     transform: translate(-50%, -50%) scale(0.8);
     width: 80%;
     max-width: 800px;
-    background-color: rgba(0, 0, 0, 0.95); /* Increased opacity */
+    background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
     color: #FFD700;
     padding: 60px 80px;
     border-radius: 25px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-    z-index: 1100;
+    z-index: 4000;
     transition: opacity 0.6s ease, transform 0.6s ease;
     opacity: 0;
     pointer-events: none;
