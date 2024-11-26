@@ -15,6 +15,7 @@
         rel="stylesheet">
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 </head>
 
 <body>
@@ -109,7 +110,39 @@
                     </a>
                 </div>
             </section>
+            <br>
+            <br>
 
+ <!-- Token Price Calculation Section with Animation Class -->
+ <section class="token-price-section animate-on-scroll" id="token-price">
+    <h2>Token Price Calculator</h2>
+    <p><strong>Current Token Price:</strong> 1 STUART = 0.00001 USD</p>
+    <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span> SOL</p>
+
+    <!-- Calculator Form -->
+    <div class="calculator-container">
+        <h3>Calculate Tokens You'll Receive</h3>
+        <form id="token-calculator">
+            <label for="amount-input">Enter Amount:</label>
+            <input type="number" id="amount-input" placeholder="Amount in USD or SOL" min="0" step="any" required>
+            <select id="currency-select">
+                <option value="USD">USD</option>
+                <option value="SOL">SOL</option>
+            </select>
+            <button type="submit">Calculate</button>
+        </form>
+        <p id="calculation-result"></p>
+    </div>
+
+    <!-- Chart Toggle Button -->
+    <button id="toggle-chart-btn">Show Price Chart</button>
+
+    <!-- Chart Container (Initially Hidden) -->
+    <div class="price-chart-container" id="price-chart-container" style="display: none;">
+        <!-- TradingView Widget Container -->
+        <div id="tradingview-widget"></div>
+    </div>
+</section>
             <!-- Presale Popup (Initially Hidden) -->
             <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
                 <button class="close-btn" id="presale-close" aria-label="Close Presale Popup">&times;</button>
@@ -146,6 +179,7 @@
                     Presale
                 </button>
             </div>
+            <br><br>
 
             <!-- Tokenomics Section with King Image -->
             <section class="tokenomics-section" id="tokenomics">
@@ -630,6 +664,130 @@
                 topbar.classList.toggle('nav-active');
             });
         });
+
+         // Fetch Real-Time SOL Price
+         async function fetchSolPrice() {
+                try {
+                    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+                    const data = await response.json();
+                    const solPriceInUsd = data.solana.usd;
+                    const tokenPriceInSol = (0.00001 / solPriceInUsd).toFixed(8);
+                    document.getElementById('token-price-sol').innerText = `${tokenPriceInSol} SOL`;
+                } catch (error) {
+                    console.error('Error fetching SOL price:', error);
+                    document.getElementById('token-price-sol').innerText = 'Error fetching price';
+                }
+            }
+
+            fetchSolPrice();
+            // Optionally, update the SOL price every minute
+            setInterval(fetchSolPrice, 60000);
+
+            // Token Calculator Logic
+            const tokenCalculatorForm = document.getElementById('token-calculator');
+            const amountInput = document.getElementById('amount-input');
+            const currencySelect = document.getElementById('currency-select');
+            const calculationResult = document.getElementById('calculation-result');
+
+            tokenCalculatorForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const amount = parseFloat(amountInput.value);
+                const currency = currencySelect.value;
+
+                if (isNaN(amount) || amount <= 0) {
+                    calculationResult.innerText = 'Please enter a valid amount.';
+                    return;
+                }
+
+                let tokensReceived;
+                if (currency === 'USD') {
+                    tokensReceived = amount / 0.00001;
+                } else if (currency === 'SOL') {
+                    try {
+                        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+                        const data = await response.json();
+                        const solPriceInUsd = data.solana.usd;
+                        const amountInUsd = amount * solPriceInUsd;
+                        tokensReceived = amountInUsd / 0.00001;
+                    } catch (error) {
+                        console.error('Error fetching SOL price:', error);
+                        calculationResult.innerText = 'Error calculating tokens. Please try again.';
+                        return;
+                    }
+                }
+
+                calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString()} STUART tokens.`;
+            });
+
+            // Chart Toggle Logic
+            const toggleChartBtn = document.getElementById('toggle-chart-btn');
+            const priceChartContainer = document.getElementById('price-chart-container');
+            let tradingViewWidgetInitialized = false;
+
+            toggleChartBtn.addEventListener('click', () => {
+                if (!tradingViewWidgetInitialized) {
+                    initializeTradingViewWidget();
+                    tradingViewWidgetInitialized = true;
+                }
+                if (priceChartContainer.style.display === 'none') {
+                    priceChartContainer.style.display = 'block';
+                    toggleChartBtn.innerText = 'Hide Price Chart';
+                } else {
+                    priceChartContainer.style.display = 'none';
+                    toggleChartBtn.innerText = 'Show Price Chart';
+                }
+            });
+
+            // Initialize TradingView Widget
+            function initializeTradingViewWidget() {
+                new TradingView.widget({
+                    "width": "100%",
+                    "height": 500,
+                    "symbol": "BINANCE:SOLUSD",
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "en",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "withdateranges": true,
+                    "hide_side_toolbar": false,
+                    "allow_symbol_change": true,
+                    "container_id": "tradingview-widget"
+                });
+            }
+
+            // Scroll Animations for Sections (Updated)
+            const scrollAnimations = () => {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', debounce(scrollAnimations));
+            scrollAnimations(); // Initial call
+
+            // Debounce function to limit how often scrollAnimations is called
+            function debounce(func, wait = 10, immediate = true) {
+                let timeout;
+                return function () {
+                    const context = this, args = arguments;
+                    const later = function () {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    };
+                    const callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) func.apply(context, args);
+                };
+            }
+
     </script>
 
 </body>
