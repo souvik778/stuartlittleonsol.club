@@ -247,8 +247,11 @@ a:hover {
 /* Hide navigation links and show menu toggle on mobile */
 @media (max-width: 768px) {
     .topbar {
+        position: fixed;
+        top: 0;
         flex-wrap: wrap;
         height: auto;
+
     }
     .topbar h1 {
         font-size: 1.8rem;
