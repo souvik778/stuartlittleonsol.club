@@ -755,9 +755,9 @@ height: auto;
     }
 }
 
+
+
 /* Pie Chart Section */
-
-
 .piechart-section {
     width: 100%;
     padding: 150px 20px; /* Increased padding for larger size */
@@ -798,25 +798,77 @@ height: auto;
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
     animation: fadeInUp 2s ease forwards;
     height: 400px; /* Fixed height for better responsiveness */
-
 }
+
+/* Topbar and Navigation */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+}
+
+.menu-toggle {
+    display: none; /* Hidden on larger screens */
+    background-color: #FFD700;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.topbar nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.topbar nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -------------------- Mobile Styles Using Media Queries -------------------- */
+
 /* Tablets and Smaller Screens */
 @media (max-width: 992px) {
     .chart-container {
         max-width: 700px;
         height: 350px;
+        padding: 30px;
     }
 
-    .chart-legend li {
+    .piechart-section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .topbar nav ul {
+        gap: 15px;
+    }
+
+    .topbar nav ul li a {
         font-size: 14px;
-        margin: 5px 10px;
-        max-width: 130px;
-    }
-
-    .chart-legend li span {
-        width: 10px;
-        height: 10px;
-        margin-right: 6px;
     }
 
     .feature-card {
@@ -838,7 +890,7 @@ height: auto;
     .chart-container {
         max-width: 90%;
         height: 300px;
-        padding: 15px;
+        padding: 20px;
     }
 
     .chart-legend {
@@ -861,6 +913,28 @@ height: auto;
     .feature-card {
         width: 100%;
     }
+
+    /* Show Menu Toggle Button */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Hide Navigation Links by Default on Mobile */
+    .topbar nav {
+        display: none;
+        width: 100%;
+    }
+
+    .topbar nav ul {
+        flex-direction: column;
+        align-items: center;
+        background-color: #444;
+        padding: 10px 0;
+    }
+
+    .topbar nav.nav-active {
+        display: block;
+    }
 }
 
 /* Extra Small Devices */
@@ -877,7 +951,7 @@ height: auto;
     .chart-container {
         max-width: 100%;
         height: 250px;
-        padding: 10px;
+        padding: 15px;
     }
 
     .chart-legend li {
@@ -901,20 +975,6 @@ height: auto;
         font-size: 12px;
         background-color: rgba(0, 0, 0, 0.8);
         color: #FFFFFF;
-    }
-}
-
-/* ========================================
-   Animations (Optional)
-======================================== */
-
-/* Fade In Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
     }
 }
 
