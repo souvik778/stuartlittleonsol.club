@@ -281,18 +281,143 @@
                 </div>
             </section>
 
-            <!-- Contact Section -->
-            <section class="contact-section" id="contact">
-                <h2>Contact Us</h2>
-                <div class="sticky-note animate-on-scroll" aria-labelledby="contact-title">
-                    <h3 id="contact-title">Get in Touch</h3>
-                    <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
-                    <form id="contact-form" action="mailto:bitelder01@gmail.com" method="post" enctype="text/plain">
-                        <input type="text" placeholder="Your Name" required aria-label="Your Name">
-                        <input type="email" placeholder="Your Email" required aria-label="Your Email">
-                        <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
-                        <button type="submit">Send Message</button>
-                    </form>
+          <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <h2>Contact Us</h2>
+        <div class="sticky-note animate-on-scroll" aria-labelledby="contact-title">
+            <h3 id="contact-title">Get in Touch</h3>
+            <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
+            <form id="contact-form">
+                <!-- Name Field -->
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required aria-label="Your Name">
+                
+                <!-- Email Field -->
+                <label for="email">Your Email *</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+                
+                <!-- Message Field -->
+                <label for="message">Your Message *</label>
+                <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+                
+                <!-- CAPTCHA Field -->
+                <label for="captcha">What is 3 + 4? *</label>
+                <input type="text" id="captcha" name="captcha" placeholder="Your Answer" required aria-label="CAPTCHA">
+                
+                <!-- Hidden Honeypot Field -->
+                <div style="display: none;">
+                    <label for="website">Website:</label>
+                    <input type="text" id="website" name="website">
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Thank You Modal -->
+    <div id="thankYouModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Thank You!</h2>
+            <p>Your message has been prepared to send. Please check your email client to complete the process.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Form Handling and Modal -->
+    <script>
+        // Function to reconstruct the email address with enhanced obfuscation
+        function getEmail() {
+            // Define the email parts as reversed arrays
+            var user = [49,48,114,101,100,108,101,116,105,98]; // 'bitelder01' reversed
+            var domain = [108,105,97,109,103]; // 'gmail' reversed
+            var tld = [109,111,99]; // 'com' reversed
+
+            // Function to reverse the array and convert to characters
+            function decode(arr) {
+                return arr.reverse().map(function(charCode) {
+                    return String.fromCharCode(charCode);
+                }).join('');
+            }
+
+            var email = decode(user) + '@' + decode(domain) + '.' + decode(tld);
+            return email;
+        }
+
+        // Function to show the thank you modal
+        function showModal() {
+            var modal = document.getElementById("thankYouModal");
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("thankYouModal");
+            modal.style.display = "none";
+        }
+
+        // Event listener for closing the modal when clicking the close button
+        document.querySelector(".close-button").addEventListener("click", closeModal);
+
+        // Event listener for closing the modal when clicking outside the modal content
+        window.addEventListener("click", function(event) {
+            var modal = document.getElementById("thankYouModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Event listener for form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var message = document.getElementById('message').value.trim();
+            var captcha = document.getElementById('captcha').value.trim();
+            var website = document.getElementById('website').value.trim(); // Honeypot field
+
+            // Basic validation
+            if (name === "" || email === "" || message === "" || captcha === "") {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            // Validate CAPTCHA
+            if (captcha !== "7") { // Answer to "What is 3 + 4?"
+                alert("Incorrect CAPTCHA answer. Please try again.");
+                return;
+            }
+
+            // Check Honeypot Field
+            if (website !== "") {
+                // Detected as spam
+                alert("Spam detected.");
+                return;
+            }
+
+            // Encode form data for URL
+            var subject = encodeURIComponent("Contact Form Submission from " + name);
+            var body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message);
+
+            // Reconstruct the email address
+            var recipient = getEmail();
+
+            // Construct the mailto link
+            var mailtoLink = "mailto:" + recipient + "?subject=" + subject + "&body=" + body;
+
+            // Open the user's email client with the pre-filled email
+            window.location.href = mailtoLink;
+
+            // Show the thank you modal
+            showModal();
+
+            // Reset the form
+            this.reset();
+        });
+    </script>
                 </div>
             </section>
         </main>
