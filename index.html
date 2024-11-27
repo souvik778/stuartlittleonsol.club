@@ -1064,86 +1064,177 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
     
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Pie Chart using Chart.js with Enhanced Features
-            const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
-            const tokenomicsPieChart = new Chart(ctxPie, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Public Sale', 'Dev and Management', 'Presale', 'Marketing and Promotions', 'Airdrop (Contest)'],
-                    datasets: [{
-                        label: 'Token Distribution',
-                        data: [50, 15, 15, 15, 5], // Percentages
-                        backgroundColor: [
-                            'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
-                            'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
-                            'rgba(255, 99, 132, 0.9)',  // Presale - Red
-                            'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
-                            'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
-                        ],
-                        borderColor: [
-                            'rgba(255, 215, 0, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 2,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    const label = context.label || '';
-                                    const value = context.parsed || 0;
-                                    return `${label}: ${value}%`;
-                                }
-                            },
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleColor: '#FFD700',
-                            bodyColor: '#fff',
-                            borderColor: '#FFD700',
-                            borderWidth: 1,
-                            borderRadius: 10,
-                        },
-                        legend: {
-                            position: 'right',
-                            labels: {
-                                boxWidth: 30,
-                                padding: 15,
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#fff'
+       // script.js
+
+document.addEventListener('DOMContentLoaded', function () {
+    const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
+    let tokenomicsPieChart;
+
+    // Function to determine if the device is mobile based on viewport width
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Function to get chart options based on device type
+    function getChartOptions() {
+        if (isMobile()) {
+            return {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value}%`;
                             }
                         },
-                        title: {
-                            display: false,
-                            text: 'Token Distribution'
-                        },
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#FFD700',
+                        bodyColor: '#fff',
+                        borderColor: '#FFD700',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                    },
+                    legend: {
+                        position: 'bottom', // Change legend position for mobile
+                        labels: {
+                            boxWidth: 20,
+                            padding: 10,
+                            font: {
+                                size: 12, // Smaller font size for mobile
+                                weight: 'bold'
+                            },
+                            color: '#fff'
                         }
                     },
-                    cutout: '50%', // Creates the doughnut effect
-                    maintainAspectRatio: false
-                }
-            });
-        
-            // Mobile Navigation Toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const topbarNav = document.querySelector('.topbar nav');
-        
-            menuToggle.addEventListener('click', function () {
-                topbarNav.classList.toggle('nav-active');
-            });
-        });
-        </script>
+                    title: {
+                        display: false,
+                        text: 'Token Distribution'
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    }
+                },
+                cutout: '60%', // Slightly larger cutout for mobile
+                maintainAspectRatio: false
+            };
+        } else {
+            return {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                return `${label}: ${value}%`;
+                            }
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#FFD700',
+                        bodyColor: '#fff',
+                        borderColor: '#FFD700',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                    },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 30,
+                            padding: 15,
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#fff'
+                        }
+                    },
+                    title: {
+                        display: false,
+                        text: 'Token Distribution'
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    }
+                },
+                cutout: '50%', // Standard cutout for desktop
+                maintainAspectRatio: false
+            };
+        }
+    }
+
+    // Function to initialize or update the chart
+    function renderChart() {
+        const config = {
+            type: 'doughnut',
+            data: {
+                labels: ['Public Sale', 'Dev and Management', 'Presale', 'Marketing and Promotions', 'Airdrop (Contest)'],
+                datasets: [{
+                    label: 'Token Distribution',
+                    data: [50, 15, 15, 15, 5], // Percentages
+                    backgroundColor: [
+                        'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
+                        'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
+                        'rgba(255, 99, 132, 0.9)',  // Presale - Red
+                        'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
+                        'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
+                    ],
+                    borderColor: [
+                        'rgba(255, 215, 0, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 10
+                }]
+            },
+            options: getChartOptions()
+        };
+
+        if (tokenomicsPieChart) {
+            tokenomicsPieChart.destroy(); // Destroy existing chart before creating a new one
+        }
+
+        tokenomicsPieChart = new Chart(ctxPie, config);
+    }
+
+    // Initial chart rendering
+    renderChart();
+
+    // Re-render chart on window resize to adjust to new viewport size
+    window.addEventListener('resize', function () {
+        renderChart();
+    });
+
+    // Mobile Navigation Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const topbarNav = document.querySelector('.topbar nav');
+
+    menuToggle.addEventListener('click', function () {
+        topbarNav.classList.toggle('nav-active');
+    });
+});
+// Debounce function to limit how often a function can run
+function debounce(func, wait) {
+    let timeout;
+    return function () {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// Use debounce for the resize event
+window.addEventListener('resize', debounce(function () {
+    renderChart();
+}, 300));
+
+</script>
+
 </body>
 </html>
