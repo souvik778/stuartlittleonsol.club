@@ -797,145 +797,123 @@ height: auto;
     animation: fadeInUp 2s ease forwards;
     height: 400px; /* Fixed height for better responsiveness */
 }
-/* Existing Pie Chart Section Styles */
-.piechart-section {
-    width: 100%;
-    padding: 150px 20px; /* Increased padding for larger size */
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: fadeIn 2s ease forwards;
-    position: relative;
-}
-
-.piechart-section h2 {
-    color: #FFD700;
-    margin-bottom: 50px;
-    font-size: 2.5rem;
-    text-shadow: 0 0 15px #FFD700;
-    animation: slideInFromRight 1.5s ease forwards;
-}
-
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
+/* Tablets and Smaller Screens */
+@media (max-width: 992px) {
+    .chart-container {
+        max-width: 700px;
+        height: 350px;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+
+    .chart-legend li {
+        font-size: 14px;
+        margin: 5px 10px;
+        max-width: 130px;
+    }
+
+    .chart-legend li span {
+        width: 10px;
+        height: 10px;
+        margin-right: 6px;
+    }
+
+    .feature-card {
+        width: 45%;
     }
 }
 
-.chart-container {
-    width: 100%;
-    max-width: 900px; /* Increased max-width */
-    position: relative;
-    padding: 40px;
-    background-color: transparent; /* Made transparent */
-    border-radius: 25px;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
-    animation: fadeInUp 2s ease forwards;
-    height: 400px; /* Fixed height for better responsiveness */
-}
-
-/* Fade In Up Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive Styles for Mobile Devices */
+/* Mobile Phones */
 @media (max-width: 768px) {
     .piechart-section {
-        padding: 100px 15px; /* Reduced padding for smaller screens */
+        padding: 80px 15px;
     }
 
     .piechart-section h2 {
-        font-size: 2rem; /* Reduced font size */
-        margin-bottom: 30px; /* Reduced margin */
-        text-align: center; /* Centered text */
+        font-size: 2rem;
+        margin-bottom: 30px;
     }
 
     .chart-container {
-        max-width: 90%; /* Adjusted max-width */
-        padding: 30px; /* Reduced padding */
-        height: 350px; /* Reduced height */
+        max-width: 90%;
+        height: 300px;
+        padding: 15px;
     }
 
-    /* Adjust Legend Styles */
-    .chart-container .chart-legend {
-        font-size: 14px; /* Increased font size for better readability */
-        color: #FFFFFF; /* High contrast color */
-        text-align: center; /* Centered legend */
+    .chart-legend {
+        flex-direction: column;
+        align-items: center;
     }
 
-    /* Ensure Canvas Resizes Properly */
-    .chart-container canvas {
-        width: 100% !important;
-        height: auto !important;
+    .chart-legend li {
+        font-size: 14px;
+        margin: 3px 0;
+        max-width: 120px;
+    }
+
+    .chart-legend li span {
+        width: 10px;
+        height: 10px;
+        margin-right: 6px;
+    }
+
+    .feature-card {
+        width: 100%;
     }
 }
 
+/* Extra Small Devices */
 @media (max-width: 480px) {
     .piechart-section {
-        padding: 80px 10px; /* Further reduced padding */
+        padding: 60px 10px;
     }
 
     .piechart-section h2 {
-        font-size: 1.8rem; /* Further reduced font size */
-        margin-bottom: 20px; /* Further reduced margin */
+        font-size: 1.8rem;
+        margin-bottom: 20px;
     }
 
     .chart-container {
-        max-width: 100%; /* Full width on very small screens */
-        padding: 20px; /* Further reduced padding */
-        height: 300px; /* Further reduced height */
+        max-width: 100%;
+        height: 250px;
+        padding: 10px;
     }
 
-    /* Enhance Legend Visibility */
-    .chart-container .chart-legend {
-        font-size: 12px; /* Adjusted font size */
-        color: #FFFFFF; /* Ensure high contrast */
+    .chart-legend li {
+        font-size: 12px;
+        margin: 2px 0;
+        max-width: 100px;
     }
 
-    /* Optional: Adjust Tooltip Styles (if applicable) */
-    .chart-container .chart-tooltip {
-        font-size: 12px; /* Smaller tooltip text */
-        background-color: rgba(0, 0, 0, 0.8); /* Darker background for contrast */
-        color: #FFFFFF; /* White text for readability */
+    .chart-legend li span {
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
     }
 
-    /* Ensure Canvas Resizes Properly */
-    .chart-container canvas {
-        width: 100% !important;
-        height: auto !important;
+    .feature-card {
+        width: 100%;
+    }
+
+    /* Optional: Adjust tooltip styles if applicable */
+    .chart-tooltip {
+        font-size: 12px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #FFFFFF;
     }
 }
 
-/* Optional: General Enhancements for Better Label Visibility */
-.chart-container .chart-legend li {
-    list-style: none; /* Remove default list styling */
-    margin-bottom: 5px; /* Space between legend items */
-    font-weight: bold; /* Bold text for emphasis */
-}
+/* ========================================
+   Animations (Optional)
+======================================== */
 
-.chart-container .chart-legend li span {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-right: 8px;
-    background-color: currentColor; /* Use the current text color for the legend marker */
-    border-radius: 50%;
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
-
 
 /* Features Section */
 .features-section {
