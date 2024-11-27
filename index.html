@@ -16,7 +16,7 @@
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -238,6 +238,88 @@
                 </div>
             </section>
             
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Pie Chart using Chart.js with Enhanced Features
+    const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
+    const tokenomicsPieChart = new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Public Sale', 'Dev and Management', 'Presale', 'Marketing and Promotions', 'Airdrop (Contest)'],
+            datasets: [{
+                label: 'Token Distribution',
+                data: [50, 15, 15, 15, 5], // Percentages
+                backgroundColor: [
+                    'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
+                    'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
+                    'rgba(255, 99, 132, 0.9)',  // Presale - Red
+                    'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
+                    'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
+                ],
+                borderColor: [
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 2,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            return `${label}: ${value}%`;
+                        }
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#FFD700',
+                    bodyColor: '#fff',
+                    borderColor: '#FFD700',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 30,
+                        padding: 15,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        color: '#fff'
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Token Distribution'
+                },
+                animation: {
+                    animateRotate: true,
+                    animateScale: true
+                }
+            },
+            cutout: '50%', // Creates the doughnut effect
+            maintainAspectRatio: false
+        }
+    });
+
+    // Mobile Navigation Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const topbarNav = document.querySelector('.topbar nav');
+
+    menuToggle.addEventListener('click', function () {
+        topbarNav.classList.toggle('nav-active');
+    });
+});
+</script>
 
             <!-- Features Section -->
             <section class="features-section animate-on-scroll" id="features">
