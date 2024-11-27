@@ -903,13 +903,7 @@ height: auto;
         color: #FFFFFF;
     }
 }
-/* Add this CSS to your stylesheet */
-@media (max-width: 768px) {
-    .chartjs-legend li span {
-        white-space: pre-wrap; /* Allows text to wrap */
-        line-height: 1.2;      /* Adjusts line spacing */
-    }
-}
+
 /* ========================================
    Animations (Optional)
 ======================================== */
@@ -1885,5 +1879,12 @@ body {
     /* Hide any popup backdrops or overlays */
     .popup-backdrop {
         display: none !important;
+    }
+}
+/* Add this CSS to your stylesheet */
+@media (max-width: 768px) {
+    .chartjs-legend li span {
+        white-space: pre-wrap; /* Allows text to wrap */
+        line-height: 1.2;      /* Adjusts line spacing */
     }
 }
