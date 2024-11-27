@@ -16,6 +16,7 @@
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -147,7 +148,7 @@
 </section>
 <!-- Mobile Presale Section -->
 <div class="mobile-presale-section">
-    <h2>Presale Information</h2>
+    <h2>Token Information</h2>
     <h1>Join the StuartLittleOnSol Token launching on December 20th!</h1>
     <div class="presale-content">
         <!-- Include the content from the popup here -->
@@ -236,6 +237,50 @@
                     <canvas id="tokenomics-piechart"></canvas>
                 </div>
             </section>
+             <!-- JavaScript for Pie Chart -->
+    <script>
+        var ctx = document.getElementById('tokenomics-piechart').getContext('2d');
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Development', 'Management', 'Marketing', 'Support'],
+                datasets: [{
+                    data: [30, 20, 25, 25],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#FFFFFF',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#FFFFFF',
+                        bodyColor: '#FFFFFF',
+                        borderColor: '#FFD700',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
             <!-- Features Section -->
             <section class="features-section animate-on-scroll" id="features">
@@ -268,7 +313,7 @@
                     </div>
                     <div class="faq-item">
                         <h3>How can I participate in the presale?</h3>
-                        <p>You can participate in the presale by following the instructions on our presale window.</p>
+                        <p>You can participate in the presale by following the instructions on our Token Information window.</p>
                     </div>
                     <div class="faq-item">
                         <h3>What blockchain is StuartLittleOnSol built on?</h3>
