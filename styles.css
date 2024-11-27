@@ -756,6 +756,8 @@ height: auto;
 }
 
 /* Pie Chart Section */
+
+
 .piechart-section {
     width: 100%;
     padding: 150px 20px; /* Increased padding for larger size */
@@ -796,6 +798,7 @@ height: auto;
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
     animation: fadeInUp 2s ease forwards;
     height: 400px; /* Fixed height for better responsiveness */
+
 }
 /* Tablets and Smaller Screens */
 @media (max-width: 992px) {
@@ -900,7 +903,13 @@ height: auto;
         color: #FFFFFF;
     }
 }
-
+/* Add this CSS to your stylesheet */
+@media (max-width: 768px) {
+    .chartjs-legend li span {
+        white-space: pre-wrap; /* Allows text to wrap */
+        line-height: 1.2;      /* Adjusts line spacing */
+    }
+}
 /* ========================================
    Animations (Optional)
 ======================================== */
