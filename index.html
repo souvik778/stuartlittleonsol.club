@@ -30,7 +30,7 @@
     <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1>StuartLittleOnSol</h1>
-        <div class="menu-toggle">☰</div>
+        <div class="menu-toggle" aria-label="Toggle Navigation">☰</div>
         <nav class="nav-links">
             <a href="#features">Features</a>
             <a href="#tokenomics">Tokenomics</a>
@@ -38,15 +38,15 @@
             <a href="#faq">FAQ</a>
             <a href="#contact">Contact</a>
             <a href="creatememe.html">Create Meme</a>
-
+    
             <!-- Social Links -->
             <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
                 <i class="fab fa-linktree"></i>
                 <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
             </a>
-           
         </nav>
     </header>
+    
 
     <!-- Main Container -->
     <div class="main-container">
@@ -297,7 +297,38 @@
             const calculationResult = document.getElementById('calculation-result');
             const toggleChartBtn = document.getElementById('toggle-chart-btn');
             const chartContainer = document.getElementById('price-chart-container');
+            const navLinks = document.querySelector('.nav-links');
+            
+         
+    if (menuToggle && navLinks) {
+        // Add a click event listener to the hamburger menu
+        menuToggle.addEventListener('click', () => {
+            // Toggle the 'active' class on the navigation links container
+            navLinks.classList.toggle('active');
 
+            // Toggle the 'open' class on the hamburger icon for visual feedback
+            menuToggle.classList.toggle('open');
+
+            // Toggle 'no-scroll' class on body to prevent background scroll
+            document.body.classList.toggle('no-scroll');
+        });
+        
+
+        // Optional: Close the menu when a navigation link is clicked (improves UX)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('open');
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    } else {
+        console.error('Menu toggle button or navigation links container not found.');
+    }
+            
+            
+            
+            
             // =============================
             //      PRESALE POPUP CODE
             // =============================
@@ -664,16 +695,8 @@
             });
 
          
-            // =============================
-            //    MOBILE NAVIGATION TOGGLE
-            // =============================
-          
-const navLinks = document.querySelector('.nav-links');
 
-menuToggle.addEventListener('click', function () {
-    navLinks.classList.toggle('active');
-    menuToggle.classList.toggle('open');
-});
+
 
             // =============================
             //    TOKEN CALCULATOR CODE
@@ -942,6 +965,8 @@ menuToggle.addEventListener('click', function () {
                 }
             });
         });
+    
+        
     </script>
 </body>
 </html>
