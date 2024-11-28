@@ -212,7 +212,9 @@
             </section>
            
             <!-- Pie Chart Section -->
-            <section class="piechart-section" id="piechart">
+            <div id="custom-legend" class="chart-legend">
+
+            <section class="piechart-section" id="piechart"></div>
                 <h2>Token Distribution</h2>
                 <div class="chart-container">
                     <canvas id="tokenomics-piechart"></canvas>
@@ -664,10 +666,10 @@ animateParticles();
                         legend: {
                             position: 'right',
                             labels: {
-                                boxWidth: 30,
-                                padding: 15,
+                                boxWidth: 15,
+                                padding: 20,
                                 font: {
-                                    size: 14,
+                                    size: 12,
                                     weight: 'bold'
                                 },
                                 color: '#fff'
@@ -988,7 +990,29 @@ document.addEventListener('DOMContentLoaded', () => {
         // Adjust size on window resize
         window.addEventListener('resize', adjustPopupSize);
     }
-});
+});// Function to generate custom legend
+function generateCustomLegend(chart, legendContainerId) {
+    const legendContainer = document.getElementById(legendContainerId);
+    const labels = chart.data.labels;
+    const backgroundColors = chart.data.datasets[0].backgroundColor;
+    
+    let legendHTML = '<ul>';
+    labels.forEach((label, index) => {
+        legendHTML += `
+            <li>
+                <span style="background-color: ${backgroundColors[index]}"></span> 
+                ${label.length > 15 ? label.substring(0, 15) + '...' : label}
+            </li>
+        `;
+    });
+    legendHTML += '</ul>';
+    
+    legendContainer.innerHTML = legendHTML;
+}
+
+// Generate the custom legend after the chart is created
+generateCustomLegend(tokenomicsPieChart, 'custom-legend');
+
 
     </script>
     
