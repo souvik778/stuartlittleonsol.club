@@ -1510,6 +1510,7 @@ footer {
         padding: 20px 15px; /* Reduce padding */
         max-height: 90vh; /* Limit height */
         overflow-y: auto; /* Enable scrolling if content overflows */
+        position: fixed;
     }
 
     .presale-popup .close-btn {
@@ -1545,7 +1546,7 @@ footer {
 }
 
 .presale-section .social-links a:hover {
-    transform: rotate(360deg);
+    transform:scale3d();
 }
 
 /* Add more subtle animations to presale-section elements */
@@ -1622,6 +1623,7 @@ footer {
     .topbar nav a {
         padding: 8px 15px;
         font-size: 0.9rem;
+        position:fixed;
     }
 
     .topbar h1 {
