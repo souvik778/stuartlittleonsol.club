@@ -1617,6 +1617,26 @@ footer {
     }
 }
 /* Media Queries for Responsive Design */
+.chart-legend {
+    max-height: 200px; /* Adjust as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-top: 20px; /* Space between chart and legend */
+}
+
+.chart-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chart-legend li {
+    margin-bottom: 8px;
+}
+
+.chart-legend li span {
+    width: 12px;
+    height: 12px;
+}
 
 /* Mobile Phones (up to 480px) */
 @media (max-width: 480px) {
@@ -1847,13 +1867,5 @@ body {
         max-height: 150px;
         font-size: 0.9rem;
     }
-
-    .chart-legend li {
-        margin-bottom: 8px;
-    }
-
-    .chart-legend li span {
-        width: 12px;
-        height: 12px;
-    }
+    
 }
