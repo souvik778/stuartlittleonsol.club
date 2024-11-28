@@ -58,7 +58,7 @@ a:hover {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
     padding: 15px 30px;
-    position: fixed;
+    position: flex;
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -407,16 +407,43 @@ a:hover {
     font-size: 1rem;
 }
 
-/* Adjust sticky note padding and font size */
-.sticky-note {
-    padding: 20px 25px;
-    font-size: 1rem;
+.presale-popup {
+    /* Initial styles */
+    display: none;
+    /* Other styles */
 }
 
-.sticky-note h3 {
-    font-size: 1.5rem;
+.presale-popup.active {
+    display: flex;
+    animation: fadeIn 0.5s forwards;
 }
 
+.presale-popup.minimize {
+    animation: fadeOut 0.5s forwards;
+}
+
+.presale-popup.maximize {
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.9); }
+}
+
+.presale-minimized {
+    display: none;
+    /* Other styles */
+}
+
+.presale-minimized.active {
+    display: block;
+}
 
 /* Adjust presale popup position to prevent overlap with top bar */
 .presale-popup {
@@ -1398,16 +1425,18 @@ footer {
     padding: 60px 80px;
     border-radius: 25px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-    z-index: 1100;
+    z-index: 4000;
     transition: opacity 0.6s ease, transform 0.6s ease;
     opacity: 0;
     pointer-events: none;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: calc(100vh - 100px); /* Prevent overflow */
+    overflow-y: auto;
     /* Removed backdrop-filter */
-    /* backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); */
+     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
 }
 
 .presale-popup.active {
