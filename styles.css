@@ -446,10 +446,12 @@ a:hover {
         top: 0;
         flex-wrap: wrap;
         height: auto;
+        z-index: 999;
 
     }
     .topbar h1 {
         font-size: 1.8rem;
+        z-index: 999;
     }
 
     .topbar nav {
