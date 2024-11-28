@@ -270,9 +270,7 @@ a:hover {
         z-index: 999;
     }
 
-    .topbar.nav-active nav {
-        display: flex;
-    }
+ 
 
     .topbar .menu-toggle {
         display: block;
@@ -1868,4 +1866,32 @@ body {
         font-size: 0.9rem;
     }
     
+}
+/* For mobile devices */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        background-color: #333; /* Example background */
+        position: absolute;
+        top: 60px; /* Adjust based on your header height */
+        right: 0;
+        width: 100%;
+        /* Add transition for smooth opening */
+        transition: max-height 0.3s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .nav-links.active {
+        max-height: 500px; /* Adjust as needed */
+    }
+
+    .nav-links a {
+        padding: 15px;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #444;
+        /* Add additional styling as needed */
+    }
 }
