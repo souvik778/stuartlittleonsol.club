@@ -312,6 +312,93 @@ a:hover {
         padding: 12px 15px;
     }
 }
+/* =============================
+   Additional Mobile Enhancements for Ultra-Small Devices (≤375px)
+   ============================= */
+
+   @media (max-width: 375px) {
+    /* 1. Further Reduce Topbar Padding and Font Size */
+    .topbar {
+        padding: 8px 15px;
+    }
+
+    .topbar h1 {
+        font-size: 1.8rem; /* Reduce font size for smaller screens */
+        padding: 3px 5px;
+    }
+
+    /* 2. Ensure Hamburger Menu is Always Visible and Positioned Correctly */
+    .menu-toggle {
+        position: absolute; /* Position absolutely within the topbar */
+        right: 15px; /* Align to the right with some spacing */
+        top: 50%; /* Vertically center the icon */
+        transform: translateY(-50%); /* Adjust for perfect centering */
+        font-size: 1.8rem; /* Slightly smaller font size */
+        padding: 5px;
+    }
+
+    /* 3. Optimize Navigation Links for Small Screens */
+    .nav-links {
+        top: 50px; /* Adjust based on reduced topbar height */
+        padding: 8px 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .nav-links a {
+        padding: 10px 15px; /* Reduce padding */
+        font-size: 0.9rem; /* Slightly smaller font size */
+    }
+
+    /* 4. Implement Full-Screen Overlay for Extremely Small Screens */
+    .nav-links.active {
+        position: fixed; /* Fix the menu to the viewport */
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.95);
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+        animation: fadeInOverlay 0.3s ease forwards;
+    }
+
+    @keyframes fadeInOverlay {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* 5. Enhance Click Targets and Prevent Text Convolution */
+    .nav-links a {
+        width: 80%; /* Ensure links don't span the entire width */
+        margin: 8px 0; /* Add vertical spacing between links */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 6. Adjust Icon and Image Sizes Within Navigation Links */
+    .nav-links a i,
+    .nav-links a img {
+        width: 16px; /* Slightly smaller icons */
+        height: 16px;
+        margin-left: 4px; /* Reduce margin */
+    }
+
+    /* 7. Maintain Smooth Transitions */
+    .nav-links,
+    .nav-links a {
+        transition: all 0.3s ease;
+    }
+}
 
 /* Main Container */
 .main-container {
