@@ -37,27 +37,7 @@
 
            
 
-            <!-- JavaScript for Modal -->
-            <script>
-                function showAnnouncement(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    const modal = document.getElementById('announcement-modal');
-                    modal.style.display = 'block';
-                }
-
-                function hideAnnouncement() {
-                    const modal = document.getElementById('announcement-modal');
-                    modal.style.display = 'none';
-                }
-
-                // Optional: Close modal when clicking outside of it
-                window.addEventListener('click', (event) => {
-                    const modal = document.getElementById('announcement-modal');
-                    if (event.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-            </script>
+ 
 
             <!-- Social Links -->
             <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
@@ -78,9 +58,9 @@
             <!-- Presale Information Section -->
             <section class="presale-section" id="presale">
                 <h2>Presale Information</h2>
-                <p><strong>Presale Target:</strong> 50 SOL</p>
+                <p><strong>Presale Softcap:</strong> 50 SOL</p>
                 <p><strong>Token Live:</strong> After presale ends</p>
-                <p><strong>Airdrop:</strong> All tokens will be airdropped to respective wallets by 12 am EST (same day)</p>
+                <p><strong>Airdrop:</strong> All tokens will be airdropped following week to respective wallets by 12 am EST (next week)</p>
                 <p><strong>Contract Address:</strong></p>
                 <div class="contract-address">
                     
@@ -94,6 +74,10 @@
                 <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
                 <p>Follow us on socials to stay updated:</p>
                 <div class="social-links">
+                    <a href="https://www.instagram.com/stuartlittle_onsol/?next=%2F" target="_blank" aria-label="instagram">
+                        <i class="fab fa-linktree"></i>
+                        <img src="instagram.jpeg" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
+                    </a>
                     <a href="https://x.com/lil_stuart_sol" target="_blank" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                         <img src="x.com.jpeg" alt="X.com Logo" style="width: 20px; height: 20px; margin-left: 5px;">
@@ -220,11 +204,13 @@
                         <h3>Airdrop (Contest)</h3>
                         <p>5% of total supply allocated for airdrops and contests.</p>
                     </div>
+                   
                 </div>
-                <!-- King Image within Tokenomics Section -->
-                <img src="king.png" alt="King Image" class="king-image-tokenomics" id="king-image-tokenomics">
-            </section>
+               <!-- King Image within Tokenomics Section -->
+ <img src="king.png" alt="King Image" class="king-image-tokenomics" id="king-image-tokenomics">
 
+            </section>
+           
             <!-- Pie Chart Section -->
             <section class="piechart-section" id="piechart">
                 <h2>Token Distribution</h2>
@@ -371,9 +357,7 @@
                 });
             };
 
-            // Close button event
-            presaleCloseBtn.addEventListener("click", hidePresale);
-
+            
             // Minimized button click event
             presaleMinimizedBtn.addEventListener('click', () => {
                 presalePopup.style.display = 'flex';
@@ -387,10 +371,34 @@
 
                 presaleMinimized.style.display = 'none';
             });
+                        // Function to maximize the popup from minimized state
+                        const maximizePresale = () => {
+                presalePopup.style.display = 'flex';
+                presalePopup.classList.add('maximize');
+
+                presalePopup.addEventListener('animationend', function handler() {
+                    presalePopup.classList.remove('maximize');
+                    presalePopup.classList.add('active');
+                    presalePopup.removeEventListener('animationend', handler);
+                });
+
+                presaleMinimized.style.display = 'none';
+            };
+            //Close button event
+            presaleCloseBtn.addEventListener("click", hidePresale);
+            // Minimized button click event
+            presaleMinimizedBtn.addEventListener('click', maximizePresale);
+
+
 
             // Close popup when clicking outside of it (optional)
             window.addEventListener("click", (e) => {
-                if (e.target === presalePopup) {
+                if (
+                    presalePopup.classList.contains('active') && // Ensure popup is active
+                    !presalePopup.contains(e.target) && // Click not inside popup
+                    !presaleMinimized.contains(e.target) && // Click not on minimized button
+                    e.target !== presaleMinimizedBtn // Click not on the minimized button itself
+                ) {
                     hidePresale();
                 }
             });
@@ -412,8 +420,11 @@
 
             const observer = new IntersectionObserver(observerCallback, observerOptions);
             const presaleSection = document.getElementById("presale");
+            if (presaleSection) {
             observer.observe(presaleSection);
-// Interactive Background Script
+            }
+        
+            // Interactive Background Script
 const canvas = document.getElementById('interactive-background');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
