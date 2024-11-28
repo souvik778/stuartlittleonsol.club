@@ -376,40 +376,58 @@ a:hover {
     font-size: 1rem;
 }
 
-/* Adjust sticky note padding and font size */
-.sticky-note {
-    padding: 20px 25px;
-    font-size: 1rem;
-}
-
-.sticky-note h3 {
-    font-size: 1.5rem;
-}
 
 
-/* Adjust presale popup position to prevent overlap with top bar */
+
+/* Presale Popup Styles */
 .presale-popup {
-top: 80px; /* Position below the top bar */
-transform: translateX(-50%) scale(0.8);
-max-height: calc(100vh - 100px); /* Prevent overflow */
-overflow-y: auto;
-padding: 30px 40px; /* Reduce padding */
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
 }
 
-/* Adjust close button size and position */
-.presale-popup .close-btn {
-font-size: 2rem;
-top: 10px;
-right: 15px;
+.popup-content {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+    width: 80vw; /* Responsive width */
 }
 
-/* Adjust presale popup heading and text sizes */
-.presale-popup h2 {
-font-size: 1.8rem;
+/* Minimize and Maximize Animations */
+.presale-popup.minimize {
+    animation: minimizePopup 0.5s forwards;
 }
 
-.presale-popup p {
-font-size: 1rem;
+.presale-popup.maximize {
+    animation: maximizePopup 0.5s forwards;
+}
+
+@keyframes minimizePopup {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+@keyframes maximizePopup {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Close Button Hover Effect */
+.close-btn:hover {
+    color: #FFD700;
+    cursor: pointer;
 }
 
 /* Ensure token image fits within popup */
@@ -1108,61 +1126,7 @@ height: auto;
     text-shadow: 0 0 15px #FFD700;
 }
 
-/* Sticky Note Styling */
-.sticky-note {
-    position: relative;
-    margin: 0 auto;
-    padding: 35px 45px;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.1); /* Increased opacity */
-    border-radius: 20px;
-    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3),
-        0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    line-height: 1.6;
-    font-size: 1.3rem;
-    color: #fff;
-    transform: rotate(-2deg);
-    z-index: 800;
-    animation: fadeInUp 2s ease forwards;
-}
 
-.sticky-note::before {
-    content: "";
-    position: absolute;
-    top: -35px;
-    left: 40px;
-    font-size: 3rem;
-    transform: rotate(-15deg);
-    z-index: 10;
-    background: url('sticky-note-icon.png') no-repeat center center;
-    background-size: contain;
-    width: 40px;
-    height: 40px;
-}
-
-.sticky-note::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-size: 100% 30px;
-    pointer-events: none;
-}
-
-.sticky-note ul {
-    list-style-type: disc;
-    padding-left: 50px;
-    margin-top: 15px;
-}
-
-.sticky-note li {
-    margin-bottom: 12px;
-    font-weight: 500;
-}
 
 /* Contact Form Styles */
 #contact-form {
@@ -1602,14 +1566,7 @@ footer {
         font-size: 1rem;
     }
 
-    .sticky-note {
-        padding: 20px 25px;
-        font-size: 1rem;
-    }
-
-    .sticky-note h3 {
-        font-size: 1.5rem;
-    }
+   
 }@media (max-width: 768px) {
     .presale-section {
         background-color: rgba(255, 215, 0, 0.1); /* Adjusted background for presale section */
