@@ -16,7 +16,6 @@
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -83,7 +82,7 @@
             <!-- Presale Information Section -->
             <section class="presale-section" id="presale">
                 <h2>Presale Information</h2>
-                <p><strong>Presale Softcap:</strong> 50 SOL</p>
+                <p><strong>Presale Target:</strong> 50 SOL</p>
                 <p><strong>Token Live:</strong> After presale ends</p>
                 <p><strong>Airdrop:</strong> All tokens will be airdropped to respective wallets by 12 am EST (same day)</p>
                 <p><strong>Contract Address:</strong></p>
@@ -148,8 +147,8 @@
 </section>
 <!-- Mobile Presale Section -->
 <div class="mobile-presale-section">
-    <h2>Token Information</h2>
-    <h1>Join the StuartLittleOnSol Token launching on December 20th!</h1>
+    <h2>Presale Information</h2>
+    <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
     <div class="presale-content">
         <!-- Include the content from the popup here -->
 
@@ -162,8 +161,8 @@
             <!-- Presale Popup (Initially Hidden) -->
             <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
                 <button class="close-btn" id="presale-close" aria-label="Close Presale Popup">&times;</button>
-                <h2 id="presale-title">Token Launch</h2>
-                <p>Join the StuartLittleOnSol Token launching on December 20th!</p>
+                <h2 id="presale-title">Presale Launch</h2>
+                <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
 
                 <!-- Countdown Timer -->
                 <div class="countdown" id="countdown">
@@ -192,7 +191,7 @@
             <!-- Minimized Presale Popup -->
             <div class="presale-minimized" id="presale-minimized">
                 <button id="presale-minimized-btn" aria-label="Open Presale Popup">
-                    Token launch info
+                    Presale
                 </button>
             </div>
             <br><br>
@@ -237,8 +236,6 @@
                     <canvas id="tokenomics-piechart"></canvas>
                 </div>
             </section>
-            
-   
 
             <!-- Features Section -->
             <section class="features-section animate-on-scroll" id="features">
@@ -271,7 +268,7 @@
                     </div>
                     <div class="faq-item">
                         <h3>How can I participate in the presale?</h3>
-                        <p>You can participate in the presale by following the instructions on our Token Information window.</p>
+                        <p>You can participate in the presale by following the instructions on our presale window.</p>
                     </div>
                     <div class="faq-item">
                         <h3>What blockchain is StuartLittleOnSol built on?</h3>
@@ -283,120 +280,23 @@
                     </div>
                 </div>
             </section>
-   <!-- Contact Section -->
-   <section class="contact-section" id="contact">
-    <h2>Contact Us</h2>
-    <div class="sticky-note animate-on-scroll" aria-labelledby="contact-title">
-        <h3 id="contact-title">Get in Touch</h3>
-        <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
-        <form id="contact-form" action="https://formspree.io/f/mvgowbvp" method="POST" novalidate>
-            <!-- Name Field -->
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required aria-label="Your Name">
-            
-            <!-- Email Field -->
-            <label for="email">Your Email *</label>
-            <input type="email" id="email" name="_replyto" placeholder="Your Email" required aria-label="Your Email">
-            
-            <!-- Message Field -->
-            <label for="message">Your Message *</label>
-            <textarea id="message" name="message" placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
-            
-            <!-- CAPTCHA Field (Optional) -->
-            <!-- If you wish to integrate reCAPTCHA or another CAPTCHA service, you can add it here -->
-            
-            <!-- Hidden Honeypot Field -->
-            <div style="display: none;">
-                <label for="website">Website:</label>
-                <input type="text" id="website" name="website">
-            </div>
-            
-            <!-- Submit Button -->
-            <button type="submit">Send Message</button>
-        </form>
+
+            <!-- Contact Section -->
+            <section class="contact-section" id="contact">
+                <h2>Contact Us</h2>
+                <div class="sticky-note animate-on-scroll" aria-labelledby="contact-title">
+                    <h3 id="contact-title">Get in Touch</h3>
+                    <p>If you have any questions, feedback, or just want to say hi, feel free to reach out to us using the form below:</p>
+                    <form id="contact-form" action="mailto:bitelder01@gmail.com" method="post" enctype="text/plain">
+                        <input type="text" placeholder="Your Name" required aria-label="Your Name">
+                        <input type="email" placeholder="Your Email" required aria-label="Your Email">
+                        <textarea placeholder="Your Message" rows="5" required aria-label="Your Message"></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </main>
     </div>
-</section>
-
-
-
-<!-- JavaScript for Form Handling and Modal -->
-<script>
-    // Function to show the thank you modal
-    function showModal() {
-        var modal = document.getElementById("thankYouModal");
-        modal.style.display = "flex";
-        modal.setAttribute("aria-hidden", "false");
-    }
-
-    // Function to close the modal
-    function closeModal() {
-        var modal = document.getElementById("thankYouModal");
-        modal.style.display = "none";
-        modal.setAttribute("aria-hidden", "true");
-    }
-
-    // Event listener for closing the modal when clicking the close button
-    document.querySelector(".close-button").addEventListener("click", closeModal);
-
-    // Event listener for closing the modal when clicking outside the modal content
-    window.addEventListener("click", function(event) {
-        var modal = document.getElementById("thankYouModal");
-        if (event.target == modal) {
-            closeModal();
-        }
-    });
-
-    // Event listener for closing the modal when pressing the Escape key
-    window.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            closeModal();
-        }
-    });
-
-    // Event listener for form submission
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-        // Show the thank you modal after successful submission
-        showModal();
-
-        // Optionally, you can track form submissions or perform other actions here
-    });
-
-    // Optional: Handle form submission errors
-    // To handle errors, you would need to submit the form via AJAX
-    // Here's an example using Fetch API:
-
-    /*
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
-
-        var form = this;
-        var formData = new FormData(form);
-
-        fetch(form.action, {
-            method: form.method,
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(function(response) {
-            if (response.ok) {
-                showModal();
-                form.reset();
-            } else {
-                response.json().then(function(data) {
-                    if (Object.hasOwn(data, 'errors')) {
-                        alert(data["errors"].map(error => error["message"]).join(", "));
-                    } else {
-                        alert("Oops! There was a problem submitting your form.");
-                    }
-                });
-            }
-        }).catch(function(error) {
-            alert("Oops! There was a problem submitting your form.");
-        });
-    });
-    */
-</script>
 
     <!-- Disclaimer Section -->
     <section class="disclaimer-section" id="disclaimer">
@@ -1063,178 +963,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+    </script>
     
-       // script.js
-
-document.addEventListener('DOMContentLoaded', function () {
-    const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
-    let tokenomicsPieChart;
-
-    // Function to determine if the device is mobile based on viewport width
-    function isMobile() {
-        return window.innerWidth <= 768;
-    }
-
-    // Function to get chart options based on device type
-    function getChartOptions() {
-        if (isMobile()) {
-            return {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                return `${label}: ${value}%`;
-                            }
-                        },
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: '#FFD700',
-                        bodyColor: '#fff',
-                        borderColor: '#FFD700',
-                        borderWidth: 1,
-                        borderRadius: 10,
-                    },
-                    legend: {
-                        position: 'bottom', // Change legend position for mobile
-                        labels: {
-                            boxWidth: 20,
-                            padding: 10,
-                            font: {
-                                size: 12, // Smaller font size for mobile
-                                weight: 'bold'
-                            },
-                            color: '#fff'
-                        }
-                    },
-                    title: {
-                        display: false,
-                        text: 'Token Distribution'
-                    },
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    }
-                },
-                cutout: '60%', // Slightly larger cutout for mobile
-                maintainAspectRatio: false
-            };
-        } else {
-            return {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                return `${label}: ${value}%`;
-                            }
-                        },
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: '#FFD700',
-                        bodyColor: '#fff',
-                        borderColor: '#FFD700',
-                        borderWidth: 1,
-                        borderRadius: 10,
-                    },
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            boxWidth: 30,
-                            padding: 15,
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: '#fff'
-                        }
-                    },
-                    title: {
-                        display: false,
-                        text: 'Token Distribution'
-                    },
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    }
-                },
-                cutout: '50%', // Standard cutout for desktop
-                maintainAspectRatio: false
-            };
-        }
-    }
-
-    // Function to initialize or update the chart
-    function renderChart() {
-        const config = {
-            type: 'doughnut',
-            data: {
-                labels: ['Public Sale', 'Dev and Management', 'Presale', 'Marketing and Promotions', 'Airdrop (Contest)'],
-                datasets: [{
-                    label: 'Token Distribution',
-                    data: [50, 15, 15, 15, 5], // Percentages
-                    backgroundColor: [
-                        'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
-                        'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
-                        'rgba(255, 99, 132, 0.9)',  // Presale - Red
-                        'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
-                        'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
-                    ],
-                    borderColor: [
-                        'rgba(255, 215, 0, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 2,
-                    hoverOffset: 10
-                }]
-            },
-            options: getChartOptions()
-        };
-
-        if (tokenomicsPieChart) {
-            tokenomicsPieChart.destroy(); // Destroy existing chart before creating a new one
-        }
-
-        tokenomicsPieChart = new Chart(ctxPie, config);
-    }
-
-    // Initial chart rendering
-    renderChart();
-
-    // Re-render chart on window resize to adjust to new viewport size
-    window.addEventListener('resize', function () {
-        renderChart();
-    });
-
-    // Mobile Navigation Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const topbarNav = document.querySelector('.topbar nav');
-
-    menuToggle.addEventListener('click', function () {
-        topbarNav.classList.toggle('nav-active');
-    });
-});
-// Debounce function to limit how often a function can run
-function debounce(func, wait) {
-    let timeout;
-    return function () {
-        const context = this, args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-}
-
-// Use debounce for the resize event
-window.addEventListener('resize', debounce(function () {
-    renderChart();
-}, 300));
-
-</script>
 
 </body>
 </html>
