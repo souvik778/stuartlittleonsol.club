@@ -1,78 +1,3 @@
-/* Reset some basic elements for consistency */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Top Bar Styling */
-  .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff; /* Change to your preferred background color */
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Keeps the top bar fixed at the top */
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  /* Logo Styling */
-  .logo .social-icon {
-    height: 40px; /* Adjust the height as needed */
-    width: auto;
-    transition: transform 0.3s ease;
-  }
-  
-  .logo .social-icon:hover {
-    transform: scale(1.1); /* Slightly enlarge the logo on hover */
-  }
-  
-  /* Navigation Links Styling */
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px; /* Space between navigation items */
-  }
-  
-  .nav-links li a {
-    text-decoration: none;
-    color: #333333; /* Change to your preferred text color */
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links li a:hover {
-    color: #007BFF; /* Change to your preferred hover color */
-  }
-  
-  /* Social Media Icons (if any) */
-  .social-media .social-icon {
-    height: 30px;
-    width: auto;
-    margin-left: 15px;
-    transition: transform 0.3s ease;
-  }
-  
-  .social-media .social-icon:hover {
-    transform: scale(1.1);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none; /* Hide navigation links on smaller screens */
-    }
-  
-    .top-bar {
-      justify-content: space-between;
-    }
-  
-    /* You can add a hamburger menu here for better mobile navigation */
-  }
-  
 /* Reset and Base Styles */
 
 * {
@@ -830,13 +755,10 @@ height: auto;
     }
 }
 
-
-
-/* Pie Chart Section */
 /* Pie Chart Section */
 .piechart-section {
     width: 100%;
-    padding: 150px 20px; /* Increased padding for larger screens */
+    padding: 150px 20px; /* Increased padding for larger size */
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
@@ -866,200 +788,16 @@ height: auto;
 
 .chart-container {
     width: 100%;
-    max-width: 900px; /* Increased max-width for larger screens */
+    max-width: 900px; /* Increased max-width */
     position: relative;
     padding: 40px;
-    background-color: transparent; /* Transparent background */
+    background-color: transparent; /* Made transparent */
     border-radius: 25px;
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
-    /* Removed conflicting animation for smoother Chart.js animations */
+    animation: fadeInUp 2s ease forwards;
     height: 400px; /* Fixed height for better responsiveness */
 }
 
-/* Topbar and Navigation */
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #333;
-}
-
-.menu-toggle {
-    display: none; /* Hidden on larger screens */
-    background-color: #FFD700;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.topbar nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-}
-
-.topbar nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-}
-
-.topbar nav ul li a:hover {
-    color: #FFD700;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* -------------------- Responsive Styles -------------------- */
-
-/* Tablets and Medium Screens (max-width: 992px) */
-@media (max-width: 992px) {
-    .chart-container {
-        max-width: 700px;
-        height: 350px;
-        padding: 30px;
-    }
-
-    .piechart-section h2 {
-        font-size: 2.2rem;
-        margin-bottom: 40px;
-    }
-
-    .topbar nav ul {
-        gap: 15px;
-    }
-
-    .topbar nav ul li a {
-        font-size: 14px;
-    }
-
-    .feature-card {
-        width: 45%;
-    }
-}
-
-/* Mobile Phones and Small Tablets (max-width: 768px) */
-@media (max-width: 768px) {
-    .piechart-section {
-        padding: 80px 15px;
-    }
-
-    .piechart-section h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-
-    .chart-container {
-        max-width: 90%;
-        height: 300px;
-        padding: 20px;
-    }
-
-    .chart-legend {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .chart-legend li {
-        font-size: 14px;
-        margin: 3px 0;
-        max-width: 120px;
-    }
-
-    .chart-legend li span {
-        width: 10px;
-        height: 10px;
-        margin-right: 6px;
-    }
-
-    .feature-card {
-        width: 100%;
-    }
-
-    /* Show Menu Toggle Button */
-    .menu-toggle {
-        display: block;
-    }
-
-    /* Hide Navigation Links by Default on Mobile */
-    .topbar nav {
-        display: none;
-        width: 100%;
-    }
-
-    .topbar nav ul {
-        flex-direction: column;
-        align-items: center;
-        background-color: #444;
-        padding: 10px 0;
-    }
-
-    .topbar nav.nav-active {
-        display: flex;
-    }
-}
-
-/* Extra Small Devices (max-width: 480px) */
-@media (max-width: 480px) {
-    .piechart-section {
-        padding: 60px 10px;
-    }
-
-    .piechart-section h2 {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-    }
-
-    .chart-container {
-        max-width: 100%;
-        height: 250px;
-        padding: 15px;
-    }
-
-    .chart-legend li {
-        font-size: 12px;
-        margin: 2px 0;
-        max-width: 100px;
-    }
-
-    .chart-legend li span {
-        width: 8px;
-        height: 8px;
-        margin-right: 4px;
-    }
-
-    .feature-card {
-        width: 100%;
-    }
-
-    /* Optional: Adjust tooltip styles if applicable */
-    .chart-tooltip {
-        font-size: 12px;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #FFFFFF;
-    }
-}
 /* Features Section */
 .features-section {
     width: 100%;
@@ -2021,12 +1759,5 @@ body {
     /* Hide any popup backdrops or overlays */
     .popup-backdrop {
         display: none !important;
-    }
-}
-/* Add this CSS to your stylesheet */
-@media (max-width: 768px) {
-    .chartjs-legend li span {
-        white-space: pre-wrap; /* Allows text to wrap */
-        line-height: 1.2;      /* Adjusts line spacing */
     }
 }
