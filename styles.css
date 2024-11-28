@@ -190,6 +190,7 @@ a:hover {
 }
 
 /* Presale Section */
+
 .presale-section {
     background-color: rgba(255, 215, 0, 0.1);
     padding: 30px 20px;
@@ -355,6 +356,36 @@ a:hover {
 .hero-image {
     max-width: 100%;
 }
+/* Make hero image responsive and add transition for smooth animation */
+.hero-image {
+    max-width: 100%;
+    transition: transform 0.2s ease-out;
+    transform-style: preserve-3d;
+}
+
+/* Optional: Add perspective to the parent container for a better 3D effect */
+.hero-section {
+    perspective: 1000px;
+}
+/* Add subtle shadow to the hero image */
+.hero-image {
+    max-width: 100%;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Update box-shadow based on tilt */
+.hero-image.rotate {
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-image {
+        transition: none;
+        transform: none;
+    }
+}
 
 /* Hide king image in tokenomics section */
 .tokenomics-section .king-image-tokenomics {
@@ -376,7 +407,15 @@ a:hover {
     font-size: 1rem;
 }
 
+/* Adjust sticky note padding and font size */
+.sticky-note {
+    padding: 20px 25px;
+    font-size: 1rem;
+}
 
+.sticky-note h3 {
+    font-size: 1.5rem;
+}
 
 
 /* Adjust presale popup position to prevent overlap with top bar */
@@ -746,6 +785,17 @@ height: auto;
         transform: translateY(-10px);
     }
 }
+/* Interactive Background Canvas Styles */
+#interactive-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure it's behind other content */
+    background-color: #000; /* Optional: Set a background color */
+    pointer-events: none; /* Allow clicks to pass through the canvas */
+}
 
 /* Pie Chart Section */
 .piechart-section {
@@ -777,18 +827,25 @@ height: auto;
         transform: translateX(0);
     }
 }
-
+/* Chart Container Styles */
 .chart-container {
-    width: 100%;
-    max-width: 900px; /* Increased max-width */
     position: relative;
-    padding: 40px;
-    background-color: transparent; /* Made transparent */
-    border-radius: 25px;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
-    animation: fadeInUp 2s ease forwards;
-    height: 400px; /* Fixed height for better responsiveness */
+    width: 80%;
+    max-width: 600px; /* Adjust as needed */
+    height: 400px; /* Define a fixed height or use responsive units */
+    margin: 0 auto; /* Center the chart horizontally */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a background for contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Ensure the canvas fills the container */
+#tokenomics-piechart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 
 /* Features Section */
 .features-section {
@@ -1100,7 +1157,61 @@ height: auto;
     text-shadow: 0 0 15px #FFD700;
 }
 
+/* Sticky Note Styling */
+.sticky-note {
+    position: relative;
+    margin: 0 auto;
+    padding: 35px 45px;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1); /* Increased opacity */
+    border-radius: 20px;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.3rem;
+    color: #fff;
+    transform: rotate(-2deg);
+    z-index: 800;
+    animation: fadeInUp 2s ease forwards;
+}
 
+.sticky-note::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: 40px;
+    font-size: 3rem;
+    transform: rotate(-15deg);
+    z-index: 10;
+    background: url('sticky-note-icon.png') no-repeat center center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+.sticky-note::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 100% 30px;
+    pointer-events: none;
+}
+
+.sticky-note ul {
+    list-style-type: disc;
+    padding-left: 50px;
+    margin-top: 15px;
+}
+
+.sticky-note li {
+    margin-bottom: 12px;
+    font-weight: 500;
+}
 
 /* Contact Form Styles */
 #contact-form {
@@ -1540,7 +1651,14 @@ footer {
         font-size: 1rem;
     }
 
-   
+    .sticky-note {
+        padding: 20px 25px;
+        font-size: 1rem;
+    }
+
+    .sticky-note h3 {
+        font-size: 1.5rem;
+    }
 }@media (max-width: 768px) {
     .presale-section {
         background-color: rgba(255, 215, 0, 0.1); /* Adjusted background for presale section */
