@@ -50,15 +50,17 @@ a:hover {
     overflow: hidden;
 }
 
-/* Top Bar */
+/* =============================
+   1. Top Bar
+   ============================= */
 
-.topbar {
+   .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
     padding: 15px 30px;
-    position: flex;
+    position: fixed; /* Changed from 'flex' to 'fixed' */
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -100,8 +102,7 @@ a:hover {
 }
 
 @keyframes wobble {
-    0%,
-    100% {
+    0%, 100% {
         transform: rotate(0deg);
     }
     25% {
@@ -123,13 +124,15 @@ a:hover {
         0 0 40px #00BFFF;
 }
 
-/* Navigation */
+/* =============================
+   2. Navigation
+   ============================= */
+
 .topbar nav {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
-    animation: fadeInRight 1s ease forwards;
     align-items: center;
+    animation: fadeInRight 1s ease forwards;
 }
 
 @keyframes fadeInRight {
@@ -177,6 +180,195 @@ a:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
+
+/* =============================
+   Mobile Navigation Toggle
+   ============================= */
+
+/* Hamburger Menu Icon */
+.menu-toggle {
+    display: none; /* Hidden by default */
+    font-size: 2rem;
+    color: #FFD700;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    z-index: 1001; /* Ensure it's above other elements */
+}
+
+.menu-toggle.open {
+    transform: rotate(90deg); /* Rotate icon when active */
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    /* Display Hamburger Menu */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Hide Navigation Links by Default */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        position: absolute;
+        top: 60px; /* Adjust based on topbar height */
+        left: 0;
+        padding: 10px 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        z-index: 999; /* Ensure it appears above other elements */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+
+    /* Show Navigation Links When Active */
+    .nav-links.active {
+        display: flex;
+        max-height: 500px; /* Adjust as needed */
+        animation: fadeInDown 0.3s ease forwards;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Navigation Links Styling in Mobile */
+    .nav-links a {
+        padding: 12px 20px;
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+        border-bottom: 1px solid #444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none; /* Remove border from the last item */
+    }
+
+    .nav-links a:hover {
+        background-color: rgba(255, 215, 0, 0.2);
+        color: #000;
+    }
+
+    /* Prevent Body Scroll When Mobile Menu is Active */
+    body.no-scroll {
+        overflow: hidden;
+    }
+}
+
+/* Further Adjustments for Smaller Phones (≤ 480px) */
+@media (max-width: 480px) {
+    /* Reduce Hamburger Menu Size */
+    .menu-toggle {
+        font-size: 1.8rem;
+        padding: 8px;
+    }
+
+    /* Adjust Navigation Links */
+    .nav-links a {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Ensure Icons and Images Within Nav Links Scale Down */
+    .nav-links a i,
+    .nav-links a img {
+        width: 18px;
+        height: 18px;
+        margin-left: 5px;
+    }
+
+    /* Adjust Topbar Padding */
+    .topbar {
+        padding: 10px 20px;
+    }
+
+    /* Adjust Topbar Heading Font Size */
+    .topbar h1 {
+        font-size: 2rem;
+        padding: 5px 8px;
+    }
+
+    /* Navigation Background and Border Radius */
+    .nav-links {
+        top: 50px; /* Adjust based on topbar height for smaller screens */
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    /* Remove Unnecessary Box Shadows for Clarity */
+    .nav-links {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Enhance Click Targets */
+    .nav-links a {
+        padding: 12px 15px;
+    }
+
+    /* Optional: Full-Screen Overlay for Extremely Small Screens */
+    .nav-links.active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 0;
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.95);
+    }
+
+    /* Adjust Navigation Links for Overlay */
+    .nav-links a {
+        width: 80%;
+        margin: 10px 0;
+        font-size: 1.1rem;
+    }
+}
+
+/* =============================
+   Smooth Transition for Navigation
+   ============================= */
+.topbar nav,
+.topbar nav a {
+    transition: all 0.3s ease;
+}
+
+/* Prevent Text Convolution by Proper Stacking */
+.nav-links a {
+    z-index: 1;
+}
+
+/* Accessibility Enhancements */
+.menu-toggle:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}
+
+.nav-links a:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}
+
 
 /* Main Container */
 .main-container {
@@ -1182,61 +1374,7 @@ height: auto;
     text-shadow: 0 0 15px #FFD700;
 }
 
-/* Sticky Note Styling */
-.sticky-note {
-    position: relative;
-    margin: 0 auto;
-    padding: 35px 45px;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.1); /* Increased opacity */
-    border-radius: 20px;
-    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3),
-        0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    line-height: 1.6;
-    font-size: 1.3rem;
-    color: #fff;
-    transform: rotate(-2deg);
-    z-index: 800;
-    animation: fadeInUp 2s ease forwards;
-}
 
-.sticky-note::before {
-    content: "";
-    position: absolute;
-    top: -35px;
-    left: 40px;
-    font-size: 3rem;
-    transform: rotate(-15deg);
-    z-index: 10;
-    background: url('sticky-note-icon.png') no-repeat center center;
-    background-size: contain;
-    width: 40px;
-    height: 40px;
-}
-
-.sticky-note::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-size: 100% 30px;
-    pointer-events: none;
-}
-
-.sticky-note ul {
-    list-style-type: disc;
-    padding-left: 50px;
-    margin-top: 15px;
-}
-
-.sticky-note li {
-    margin-bottom: 12px;
-    font-weight: 500;
-}
 
 /* Contact Form Styles */
 #contact-form {
@@ -1866,32 +2004,4 @@ body {
         font-size: 0.9rem;
     }
     
-}
-/* For mobile devices */
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-        background-color: #333; /* Example background */
-        position: absolute;
-        top: 60px; /* Adjust based on your header height */
-        right: 0;
-        width: 100%;
-        /* Add transition for smooth opening */
-        transition: max-height 0.3s ease-in-out;
-        max-height: 0;
-        overflow: hidden;
-    }
-
-    .nav-links.active {
-        max-height: 500px; /* Adjust as needed */
-    }
-
-    .nav-links a {
-        padding: 15px;
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid #444;
-        /* Add additional styling as needed */
-    }
 }
