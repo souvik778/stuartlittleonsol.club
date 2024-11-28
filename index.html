@@ -417,6 +417,7 @@
                     }
                 });
             };
+            
 
             const observer = new IntersectionObserver(observerCallback, observerOptions);
             const presaleSection = document.getElementById("presale");
@@ -620,7 +621,7 @@ animateParticles();
             const tokenomicsPieChart = new Chart(ctxPie, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Public Sale', 'Dev and Management', 'Presale', 'Marketing and Promotions', 'Airdrop (Contest)'],
+                    labels: ['Public Sale', 'Dev & Management', 'Presale', 'Marketing & Promotions', 'Airdrop (Contest)'],
                     datasets: [{
                         label: 'Token Distribution',
                         data: [50, 15, 15, 15, 5], // Percentages
@@ -670,6 +671,7 @@ animateParticles();
                                     weight: 'bold'
                                 },
                                 color: '#fff'
+                                
                             }
                         },
                         title: {
@@ -683,10 +685,28 @@ animateParticles();
                     },
                     cutout: '50%', // Creates the doughnut effect
                     maintainAspectRatio: false
+                    
                 }
+                
+                
             });
+                
         });
+        // Inside the generateCustomLegend function
+labels.forEach((label, index) => {
+    let displayLabel = label;
+    if (label.length > 15) { // Adjust the character limit as needed
+        displayLabel = label.substring(0, 15) + '...';
+    }
+    legendHTML += `
+        <li>
+            <span style="background-color: ${backgroundColors[index]}"></span> 
+            ${displayLabel}
+        </li>
+    `;
+});
 
+     
         // Mobile Navigation Toggle
         document.addEventListener('DOMContentLoaded', function () {
             const menuToggle = document.querySelector('.menu-toggle');
