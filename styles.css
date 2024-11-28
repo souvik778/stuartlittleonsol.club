@@ -220,7 +220,7 @@ a:hover {
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        z-index: 999; /* Ensure it appears above other elements */
+        z-index: 10000; /* Ensure it appears above other elements */
     }
 
     /* Show Navigation Links When Active */
@@ -250,6 +250,7 @@ a:hover {
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 10000;
     }
 
     /* Prevent Body Scroll When Mobile Menu is Active */
@@ -343,6 +344,7 @@ a:hover {
         padding: 8px 0;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        z-index: 1000;
     }
 
     .nav-links a {
@@ -365,6 +367,7 @@ a:hover {
         box-shadow: none;
         padding: 0;
         animation: fadeInOverlay 0.3s ease forwards;
+        z-index: 10000;
     }
 
     @keyframes fadeInOverlay {
