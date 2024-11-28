@@ -300,7 +300,7 @@
             const navLinks = document.querySelector('.nav-links');
             
          
-    if (menuToggle && navLinks) {
+            if (menuToggle && navLinks) {
         // Add a click event listener to the hamburger menu
         menuToggle.addEventListener('click', () => {
             // Toggle the 'active' class on the navigation links container
@@ -311,16 +311,11 @@
 
             // Toggle 'no-scroll' class on body to prevent background scroll
             document.body.classList.toggle('no-scroll');
-        });
-        
 
-        // Optional: Close the menu when a navigation link is clicked (improves UX)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('open');
-                document.body.classList.remove('no-scroll');
-            });
+            // Update ARIA attributes for accessibility
+            const isActive = navLinks.classList.contains('active');
+            menuToggle.setAttribute('aria-expanded', isActive);
+            navLinks.setAttribute('aria-hidden', !isActive);
         });
     } else {
         console.error('Menu toggle button or navigation links container not found.');
