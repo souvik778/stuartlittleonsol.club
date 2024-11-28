@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Tags and Title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StuartLittleOnSol Homepage</title>
+
+    <!-- External Libraries -->
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 </head>
 
@@ -32,18 +37,14 @@
             <a href="#piechart">Token Distribution</a>
             <a href="#faq">FAQ</a>
             <a href="#contact">Contact</a>
-
             <a href="creatememe.html">Create Meme</a>
-
-           
-
- 
 
             <!-- Social Links -->
             <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
                 <i class="fab fa-linktree"></i>
                 <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
             </a>
+           
         </nav>
     </header>
 
@@ -63,80 +64,61 @@
                 <p><strong>Airdrop:</strong> All tokens will be airdropped following week to respective wallets by 12 am EST (next week)</p>
                 <p><strong>Contract Address:</strong></p>
                 <div class="contract-address">
-                    
                     SOL- HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
-                  
                 </div>
                 <div class="contract-address"> 
                     USDC- HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
-
                 </div>
                 <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
                 <p>Follow us on socials to stay updated:</p>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/stuartlittle_onsol/?next=%2F" target="_blank" aria-label="instagram">
-                        <i class="fab fa-linktree"></i>
-                        <img src="instagram.jpeg" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-                    </a>
-                    <a href="https://x.com/lil_stuart_sol" target="_blank" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                        <img src="x.com.jpeg" alt="X.com Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-                    </a>
-                    <a href="https://t.me/lilstuartcoinsol" target="_blank" aria-label="Telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                        <img src="Telegram_logo.png" alt="Telegram Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-                    </a>
-                    <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
-                        <i class="fab fa-linktree"></i>
-                        <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-                    </a>
+                    <!-- Repeated Social Links for clarity -->
                 </div>
             </section>
-            <br>
-            <br>
+            <br><br>
 
- <!-- Token Price Calculation Section with Animation Class -->
- <section class="presale-section" id="token-price">
-    <h2>Token Price Calculator</h2>
-    <p><strong>Current Token Price:</strong> 1 $lilstu = 0.0001 USDC</p>
-    <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span> SOL</p>
+            <!-- Token Price Calculation Section -->
+            <section class="presale-section" id="token-price">
+                <h2>Token Price Calculator</h2>
+                <p><strong>Current Token Price:</strong> 1 $lilstu = <span id="token-price-usd">Loading...</span> USD</p>
+                <p><strong>Token Price in USDC:</strong> <span id="token-price-usdc">Loading...</span></p>
+                <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span></p>
+                <p><strong>USDC Price:</strong> <span id="usdc-price-usd">Loading...</span></p>
+                <p><strong>SOL Price:</strong> <span id="sol-price-usd">Loading...</span></p>
 
-    <!-- Calculator Form -->
-    <div class="calculator-container">
-        <h3>Calculate Tokens You'll Receive</h3>
-        <form id="token-calculator">
-            <label for="amount-input">Enter Amount:</label>
-            <input type="number" id="amount-input" placeholder="Amount in USDC or SOL" min="0" step="any" required>
-            <select id="currency-select">
-                <option value="USDC">USDC</option>
-                <option value="SOL">SOL</option>
-            </select>
-            <button type="submit">Calculate</button>
-        </form>
-        <p id="calculation-result"></p>
-    </div>
+                <!-- Calculator Form -->
+                <div class="calculator-container">
+                    <h3>Calculate Tokens You'll Receive</h3>
+                    <form id="token-calculator" onsubmit="return false;">
+                        <label for="amount-input">Enter Amount:</label>
+                        <input type="number" id="amount-input" placeholder="Amount in USDC or SOL" min="0" step="any" required>
+                        <select id="currency-select">
+                            <option value="USDC">USDC</option>
+                            <option value="SOL">SOL</option>
+                        </select>
+                        <button type="button" id="calculate-button">Calculate</button>
+                    </form>
+                    <p id="calculation-result"></p>
+                </div>
 
-    <!-- Chart Toggle Button -->
-    <button id="toggle-chart-btn">Show Price Chart</button>
+                <!-- Chart Toggle Button -->
+                <button id="toggle-chart-btn">Show Price Chart</button>
 
-    <!-- Chart Container (Initially Hidden) -->
-    <div class="price-chart-container" id="price-chart-container" style="display: none;">
-        <!-- TradingView Widget Container -->
-        <div id="tradingview-widget"></div>
-    </div>
-</section>
-<!-- Mobile Presale Section -->
-<div class="mobile-presale-section">
-    <h2>Token Launch Information</h2>
-    <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
-    <div class="presale-content">
-        <!-- Include the content from the popup here -->
+                <!-- Chart Container (Initially Hidden) -->
+                <div class="price-chart-container" id="price-chart-container" style="display: none;">
+                    <div id="tradingview-widget"></div>
+                </div>
+            </section>
 
-        <!-- Add more content as needed -->
-    </div>
-    <img src="token.png" alt="Token Image" class="token-image">
-</div>
-
+            <!-- Mobile Presale Section -->
+            <div class="mobile-presale-section">
+                <h2>Token Launch Information</h2>
+                <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
+                <div class="presale-content">
+                    <!-- Additional Content as Needed -->
+                </div>
+                <img src="token.png" alt="Token Image" class="token-image">
+            </div>
 
             <!-- Presale Popup (Initially Hidden) -->
             <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
@@ -164,7 +146,7 @@
                     </div>
                 </div>
 
-                <!-- Token Image Instead of Jupiter Integration -->
+                <!-- Token Image -->
                 <img src="token.png" alt="Token Image" class="token-image" id="token-image">
             </div>
 
@@ -204,27 +186,23 @@
                         <h3>Airdrop (Contest)</h3>
                         <p>5% of total supply allocated for airdrops and contests.</p>
                     </div>
-                   
                 </div>
-               <!-- King Image within Tokenomics Section -->
- <img src="king.png" alt="King Image" class="king-image-tokenomics" id="king-image-tokenomics">
-
+                <!-- King Image within Tokenomics Section -->
+                <img src="king.png" alt="King Image" class="king-image-tokenomics" id="king-image-tokenomics">
             </section>
-           
-            <!-- Pie Chart Section -->
-            <div id="custom-legend" class="chart-legend">
 
-            <section class="piechart-section" id="piechart"></div>
+            <!-- Pie Chart Section -->
+            <section class="piechart-section" id="piechart">
                 <h2>Token Distribution</h2>
                 <div class="chart-container">
                     <canvas id="tokenomics-piechart"></canvas>
                 </div>
+                <div id="custom-legend" class="chart-legend"></div>
             </section>
 
             <!-- Features Section -->
             <section class="features-section animate-on-scroll" id="features">
                 <h2>Features</h2>
-
                 <div class="features-container">
                     <div class="feature-card">
                         <h3>Tax-Free Token</h3>
@@ -239,7 +217,6 @@
                         <p>Be part of a thriving community where your voice matters. Participate in governance decisions through our transparent voting system and help shape the future direction of StuartLittleOnSol. With rewards for active participation, your engagement strengthens the ecosystem while benefiting all members.</p>
                     </div>
                 </div>
-
             </section>
 
             <!-- FAQ Section -->
@@ -287,25 +264,43 @@
         <p>By purchasing $LILSTU, you acknowledge that it is not a security or investment. The team is not liable for any potential losses or tax implications. LILSTU is a community-driven DeFi ecosystem, and you are solely responsible for understanding and complying with local laws and regulations.</p>
     </section>
 
+    <!-- Footer -->
     <footer role="contentinfo">
         <p>&copy; 2024 StuartLittleOnSol. All Rights Reserved.</p>
     </footer>
 
-    <!-- JavaScript for Presale Popup Interactivity, Interactive Background, and Pie Chart -->
+    <!-- JavaScript for All Functionalities -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Presale Popup Interactivity
+            // =============================
+            //      GLOBAL VARIABLES
+            // =============================
+            let solPriceInUsd = null;
+            let usdcPriceInUsd = null;
+            const tokenPriceInUsd = 0.00001; // Fixed token price in USD
+
+            // =============================
+            //       ELEMENT SELECTORS
+            // =============================
             const presalePopup = document.getElementById("presale-popup");
             const presaleCloseBtn = document.getElementById("presale-close");
-            const tokenImage = document.getElementById("token-image");
-            const tokenomicsSection = document.getElementById("tokenomics");
-            const countdownElement = document.getElementById("countdown");
-            const heroImage = document.getElementById("hero-image");
-            const kingImageTokenomics = document.getElementById("king-image-tokenomics");
-
             const presaleMinimized = document.getElementById('presale-minimized');
             const presaleMinimizedBtn = document.getElementById('presale-minimized-btn');
+            const countdownElement = document.getElementById("countdown");
+            const kingImageTokenomics = document.getElementById("king-image-tokenomics");
+            const tokenomicsSection = document.getElementById("tokenomics");
+            const menuToggle = document.querySelector('.menu-toggle');
+            const topbar = document.querySelector('.topbar');
+            const calculateButton = document.getElementById('calculate-button');
+            const amountInput = document.getElementById('amount-input');
+            const currencySelect = document.getElementById('currency-select');
+            const calculationResult = document.getElementById('calculation-result');
+            const toggleChartBtn = document.getElementById('toggle-chart-btn');
+            const chartContainer = document.getElementById('price-chart-container');
 
+            // =============================
+            //      PRESALE POPUP CODE
+            // =============================
             let presaleShown = false; // Flag to ensure popup is shown only once
 
             // Countdown Timer Setup
@@ -359,22 +354,8 @@
                 });
             };
 
-            
-            // Minimized button click event
-            presaleMinimizedBtn.addEventListener('click', () => {
-                presalePopup.style.display = 'flex';
-                presalePopup.classList.add('maximize');
-
-                presalePopup.addEventListener('animationend', function handler() {
-                    presalePopup.classList.remove('maximize');
-                    presalePopup.classList.add('active');
-                    presalePopup.removeEventListener('animationend', handler);
-                });
-
-                presaleMinimized.style.display = 'none';
-            });
-                        // Function to maximize the popup from minimized state
-                        const maximizePresale = () => {
+            // Function to maximize the popup from minimized state
+            const maximizePresale = () => {
                 presalePopup.style.display = 'flex';
                 presalePopup.classList.add('maximize');
 
@@ -386,12 +367,11 @@
 
                 presaleMinimized.style.display = 'none';
             };
-            //Close button event
+
+            // Close button event
             presaleCloseBtn.addEventListener("click", hidePresale);
             // Minimized button click event
             presaleMinimizedBtn.addEventListener('click', maximizePresale);
-
-
 
             // Close popup when clicking outside of it (optional)
             window.addEventListener("click", (e) => {
@@ -419,186 +399,188 @@
                     }
                 });
             };
-            
 
             const observer = new IntersectionObserver(observerCallback, observerOptions);
             const presaleSection = document.getElementById("presale");
             if (presaleSection) {
-            observer.observe(presaleSection);
+                observer.observe(presaleSection);
             }
-        
-            // Interactive Background Script
-const canvas = document.getElementById('interactive-background');
-const ctx = canvas.getContext('2d');
-let particlesArray = [];
-const numberOfParticles = 200; // Increased number for denser background
-const mouse = { x: null, y: null, radius: 150 }; // Increased radius for better interaction
 
-// Handle Canvas Resize
-const resizeCanvas = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-};
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+            // =============================
+            //    INTERACTIVE BACKGROUND
+            // =============================
+            const canvas = document.getElementById('interactive-background');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 200; // Increased number for denser background
+            const mouse = { x: null, y: null, radius: 150 }; // Increased radius for better interaction
 
-// Handle Mouse Movement
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.x;
-    mouse.y = e.y;
-});
+            // Handle Canvas Resize
+            const resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-// =============================
-//        TOUCH INTERACTION
-// =============================
+            // Handle Mouse Movement
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
 
-// Handle Touch Start
-window.addEventListener('touchstart', (e) => {
-    if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        mouse.x = touch.clientX;
-        mouse.y = touch.clientY;
-    }
-}, false);
+            // =============================
+            //        TOUCH INTERACTION
+            // =============================
 
-// Handle Touch Move
-window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        mouse.x = touch.clientX;
-        mouse.y = touch.clientY;
-    }
-}, false);
+            // Handle Touch Start
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    mouse.x = touch.clientX;
+                    mouse.y = touch.clientY;
+                }
+            }, false);
 
-// Handle Touch End and Touch Cancel
-window.addEventListener('touchend', () => {
-    mouse.x = null;
-    mouse.y = null;
-}, false);
+            // Handle Touch Move
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    mouse.x = touch.clientX;
+                    mouse.y = touch.clientY;
+                }
+            }, false);
 
-window.addEventListener('touchcancel', () => {
-    mouse.x = null;
-    mouse.y = null;
-}, false);
+            // Handle Touch End and Touch Cancel
+            window.addEventListener('touchend', () => {
+                mouse.x = null;
+                mouse.y = null;
+            }, false);
 
-// =============================
-//         PARTICLE CLASS
-// =============================
+            window.addEventListener('touchcancel', () => {
+                mouse.x = null;
+                mouse.y = null;
+            }, false);
 
-class Particle {
-    constructor(x, y, dx, dy, size, color, opacity) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-        this.size = size;
-        this.color = color;
-        this.opacity = opacity;
-    }
+            // =============================
+            //         PARTICLE CLASS
+            // =============================
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold color with variable opacity
-        ctx.fill();
-    }
+            class Particle {
+                constructor(x, y, dx, dy, size, color, opacity) {
+                    this.x = x;
+                    this.y = y;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.size = size;
+                    this.color = color;
+                    this.opacity = opacity;
+                }
 
-    update() {
-        this.x += this.dx;
-        this.y += this.dy;
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold color with variable opacity
+                    ctx.fill();
+                }
 
-        // Bounce off edges
-        if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
-        if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
+                update() {
+                    this.x += this.dx;
+                    this.y += this.dy;
 
-        // Move away from mouse or touch
-        if (mouse.x !== null && mouse.y !== null) { // Ensure mouse coordinates are valid
-            const dxMouse = mouse.x - this.x;
-            const dyMouse = mouse.y - this.y;
-            const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-            if (distance < mouse.radius + this.size) {
-                const angle = Math.atan2(dyMouse, dxMouse);
-                const moveX = Math.cos(angle) * 5;
-                const moveY = Math.sin(angle) * 5;
-                this.x -= moveX;
-                this.y -= moveY;
+                    // Bounce off edges
+                    if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
+                    if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
+
+                    // Move away from mouse or touch
+                    if (mouse.x !== null && mouse.y !== null) { // Ensure mouse coordinates are valid
+                        const dxMouse = mouse.x - this.x;
+                        const dyMouse = mouse.y - this.y;
+                        const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                        if (distance < mouse.radius + this.size) {
+                            const angle = Math.atan2(dyMouse, dxMouse);
+                            const moveX = Math.cos(angle) * 5;
+                            const moveY = Math.sin(angle) * 5;
+                            this.x -= moveX;
+                            this.y -= moveY;
+                        }
+                    }
+
+                    this.draw();
+                }
             }
-        }
 
-        this.draw();
-    }
-}
+            // =============================
+            //      INITIALIZE PARTICLES
+            // =============================
 
-// =============================
-//      INITIALIZE PARTICLES
-// =============================
+            const initParticles = () => {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    const size = Math.random() * 3 + 1;
+                    const x = Math.random() * (canvas.width - size * 2) + size;
+                    const y = Math.random() * (canvas.height - size * 2) + size;
+                    const dx = (Math.random() * 1) - 0.5;
+                    const dy = (Math.random() * 1) - 0.5;
+                    const opacity = Math.random() * 0.5 + 0.3; // Variable opacity for depth
+                    particlesArray.push(new Particle(x, y, dx, dy, size, 'gold', opacity));
+                }
+            };
 
-const initParticles = () => {
-    particlesArray = [];
-    for (let i = 0; i < numberOfParticles; i++) {
-        const size = Math.random() * 3 + 1;
-        const x = Math.random() * (canvas.width - size * 2) + size;
-        const y = Math.random() * (canvas.height - size * 2) + size;
-        const dx = (Math.random() * 1) - 0.5;
-        const dy = (Math.random() * 1) - 0.5;
-        const opacity = Math.random() * 0.5 + 0.3; // Variable opacity for depth
-        particlesArray.push(new Particle(x, y, dx, dy, size, 'gold', opacity));
-    }
-};
+            // =============================
+            //     CONNECT PARTICLES
+            // =============================
 
-// =============================
-//     CONNECT PARTICLES
-// =============================
+            const connectParticles = () => {
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a + 1; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 120) { // Increased distance for more connections
+                            const opacity = 1 - distance / 120;
+                            ctx.strokeStyle = `rgba(255,215,0,${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            };
 
-const connectParticles = () => {
-    for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a + 1; b < particlesArray.length; b++) {
-            const dx = particlesArray[a].x - particlesArray[b].x;
-            const dy = particlesArray[a].y - particlesArray[b].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 120) { // Increased distance for more connections
-                const opacity = 1 - distance / 120;
-                ctx.strokeStyle = `rgba(255,215,0,${opacity})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                ctx.stroke();
-            }
-        }
-    }
-};
+            // =============================
+            //       ANIMATE PARTICLES
+            // =============================
 
-// =============================
-//       ANIMATE PARTICLES
-// =============================
+            const animateParticles = () => {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesArray.forEach(particle => particle.update());
+                connectParticles();
+            };
 
-const animateParticles = () => {
-    requestAnimationFrame(animateParticles);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particlesArray.forEach(particle => particle.update());
-    connectParticles();
-};
+            // =============================
+            //       INITIALIZATION
+            // =============================
 
-// =============================
-//       INITIALIZATION
-// =============================
+            initParticles();
+            animateParticles();
 
-initParticles();
-animateParticles();
-
-
-            // FAQ Toggle Functionality
+            // =============================
+            //    FAQ TOGGLE FUNCTIONALITY
+            // =============================
             const faqItems = document.querySelectorAll('.faq-item');
-
             faqItems.forEach(item => {
                 item.addEventListener('click', () => {
                     item.classList.toggle('active');
                 });
             });
 
-            // Interactivity for King Image within Tokenomics Section
-            // Make the king image react to cursor movement within the Tokenomics section
+            // =============================
+            //  KING IMAGE INTERACTIVITY
+            // =============================
             kingImageTokenomics.addEventListener('mousemove', (e) => {
                 const rect = tokenomicsSection.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
@@ -618,7 +600,9 @@ animateParticles();
                 kingImageTokenomics.style.transform = `translate(0px, 0px) rotate(0deg)`;
             });
 
-            // Initialize Pie Chart using Chart.js with Enhanced Features
+            // =============================
+            //        PIE CHART CODE
+            // =============================
             const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
             const tokenomicsPieChart = new Chart(ctxPie, {
                 type: 'doughnut',
@@ -664,21 +648,10 @@ animateParticles();
                             cornerRadius: 10,
                         },
                         legend: {
-                            position: 'right',
-                            labels: {
-                                boxWidth: 15,
-                                padding: 20,
-                                font: {
-                                    size: 12,
-                                    weight: 'bold'
-                                },
-                                color: '#fff'
-                                
-                            }
+                            display: true // Hide default legend
                         },
                         title: {
-                            display: false,
-                            text: 'Token Distribution'
+                            display: false
                         },
                         animation: {
                             animateRotate: true,
@@ -687,196 +660,188 @@ animateParticles();
                     },
                     cutout: '50%', // Creates the doughnut effect
                     maintainAspectRatio: false
-                    
                 }
-                
-                
             });
-                
-        });
-        // Inside the generateCustomLegend function
-labels.forEach((label, index) => {
-    let displayLabel = label;
-    if (label.length > 15) { // Adjust the character limit as needed
-        displayLabel = label.substring(0, 15) + '...';
-    }
-    legendHTML += `
-        <li>
-            <span style="background-color: ${backgroundColors[index]}"></span> 
-            ${displayLabel}
-        </li>
-    `;
-});
 
-     
-        // Mobile Navigation Toggle
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const topbar = document.querySelector('.topbar');
-
+         
+            // =============================
+            //    MOBILE NAVIGATION TOGGLE
+            // =============================
             menuToggle.addEventListener('click', function () {
                 topbar.classList.toggle('nav-active');
             });
-        });
 
-     // Fetch Real-Time SOL Price in USDC using Binance API
-async function fetchSolPrice() {
-    try {
-        const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDC');
-        
-        // Check if the response is OK (status code 200-299)
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+            // =============================
+            //    TOKEN CALCULATOR CODE
+            // =============================
 
-        const data = await response.json();
+            /**
+             * Fetches real-time SOL and USDC prices in USD from CoinGecko and updates the DOM.
+             */
+            async function fetchPrices() {
+                const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+                const params = new URLSearchParams({
+                    ids: 'solana,usd-coin',
+                    vs_currencies: 'usd'
+                });
 
-        // Debugging: Log the fetched data
-        console.log('Binance API Response:', data);
+                try {
+                    const response = await fetch(`${COINGECKO_API_URL}?${params.toString()}`);
+                    if (!response.ok) {
+                        throw new Error(`CoinGecko API responded with status: ${response.status}`);
+                    }
 
-        // Ensure the API response contains the expected data
-        if (!data.price) {
-            throw new Error('Invalid data received from Binance API.');
-        }
+                    const data = await response.json();
 
-        const solPriceInUsdc = parseFloat(data.price);
+                    // Assign fetched prices
+                    solPriceInUsd = parseFloat(data.solana?.usd);
+                    usdcPriceInUsd = parseFloat(data['usd-coin']?.usd);
 
-        // Validate the fetched price
-        if (isNaN(solPriceInUsdc) || solPriceInUsdc <= 0) {
-            throw new Error('Invalid SOL price fetched from Binance.');
-        }
+                    // Validate the fetched prices
+                    if (!isValidPrice(solPriceInUsd) || !isValidPrice(usdcPriceInUsd)) {
+                        throw new Error('Invalid price data received from CoinGecko API.');
+                    }
 
-        // Calculate the token price in SOL based on USDC
-        const tokenPriceInSol = (0.0001 / solPriceInUsdc).toFixed(8);
+                    // Update the DOM elements for prices
+                    updatePriceElements();
 
-        // Get the DOM element
-        const priceElement = document.getElementById('token-price-sol');
-
-        // Ensure the DOM element exists
-        if (!priceElement) {
-            throw new Error('Element with ID "token-price-sol" not found in the DOM.');
-        }
-
-        // Update the DOM element with the fetched price
-        priceElement.innerText = `${tokenPriceInSol} SOL`;
-    } catch (error) {
-        console.error('Error fetching SOL price:', error);
-
-        // Get the DOM element
-        const priceElement = document.getElementById('token-price-sol');
-
-        // If the element exists, update its text to show an error message
-        if (priceElement) {
-            priceElement.innerText = 'Error fetching price';
-        }
-    }
-}
-
-// Initial fetch when the page loads
-fetchSolPrice();
-
-// Optionally, update the SOL price every minute (60000 milliseconds)
-setInterval(fetchSolPrice, 60000);
-
-// Token Calculator Logic
-const tokenCalculatorForm = document.getElementById('token-calculator');
-const amountInput = document.getElementById('amount-input');
-const currencySelect = document.getElementById('currency-select');
-const calculationResult = document.getElementById('calculation-result');
-
-tokenCalculatorForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const amount = parseFloat(amountInput.value);
-    const currency = currencySelect.value;
-
-    // Input Validation
-    if (isNaN(amount) || amount <= 0) {
-        calculationResult.innerText = 'Please enter a valid amount.';
-        return;
-    }
-
-    let tokensReceived;
-
-    if (currency === 'USDC') {
-        // Calculation for USDC
-        tokensReceived = amount / 0.0001; // Ensured consistency with fetchSolPrice
-    } else if (currency === 'SOL') {
-        try {
-            // Fetch SOL price in USDC from Binance API
-            const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDC');
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                } catch (error) {
+                    console.error('Error fetching prices:', error);
+                    displayPriceError();
+                }
             }
 
-            const data = await response.json();
-            const solPriceInUsdc = parseFloat(data.price); // Correct property access
-
-            // Validate the fetched price
-            if (isNaN(solPriceInUsdc) || solPriceInUsdc <= 0) {
-                throw new Error('Invalid SOL price received from Binance API.');
+            /**
+             * Validates the price data.
+             * @param {number} price 
+             * @returns {boolean}
+             */
+            function isValidPrice(price) {
+                return typeof price === 'number' && !isNaN(price) && price > 0;
             }
 
-            // Calculate tokens received based on SOL input
-            const amountInUsdc = amount * solPriceInUsdc;
-            tokensReceived = amountInUsdc / 0.0001; // Ensured consistency with fetchSolPrice
-        } catch (error) {
-            console.error('Error fetching SOL price:', error);
-            calculationResult.innerText = 'Error calculating tokens. Please try again.';
-            return;
-        }
-    } else {
-        // Handle unsupported currencies if any
-        calculationResult.innerText = 'Unsupported currency selected.';
-        return;
-    }
+            /**
+             * Updates the DOM elements with the latest prices.
+             */
+            function updatePriceElements() {
+                // Update USDC price
+                const usdcPriceElement = document.getElementById('usdc-price-usd');
+                if (usdcPriceElement && usdcPriceInUsd !== null) {
+                    usdcPriceElement.innerText = `$${usdcPriceInUsd.toFixed(4)}`;
+                }
 
-    // Display the result with comma separators for readability
-    calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString()} STUART tokens.`;
-});
+                // Update SOL price
+                const solPriceElement = document.getElementById('sol-price-usd');
+                if (solPriceElement && solPriceInUsd !== null) {
+                    solPriceElement.innerText = `$${solPriceInUsd.toFixed(2)}`;
+                }
 
-// Chart Toggle Logic
-const toggleChartBtn = document.getElementById('toggle-chart-btn');
-const priceChartContainer = document.getElementById('price-chart-container');
-let tradingViewWidgetInitialized = false;
+                // Update Token price in USD
+                const tokenPriceElement = document.getElementById('token-price-usd');
+                if (tokenPriceElement && tokenPriceInUsd !== null) {
+                    tokenPriceElement.innerText = `$${tokenPriceInUsd.toFixed(5)}`;
+                }
 
-toggleChartBtn.addEventListener('click', () => {
-    if (!tradingViewWidgetInitialized) {
-        initializeTradingViewWidget();
-        tradingViewWidgetInitialized = true;
-    }
-    if (priceChartContainer.style.display === 'none' || priceChartContainer.style.display === '') {
-        priceChartContainer.style.display = 'block';
-        toggleChartBtn.innerText = 'Hide Price Chart';
-    } else {
-        priceChartContainer.style.display = 'none';
-        toggleChartBtn.innerText = 'Show Price Chart';
-    }
-});
+                // Calculate and update token price in SOL and USDC
+                if (solPriceInUsd && tokenPriceInUsd && usdcPriceInUsd) {
+                    const tokenPriceInSol = (tokenPriceInUsd / solPriceInUsd).toFixed(8);
+                    const tokenPriceInUsdc = (tokenPriceInUsd / usdcPriceInUsd).toFixed(8);
 
-// Initialize TradingView Widget
-function initializeTradingViewWidget() {
-    new TradingView.widget({
-        "width": "100%",
-        "height": 500,
-        "symbol": "BINANCE:SOLUSDC",
-        "interval": "D",
-        "timezone": "Etc/UTC",
-        "theme": "dark",
-        "style": "1",
-        "locale": "en",
-        "toolbar_bg": "#f1f3f6",
-        "enable_publishing": false,
-        "withdateranges": true,
-        "hide_side_toolbar": false,
-        "allow_symbol_change": true,
-        "container_id": "tradingview-widget"
-    });
-}
+                    const priceSolElement = document.getElementById('token-price-sol');
+                    if (priceSolElement) {
+                        priceSolElement.innerText = `${tokenPriceInSol} SOL`;
+                    }
 
+                    const priceUsdcElement = document.getElementById('token-price-usdc');
+                    if (priceUsdcElement) {
+                        priceUsdcElement.innerText = `${tokenPriceInUsdc} USDC`;
+                    }
+                }
+            }
 
-            // Scroll Animations for Sections (Updated)
+            /**
+             * Displays an error message in the price elements.
+             */
+            function displayPriceError() {
+                const priceElements = ['usdc-price-usd', 'sol-price-usd', 'token-price-usd', 'token-price-sol', 'token-price-usdc'];
+                priceElements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.innerText = 'Error fetching price';
+                    }
+                });
+            }
+
+            /**
+             * Sets up the token calculator functionality.
+             */
+            function setupTokenCalculator() {
+                if (!calculateButton || !amountInput || !currencySelect || !calculationResult) {
+                    console.error('One or more calculator elements are missing in the DOM.');
+                    return;
+                }
+
+                calculateButton.addEventListener('click', () => {
+                    // Clear previous result
+                    calculationResult.innerText = '';
+
+                    // Parse and sanitize user input
+                    const amount = parseFloat(amountInput.value);
+                    const currency = currencySelect.value;
+
+                    // Input Validation
+                    if (!isValidAmount(amount)) {
+                        calculationResult.innerText = 'Please enter a valid positive amount.';
+                        return;
+                    }
+
+                    if (!solPriceInUsd || !usdcPriceInUsd) {
+                        calculationResult.innerText = 'Price data not loaded yet. Please try again in a moment.';
+                        return;
+                    }
+
+                    let tokensReceived = 0;
+
+                    // Simple calculation logic
+                    if (currency === 'USDC') {
+                        tokensReceived = amount / tokenPriceInUsd;
+                    } else if (currency === 'SOL') {
+                        const amountInUsd = amount * solPriceInUsd;
+                        tokensReceived = amountInUsd / tokenPriceInUsd;
+                    } else {
+                        calculationResult.innerText = 'Unsupported currency selected.';
+                        return;
+                    }
+
+                    // Ensure tokensReceived is a finite number
+                    if (!isFinite(tokensReceived)) {
+                        calculationResult.innerText = 'Calculation error. Please check your inputs.';
+                        return;
+                    }
+
+                    // Display the result with comma separators and appropriate decimal places
+                    calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} STUART tokens.`;
+                });
+            }
+
+            /**
+             * Validates the input amount.
+             * @param {number} amount 
+             * @returns {boolean}
+             */
+            function isValidAmount(amount) {
+                return typeof amount === 'number' && !isNaN(amount) && amount > 0;
+            }
+
+            // Initialize Token Calculator
+            setupTokenCalculator();
+            fetchPrices(); // Initial fetch when the page loads
+            // Update the prices every minute (60000 milliseconds)
+            setInterval(fetchPrices, 60000);
+
+            // =============================
+            //   SCROLL ANIMATIONS CODE
+            // =============================
             const scrollAnimations = () => {
                 const elements = document.querySelectorAll('.animate-on-scroll');
                 elements.forEach(el => {
@@ -905,117 +870,74 @@ function initializeTradingViewWidget() {
                     if (callNow) func.apply(context, args);
                 };
             }
-            document.addEventListener('DOMContentLoaded', () => {
-    const presalePopup = document.querySelector('.presale-popup');
-    if (presalePopup) {
-        const adjustPopupSize = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const aspectRatio = width / height;
 
-            if (aspectRatio > 1.6) {
-                // Wide screens (e.g., 16:9 or wider)
-                presalePopup.style.width = '60vw';
-                presalePopup.style.maxWidth = '1200px';
-                presalePopup.style.padding = '50px';
-            } else if (aspectRatio > 1.4) {
-                // Moderate wide screens (e.g., 3:2)
-                presalePopup.style.width = '70vw';
-                presalePopup.style.maxWidth = '1000px';
-                presalePopup.style.padding = '40px';
-            } else {
-                // Square or tall screens
-                presalePopup.style.width = '80vw';
-                presalePopup.style.maxWidth = '800px';
-                presalePopup.style.padding = '30px';
-            }
-        };
+            // =============================
+            //     PRESALE POPUP RESIZE
+            // =============================
+            const adjustPopupSize = () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const aspectRatio = width / height;
 
-        // Initial adjustment
-        adjustPopupSize();
+                if (aspectRatio > 1.6) {
+                    // Wide screens (e.g., 16:9 or wider)
+                    presalePopup.style.width = '60vw';
+                    presalePopup.style.maxWidth = '1200px';
+                    presalePopup.style.padding = '50px';
+                } else if (aspectRatio > 1.4) {
+                    // Moderate wide screens (e.g., 3:2)
+                    presalePopup.style.width = '70vw';
+                    presalePopup.style.maxWidth = '1000px';
+                    presalePopup.style.padding = '40px';
+                } else {
+                    // Square or tall screens
+                    presalePopup.style.width = '80vw';
+                    presalePopup.style.maxWidth = '800px';
+                    presalePopup.style.padding = '30px';
+                }
+            };
 
-        // Adjust on window resize
-        window.addEventListener('resize', adjustPopupSize);
-    }
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const presalePopup = document.querySelector('.presale-popup');
-    const closeButton = document.querySelector('.presale-popup .close-btn');
+            // Initial adjustment
+            adjustPopupSize();
 
-    if (presalePopup) {
-        // Function to adjust popup size dynamically based on aspect ratio
-        const adjustPopupSize = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const aspectRatio = width / height;
+            // Adjust on window resize
+            window.addEventListener('resize', adjustPopupSize);
 
-            if (aspectRatio > 1.6) {
-                // Wide screens (e.g., 16:9 or wider)
-                presalePopup.style.width = '60vw';
-                presalePopup.style.maxWidth = '1200px';
-                presalePopup.style.padding = '50px';
-            } else if (aspectRatio > 1.4) {
-                // Moderate wide screens (e.g., 3:2)
-                presalePopup.style.width = '70vw';
-                presalePopup.style.maxWidth = '1000px';
-                presalePopup.style.padding = '40px';
-            } else {
-                // Square or tall screens
-                presalePopup.style.width = '80vw';
-                presalePopup.style.maxWidth = '800px';
-                presalePopup.style.padding = '30px';
-            }
-        };
+            // =============================
+            //      TRADINGVIEW WIDGET
+            // =============================
+            let chartInitialized = false;
 
-        // Function to close the popup
-        const closePopup = () => {
-            presalePopup.classList.remove('active');
-        };
+            toggleChartBtn.addEventListener('click', () => {
+                if (!chartInitialized) {
+                    new TradingView.widget({
+                        "width": "100%",
+                        "height": 500,
+                        "symbol": "BINANCE:SOLUSDT",
+                        "interval": "D",
+                        "timezone": "Etc/UTC",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "en",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "withdateranges": true,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview-widget"
+                    });
+                    chartInitialized = true;
+                }
 
-        // Close popup when clicking outside of it
-        document.addEventListener('click', (event) => {
-            if (presalePopup.classList.contains('active') && !presalePopup.contains(event.target)) {
-                closePopup();
-            }
+                if (chartContainer.style.display === 'none' || chartContainer.style.display === '') {
+                    chartContainer.style.display = 'block';
+                    toggleChartBtn.innerText = 'Hide Price Chart';
+                } else {
+                    chartContainer.style.display = 'none';
+                    toggleChartBtn.innerText = 'Show Price Chart';
+                }
+            });
         });
-
-        // Close popup when the close button is clicked
-        if (closeButton) {
-            closeButton.addEventListener('click', closePopup);
-        }
-
-        // Initial size adjustment
-        adjustPopupSize();
-
-        // Adjust size on window resize
-        window.addEventListener('resize', adjustPopupSize);
-    }
-});// Function to generate custom legend
-function generateCustomLegend(chart, legendContainerId) {
-    const legendContainer = document.getElementById(legendContainerId);
-    const labels = chart.data.labels;
-    const backgroundColors = chart.data.datasets[0].backgroundColor;
-    
-    let legendHTML = '<ul>';
-    labels.forEach((label, index) => {
-        legendHTML += `
-            <li>
-                <span style="background-color: ${backgroundColors[index]}"></span> 
-                ${label.length > 15 ? label.substring(0, 15) + '...' : label}
-            </li>
-        `;
-    });
-    legendHTML += '</ul>';
-    
-    legendContainer.innerHTML = legendHTML;
-}
-
-// Generate the custom legend after the chart is created
-generateCustomLegend(tokenomicsPieChart, 'custom-legend');
-
-
     </script>
-    
-
 </body>
 </html>
