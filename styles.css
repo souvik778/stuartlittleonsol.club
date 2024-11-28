@@ -1840,4 +1840,20 @@ body {
     .popup-backdrop {
         display: none !important;
     }
+    
+}
+@media (max-width: 768px) {
+    .chart-legend {
+        max-height: 150px;
+        font-size: 0.9rem;
+    }
+
+    .chart-legend li {
+        margin-bottom: 8px;
+    }
+
+    .chart-legend li span {
+        width: 12px;
+        height: 12px;
+    }
 }
