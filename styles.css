@@ -221,15 +221,11 @@ a:hover {
         border-bottom-right-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         z-index: 999; /* Ensure it appears above other elements */
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
     }
 
     /* Show Navigation Links When Active */
     .nav-links.active {
         display: flex;
-        max-height: 500px; /* Adjust as needed */
         animation: fadeInDown 0.3s ease forwards;
     }
 
@@ -254,16 +250,6 @@ a:hover {
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .nav-links a:last-child {
-        border-bottom: none; /* Remove border from the last item */
-    }
-
-    .nav-links a:hover {
-        background-color: rgba(255, 215, 0, 0.2);
-        color: #000;
     }
 
     /* Prevent Body Scroll When Mobile Menu is Active */
@@ -271,6 +257,10 @@ a:hover {
         overflow: hidden;
     }
 }
+
+/* =============================
+   Additional Mobile Enhancements
+   ============================= */
 
 /* Further Adjustments for Smaller Phones (≤ 480px) */
 @media (max-width: 480px) {
@@ -321,56 +311,7 @@ a:hover {
     .nav-links a {
         padding: 12px 15px;
     }
-
-    /* Full-Screen Overlay for Extremely Small Screens */
-    .nav-links.active {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        box-shadow: none;
-        background-color: rgba(0, 0, 0, 0.95);
-        overflow-y: auto; /* Allow scrolling if content exceeds viewport */
-    }
-
-    /* Adjust Navigation Links for Overlay */
-    .nav-links a {
-        width: 80%;
-        margin: 10px 0;
-        font-size: 1.1rem;
-    }
 }
-
-/* =============================
-   Smooth Transition for Navigation
-   ============================= */
-.topbar nav,
-.topbar nav a {
-    transition: all 0.3s ease;
-}
-
-/* Prevent Text Convolution by Proper Stacking */
-.nav-links a {
-    z-index: 1;
-}
-
-/* Accessibility Enhancements */
-.menu-toggle:focus {
-    outline: 2px solid #FFD700;
-    outline-offset: 2px;
-}
-
-.nav-links a:focus {
-    outline: 2px solid #FFD700;
-    outline-offset: 2px;
-}
-
 
 /* Main Container */
 .main-container {
@@ -446,12 +387,10 @@ a:hover {
         top: 0;
         flex-wrap: wrap;
         height: auto;
-        z-index: 999;
 
     }
     .topbar h1 {
         font-size: 1.8rem;
-        z-index: 999;
     }
 
     .topbar nav {
