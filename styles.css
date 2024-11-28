@@ -180,7 +180,6 @@ a:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
-
 /* =============================
    Mobile Navigation Toggle
    ============================= */
@@ -372,6 +371,31 @@ a:hover {
 }
 
 
+/* =============================
+   Smooth Transition for Navigation
+   ============================= */
+.topbar nav,
+.topbar nav a {
+    transition: all 0.3s ease;
+}
+
+/* Prevent Text Convolution by Proper Stacking */
+.nav-links a {
+    z-index: 1;
+}
+
+/* Accessibility Enhancements */
+.menu-toggle:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}
+
+.nav-links a:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}
+
+
 /* Main Container */
 .main-container {
     display: flex;
@@ -439,48 +463,7 @@ a:hover {
     transform: scale(1.2);
 }
 
-/* Hide navigation links and show menu toggle on mobile */
-@media (max-width: 768px) {
-    .topbar {
-        position: fixed;
-        top: 0;
-        flex-wrap: wrap;
-        height: auto;
 
-    }
-    .topbar h1 {
-        font-size: 1.8rem;
-    }
-
-    .topbar nav {
-        display: none;
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.95);
-        width: 100%;
-        padding: 10px 0;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 999;
-    }
-
- 
-
-    .topbar .menu-toggle {
-        display: block;
-        font-size: 2rem;
-        color: #FFD700;
-        cursor: pointer;
-        padding: 10px;
-    }
-
-    .topbar nav a {
-        padding: 12px;
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-    }
-}
 .presale-popup {
     display: none; /* Hide the popup on mobile devices */
 }
