@@ -239,9 +239,6 @@ a:hover {
         display: flex; /* Display as flex to use flex properties */
     }
 }
-.nav-links a:hover {
-    background-color: rgba(255, 215, 0, 0.4);
-}
 
 
 /* Ensuring proper display and functionality on even smaller devices */
@@ -334,7 +331,6 @@ a:hover {
         width: 16px; /* Slightly smaller icons */
         height: 16px;
         margin-left: 4px; /* Reduce margin */
-        z-index: 1;
     }
 
     /* 7. Maintain Smooth Transitions */
@@ -1750,7 +1746,15 @@ footer {
 
 /* Mobile Phones (up to 480px) */
 @media (max-width: 480px) {
-  
+    .topbar nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        position:fixed;
+    }
+
+    .topbar h1 {
+        font-size: 1.8rem;
+    }
 
     .main-container {
         padding: 10px;
@@ -1824,7 +1828,14 @@ footer {
 
 /* Tablets and Small Laptops (481px to 1024px) */
 @media (min-width: 481px) and (max-width: 1024px) {
+    .topbar nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
 
+    .topbar h1 {
+        font-size: 2rem;
+    }
 
     .tokenomics-item,
     .feature-card {
