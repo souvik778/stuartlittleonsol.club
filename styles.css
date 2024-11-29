@@ -59,7 +59,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
-    padding: 15px 15px;
+    padding: 15px 30px;
     position: fixed; /* Changed from 'flex' to 'fixed' */
     top: 0;
     width: 100%;
@@ -99,7 +99,6 @@ a:hover {
     padding: 5px 10px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
-    text-align: center;
 }
 
 @keyframes wobble {
@@ -265,9 +264,8 @@ a:hover {
     }
 
     .topbar h1 {
-        font-size: 1rem; /* Reduce font size for smaller screens */
+        font-size: 1.8rem; /* Reduce font size for smaller screens */
         padding: 3px 5px;
-        text-align: center;
     }
 
     /* 2. Ensure Hamburger Menu is Always Visible and Positioned Correctly */
@@ -423,10 +421,7 @@ a:hover {
 
     }
     .topbar h1 {
-        font-size: 1rem;
-        align-items: center;
-          padding: 3px 5px;
-
+        font-size: 1.8rem;
     }
 
     .topbar nav {
