@@ -421,7 +421,9 @@ a:hover {
 
     }
     .topbar h1 {
-        font-size: 1.8rem;
+        font-size: 1rem;
+        align-items: center;
+
     }
 
     .topbar nav {
