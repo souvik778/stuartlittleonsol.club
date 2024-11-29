@@ -84,7 +84,7 @@ a:hover {
 
 .topbar h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 700;
     text-transform: uppercase;
     color: #FFD700;
@@ -92,8 +92,8 @@ a:hover {
         -3px -3px 0 #fff,
         3px -3px 0 #fff,
         -3px 3px 0 #fff,
-        3px 3px 0 #fff;
-      /*  6px 6px 0 #fff;*/
+        3px 3px 0 #fff,
+        6px 6px 0 #fff;
     position: relative;
     animation: wobble 6s infinite;
     padding: 5px 10px;
@@ -425,7 +425,7 @@ a:hover {
     .topbar h1 {
         font-size: 1rem;
         align-items: center;
-        padding: 3px 5px;
+          padding: 3px 5px;
 
     }
 
