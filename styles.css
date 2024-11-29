@@ -59,7 +59,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.85); /* Increased opacity */
-    padding: 15px 30px;
+    padding: 15px 15px;
     position: fixed; /* Changed from 'flex' to 'fixed' */
     top: 0;
     width: 100%;
