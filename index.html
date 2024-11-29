@@ -21,8 +21,8 @@
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <!-- Include Solana Web3.js via CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/@solana/web3.js/1.73.0/web3.min.js"></script>
+    <!-- Include @solana/web3.js via Corrected CDN -->
+    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
     <!-- Include @solana/spl-token via CDN -->
     <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
 </head>
@@ -43,16 +43,16 @@
             <a href="#contact">Contact</a>
             <a href="creatememe.html">Create Meme</a>
 
-         <!-- Social Links -->
-         <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
-            <i class="fab fa-linktree"></i>
-            <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-        </a>
-         <!-- Connect Wallet Button -->
-         <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
-         <!-- Disconnect Wallet Button (Initially Hidden) -->
-         <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
-         <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
+            <!-- Social Links -->
+            <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
+                <i class="fab fa-linktree"></i>
+                <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
+            </a>
+            <!-- Connect Wallet Button -->
+            <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
+            <!-- Disconnect Wallet Button (Initially Hidden) -->
+            <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
+            <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
     </header>
 
@@ -299,6 +299,10 @@
             let usdcPriceInUsd = null;
             const tokenPriceInUsd = 0.0001; // Fixed token price in USD
             let connectedWallet = null; // Initialize as null
+
+            // Assign global variables from CDN libraries
+            const solanaWeb3 = window.solanaWeb3;
+            const splToken = window.splToken;
 
             // =============================
             //       ELEMENT SELECTORS
@@ -849,6 +853,11 @@
 
                     // Display the result with comma separators and appropriate decimal places
                     calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} STUART tokens.`;
+
+                    // Enable Buy button if wallet is connected
+                    if (connectedWallet) {
+                        buyButton.disabled = false;
+                    }
                 });
             }
 
@@ -1077,7 +1086,7 @@
                     buyButton.disabled = true;
                 } catch (error) {
                     console.error('Transaction failed:', error);
-                    alert('Transaction failed. Please ensure you have sufficient funds and try again.');
+                    alert(`Transaction failed: ${error.message}`);
                 }
             };
 
@@ -1100,17 +1109,22 @@
                 const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
                 const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
+                // Ensure lamports are integers
+                const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
+                const roundedLamports = Math.round(lamports);
+
                 const transaction = new solanaWeb3.Transaction().add(
                     solanaWeb3.SystemProgram.transfer({
                         fromPubkey,
                         toPubkey,
-                        lamports: solanaWeb3.LAMPORTS_PER_SOL * amount,
+                        lamports: roundedLamports,
                     })
                 );
 
                 // Sign and send transaction
-                const { signature } = await provider.signAndSendTransaction(transaction);
-                await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+                const signature = await provider.signAndSendTransaction(transaction);
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+                await connection.confirmTransaction(signature, 'confirmed');
             };
 
             /**
@@ -1125,25 +1139,28 @@
                 // Get the token program ID
                 const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
+                // Initialize connection
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+
                 // Find the associated token accounts
-                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey);
-                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey); // Corrected owner parameter
+                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
+                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
 
                 // Create transfer instruction using @solana/spl-token
                 const transaction = new solanaWeb3.Transaction().add(
                     splToken.createTransferInstruction(
-                        TOKEN_PROGRAM_ID,
                         fromTokenAccount,
                         toTokenAccount,
                         fromPubkey,
+                        amount * (10 ** 6), // USDC has 6 decimals
                         [],
-                        amount * (10 ** 6) // USDC has 6 decimals
+                        TOKEN_PROGRAM_ID
                     )
                 );
 
                 // Sign and send transaction
-                const { signature } = await provider.signAndSendTransaction(transaction);
-                await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+                const signature = await provider.signAndSendTransaction(transaction);
+                await connection.confirmTransaction(signature, 'confirmed');
             };
 
             /**
@@ -1151,9 +1168,10 @@
              * @param {PublicKey} owner 
              * @param {string} mint 
              * @param {PublicKey} payer 
+             * @param {Connection} connection
              * @returns {PublicKey}
              */
-            const getOrCreateAssociatedTokenAccount = async (owner, mint, payer) => {
+            const getOrCreateAssociatedTokenAccount = async (owner, mint, payer, connection) => {
                 const associatedTokenAddress = await splToken.getAssociatedTokenAddress(
                     splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
                     splToken.TOKEN_PROGRAM_ID,
@@ -1162,7 +1180,6 @@
                 );
 
                 // Check if the account exists
-                const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
                 const account = await connection.getAccountInfo(associatedTokenAddress);
                 if (account === null) {
                     // Create the account
@@ -1174,9 +1191,8 @@
                             new solanaWeb3.PublicKey(mint)  // Mint
                         )
                     );
-                    const provider = window.solana;
-                    const { signature } = await provider.signAndSendTransaction(transaction);
-                    await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+                    const signature = await window.solana.signAndSendTransaction(transaction);
+                    await connection.confirmTransaction(signature, 'confirmed');
                 }
 
                 return associatedTokenAddress;
