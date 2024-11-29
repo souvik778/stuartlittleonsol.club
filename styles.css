@@ -1970,18 +1970,25 @@ body {
 /* for wallet*/
 
 .btn {
-    background-color: #5a67d8;
-    color: white;
-    border: none;
+    font-size: 1rem;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 30px;
+    background-color: rgba(255, 215, 0, 0.3); /* Increased background opacity */
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1em;
 }
 
 .btn:hover {
-    background-color: #434190;
+    color: #000;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+.btn:hover::after {
+    width: 100%;
 }
 
 .connect-wallet-btn {
@@ -1993,9 +2000,28 @@ body {
 .wallet-address {
     margin-left: 15px;
     font-size: 0.9em;
-    color: #2d3748;
+    color: #be8349;
     word-break: break-all;
 }
+
+
+.connect-wallet-btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 215, 0, 0.4);
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+
+
+
+
+
 input, select {
     padding: 10px;
     border: 2px solid #e2e8f0;
@@ -2040,4 +2066,3 @@ input, select {
     }
 }
 
-/*extra*/
