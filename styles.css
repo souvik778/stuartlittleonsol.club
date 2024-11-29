@@ -80,12 +80,12 @@ a:hover {
     to {
         top: 0;
     }
-}x
+}
 
 .topbar h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     color: #FFD700;
     text-shadow:
@@ -99,7 +99,7 @@ a:hover {
     padding: 5px 10px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
 }
 
 @keyframes wobble {
