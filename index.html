@@ -21,6 +21,10 @@
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <!-- Include Solana Web3.js via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/@solana/web3.js/1.73.0/web3.min.js"></script>
+    <!-- Include @solana/spl-token via CDN -->
+    <script src="https://unpkg.com/@solana/spl-token@0.2.0/dist/spl-token.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +34,7 @@
     <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1><a href="index.html">StuartLittleOnSol</a></h1>
-        <div class="menu-toggle"  aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links" >☰</div>
+        <div class="menu-toggle" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">☰</div>
         <nav class="nav-links" id="nav-links" aria-hidden="true">
             <a href="#features">Features</a>
             <a href="#tokenomics">Tokenomics</a>
@@ -38,17 +42,17 @@
             <a href="#faq">FAQ</a>
             <a href="#contact">Contact</a>
             <a href="creatememe.html">Create Meme</a>
-    
+
             <!-- Social Links -->
             <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
                 <i class="fab fa-linktree"></i>
                 <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
             </a>
+            <!-- Connect Wallet Button -->
+            <button id="connect-wallet" class="btn connect-wallet-btn">Connect Wallet</button>
+            <span id="wallet-address" class="wallet-address"></span>
         </nav>
-
-
     </header>
-    
 
     <!-- Main Container -->
     <div class="main-container">
@@ -99,6 +103,8 @@
                             <option value="SOL">SOL</option>
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
+                        <br> 
+                        <button type="button" id="buy-button" class="btn" disabled>Buy</button>
                     </form>
                     <p id="calculation-result"></p>
                 </div>
@@ -280,6 +286,7 @@
             let solPriceInUsd = null;
             let usdcPriceInUsd = null;
             const tokenPriceInUsd = 0.0001; // Fixed token price in USD
+            let connectedWallet = null; // Initialize as null
 
             // =============================
             //       ELEMENT SELECTORS
@@ -300,37 +307,12 @@
             const toggleChartBtn = document.getElementById('toggle-chart-btn');
             const chartContainer = document.getElementById('price-chart-container');
             const navLinks = document.querySelector('.nav-links');
-            
-         
-    if (menuToggle && navLinks) {
-        // Add a click event listener to the hamburger menu
-        menuToggle.addEventListener('click', () => {
-            // Toggle the 'active' class on the navigation links container
-            navLinks.classList.toggle('active');
+            const connectWalletButton = document.getElementById('connect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const buyButton = document.getElementById('buy-button');
+            const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
+            const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
 
-            // Toggle the 'open' class on the hamburger icon for visual feedback
-            menuToggle.classList.toggle('open');
-
-            // Toggle 'no-scroll' class on body to prevent background scroll
-            document.body.classList.toggle('no-scroll');
-        });
-        
-
-        // Optional: Close the menu when a navigation link is clicked (improves UX)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('open');
-                document.body.classList.remove('no-scroll');
-            });
-        });
-    } else {
-        console.error('Menu toggle button or navigation links container not found.');
-    }
-            
-            
-            
-            
             // =============================
             //      PRESALE POPUP CODE
             // =============================
@@ -681,7 +663,7 @@
                             cornerRadius: 10,
                         },
                         legend: {
-                            display: true // Hide default legend
+                            display: true // Show default legend
                         },
                         title: {
                             display: false
@@ -695,10 +677,6 @@
                     maintainAspectRatio: false
                 }
             });
-
-         
-
-
 
             // =============================
             //    TOKEN CALCULATOR CODE
@@ -966,9 +944,218 @@
                     toggleChartBtn.innerText = 'Show Price Chart';
                 }
             });
+
+            // =============================
+            //    CONNECT WALLET FUNCTIONALITY
+            // =============================
+
+            /**
+             * Connects to the Phantom Wallet.
+             */
+            const connectWallet = async () => {
+                if (window.solana && window.solana.isPhantom) {
+                    try {
+                        const response = await window.solana.connect();
+                        connectedWallet = response.publicKey.toString();
+                        walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
+                        connectWalletButton.disabled = true;
+                        connectWalletButton.innerText = 'Wallet Connected';
+                        console.log('Connected wallet address:', connectedWallet);
+                        // Enable Buy button if calculation is already done
+                        if (calculationResult.innerText.includes('STUART tokens')) {
+                            buyButton.disabled = false;
+                        }
+                    } catch (err) {
+                        console.error('Failed to connect wallet:', err);
+                        alert('Failed to connect wallet. Please try again.');
+                    }
+                } else {
+                    alert('Phantom Wallet not found. Please install it from https://phantom.app');
+                }
+            };
+
+            /**
+             * Truncates the wallet address for display.
+             * @param {string} address 
+             * @returns {string}
+             */
+            const truncateAddress = (address) => {
+                return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+            };
+
+            // Event listener for Connect Wallet button
+            connectWalletButton.addEventListener('click', connectWallet);
+
+            // =============================
+            //         BUY BUTTON CODE
+            // =============================
+
+            /**
+             * Handles the Buy action by sending SOL or USDC to the target address.
+             */
+            const buyTokens = async () => {
+                if (!connectedWallet) {
+                    alert('Please connect your wallet first.');
+                    return;
+                }
+
+                const amount = parseFloat(amountInput.value);
+                const currency = currencySelect.value;
+
+                if (!isValidAmount(amount)) {
+                    alert('Please enter a valid amount.');
+                    return;
+                }
+
+                try {
+                    if (currency === 'SOL') {
+                        await sendSOL(amount);
+                    } else if (currency === 'USDC') {
+                        await sendUSDC(amount);
+                    } else {
+                        alert('Unsupported currency selected.');
+                        return;
+                    }
+
+                    alert(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}.`);
+                    // Reset the form
+                    document.getElementById('token-calculator').reset();
+                    calculationResult.innerText = '';
+                    buyButton.disabled = true;
+                } catch (error) {
+                    console.error('Transaction failed:', error);
+                    alert('Transaction failed. Please ensure you have sufficient funds and try again.');
+                }
+            };
+
+            // Event listener for Buy button
+            buyButton.addEventListener('click', () => {
+                // Add animation to buy action (assuming animate.css is included)
+                buyButton.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => {
+                    buyTokens();
+                    buyButton.classList.remove('animate__animated', 'animate__pulse');
+                }, 500);
+            });
+
+            /**
+             * Sends SOL from the user's wallet to the target address.
+             * @param {number} amount 
+             */
+            const sendSOL = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+
+                const transaction = new solanaWeb3.Transaction().add(
+                    solanaWeb3.SystemProgram.transfer({
+                        fromPubkey,
+                        toPubkey,
+                        lamports: solanaWeb3.LAMPORTS_PER_SOL * amount,
+                    })
+                );
+
+                // Sign and send transaction
+                const { signature } = await provider.signAndSendTransaction(transaction);
+                await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+            };
+
+            /**
+             * Sends USDC (SPL Token) from the user's wallet to the target address.
+             * @param {number} amount 
+             */
+            const sendUSDC = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+
+                // Get the token program ID
+                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+
+                // Find the associated token accounts
+                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey);
+                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey); // Corrected owner parameter
+
+                // Create transfer instruction using @solana/spl-token
+                const transaction = new solanaWeb3.Transaction().add(
+                    splToken.createTransferInstruction(
+                        TOKEN_PROGRAM_ID,
+                        fromTokenAccount,
+                        toTokenAccount,
+                        fromPubkey,
+                        [],
+                        amount * (10 ** 6) // USDC has 6 decimals
+                    )
+                );
+
+                // Sign and send transaction
+                const { signature } = await provider.signAndSendTransaction(transaction);
+                await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+            };
+
+            /**
+             * Gets or creates the associated token account for a given owner and mint.
+             * @param {PublicKey} owner 
+             * @param {string} mint 
+             * @param {PublicKey} payer 
+             * @returns {PublicKey}
+             */
+            const getOrCreateAssociatedTokenAccount = async (owner, mint, payer) => {
+                const associatedTokenAddress = await splToken.getAssociatedTokenAddress(
+                    splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+                    splToken.TOKEN_PROGRAM_ID,
+                    new solanaWeb3.PublicKey(mint),
+                    new solanaWeb3.PublicKey(owner)
+                );
+
+                // Check if the account exists
+                const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+                const account = await connection.getAccountInfo(associatedTokenAddress);
+                if (account === null) {
+                    // Create the account
+                    const transaction = new solanaWeb3.Transaction().add(
+                        splToken.createAssociatedTokenAccountInstruction(
+                            new solanaWeb3.PublicKey(payer), // Payer
+                            associatedTokenAddress,         // Associated Token Account
+                            new solanaWeb3.PublicKey(owner), // Owner
+                            new solanaWeb3.PublicKey(mint)  // Mint
+                        )
+                    );
+                    const provider = window.solana;
+                    const { signature } = await provider.signAndSendTransaction(transaction);
+                    await solanaWeb3.Connection('https://api.mainnet-beta.solana.com').confirmTransaction(signature, 'confirmed');
+                }
+
+                return associatedTokenAddress;
+            };
+
+            // =============================
+            //   AUTOMATIC WALLET CONNECTION
+            // =============================
+
+            /**
+             * Automatically connects to the wallet if already connected (persistent session).
+             */
+            const checkIfWalletIsConnected = async () => {
+                if (window.solana && window.solana.isPhantom) {
+                    try {
+                        const response = await window.solana.connect({ onlyIfTrusted: true });
+                        connectedWallet = response.publicKey.toString();
+                        walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
+                        connectWalletButton.disabled = true;
+                        connectWalletButton.innerText = 'Wallet Connected';
+                        buyButton.disabled = false;
+                        console.log('Wallet already connected:', connectedWallet);
+                    } catch (err) {
+                        console.log('No wallet connection found:', err);
+                    }
+                }
+            };
+
+            checkIfWalletIsConnected();
         });
-    
-        
     </script>
 </body>
 </html>
+
+
