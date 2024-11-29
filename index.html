@@ -7,6 +7,16 @@
     <title>StuartLittleOnSol Homepage</title>
 
     <!-- External Libraries -->
+      <!-- Buffer Polyfill -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
+    <script>
+        window.Buffer = window.Buffer || buffer.Buffer;
+    </script>
+     <!-- Include @solana/web3.js via Corrected CDN -->
+     <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
+     <!-- Include @solana/spl-token via CDN -->
+     <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Font Awesome CDN for Icons -->
@@ -21,15 +31,9 @@
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <!-- Include @solana/web3.js via Corrected CDN -->
-    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
-    <!-- Include @solana/spl-token via CDN -->
-    <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
-    <!-- Buffer Polyfill -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
-    <script>
-        window.Buffer = window.Buffer || buffer.Buffer;
-    </script>
+   
+   
+   
 </head>
 
 <body>
@@ -1052,7 +1056,7 @@
             // Event listener for Connect Wallet button
             connectWalletButton.addEventListener('click', connectWallet);
 
-            // =============================
+             // =============================
             //         BUY BUTTON CODE
             // =============================
 
@@ -1074,17 +1078,19 @@
                 }
 
                 try {
+                    let signature;
+
                     if (currency === 'SOL') {
-                        await sendSOL(amount);
+                        signature = await sendSOL(amount);
                     } else if (currency === 'USDC') {
-                        await sendUSDC(amount);
+                        signature = await sendUSDC(amount);
                     } else {
                         alert('Unsupported currency selected.');
                         return;
                     }
 
-                    // Display confirmation message instead of alert
-                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}.`);
+                    // Display confirmation message with Solscan link
+                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`, signature);
                     // Reset the form
                     document.getElementById('token-calculator').reset();
                     calculationResult.innerText = '';
@@ -1108,6 +1114,7 @@
             /**
              * Sends SOL from the user's wallet to the target address.
              * @param {number} amount 
+             * @returns {string} Transaction signature
              */
             const sendSOL = async (amount) => {
                 const provider = window.solana;
@@ -1130,11 +1137,14 @@
                 const signature = await provider.signAndSendTransaction(transaction);
                 const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
                 await connection.confirmTransaction(signature, 'confirmed');
+
+                return signature; // Return the transaction signature
             };
 
             /**
              * Sends USDC (SPL Token) from the user's wallet to the target address.
              * @param {number} amount 
+             * @returns {string} Transaction signature
              */
             const sendUSDC = async (amount) => {
                 const provider = window.solana;
@@ -1166,6 +1176,8 @@
                 // Sign and send transaction
                 const signature = await provider.signAndSendTransaction(transaction);
                 await connection.confirmTransaction(signature, 'confirmed');
+
+                return signature; // Return the transaction signature
             };
 
             /**
@@ -1202,7 +1214,6 @@
 
                 return associatedTokenAddress;
             };
-
             // =============================
             //   AUTOMATIC WALLET CONNECTION
             // =============================
