@@ -50,6 +50,8 @@
         </a>
          <!-- Connect Wallet Button -->
          <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
+         <!-- Disconnect Wallet Button (Initially Hidden) -->
+         <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
          <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
     </header>
@@ -115,6 +117,11 @@
                 <!-- Chart Container (Initially Hidden) -->
                 <div class="price-chart-container" id="price-chart-container" style="display: none;">
                     <div id="tradingview-widget"></div>
+                </div>
+
+                <!-- Confirmation Message Container -->
+                <div id="transaction-confirmation" class="transaction-confirmation" style="display: none; margin-top: 20px;">
+                    <p id="confirmation-message" style="color: green; font-weight: bold;"></p>
                 </div>
             </section>
 
@@ -240,11 +247,10 @@
                         <h3>How can I participate in the presale?</h3>
                         <p>You can participate in the presale by following the instructions on our presale window.</p>
                     </div>
-                    <div class="faq-container">
-                        <div class="faq-item">
-                            <h3>How do I buy $lilstu coin?</h3>
-                            <p>Connect your wallet, enter your desired amount in the token price calculator section, hit calculate, then hit buy. </p>
-                        </div>
+                    <div class="faq-item">
+                        <h3>How do I buy $lilstu coin?</h3>
+                        <p>Connect your wallet, enter your desired amount in the token price calculator section, hit calculate, then hit buy.</p>
+                    </div>
                     <div class="faq-item">
                         <h3>What blockchain is StuartLittleOnSol built on?</h3>
                         <p>StuartLittleOnSol is built on the Solana blockchain, leveraging its robust infrastructure and low transaction fees.</p>
@@ -314,6 +320,7 @@
             const chartContainer = document.getElementById('price-chart-container');
             const navLinks = document.querySelector('.nav-links');
             const connectWalletButton = document.getElementById('connect-wallet');
+            const disconnectWalletButton = document.getElementById('disconnect-wallet'); // New
             const walletAddressSpan = document.getElementById('wallet-address');
             const buyButton = document.getElementById('buy-button');
             const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
@@ -375,13 +382,13 @@
                 });
             };
 
-                    // Toggle mobile menu visibility
-menuToggle.addEventListener('click', () => {
-    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', !isExpanded);
-    navLinks.classList.toggle('active');
-    navLinks.setAttribute('aria-hidden', isExpanded);
-});
+            // Toggle mobile menu visibility
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+                navLinks.setAttribute('aria-hidden', isExpanded);
+            });
 
             // Function to maximize the popup from minimized state
             const maximizePresale = () => {
@@ -413,8 +420,6 @@ menuToggle.addEventListener('click', () => {
                     hidePresale();
                 }
             });
-       
-
 
             // Intersection Observer to detect when Presale section is in view
             const observerOptions = {
@@ -976,6 +981,7 @@ menuToggle.addEventListener('click', () => {
                         walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
                         connectWalletButton.disabled = true;
                         connectWalletButton.innerText = 'Wallet Connected';
+                        disconnectWalletButton.style.display = 'inline-block'; // Show Disconnect button
                         console.log('Connected wallet address:', connectedWallet);
                         // Enable Buy button if calculation is already done
                         if (calculationResult.innerText.includes('STUART tokens')) {
@@ -999,7 +1005,6 @@ menuToggle.addEventListener('click', () => {
                 return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
             };
 
-            
             // =============================
             //    DISCONNECT WALLET FUNCTIONALITY
             // =============================
@@ -1007,7 +1012,7 @@ menuToggle.addEventListener('click', () => {
             /**
              * Disconnects the Phantom Wallet.
              */
-             const disconnectWallet = async () => {
+            const disconnectWallet = async () => {
                 if (window.solana && window.solana.isPhantom && connectedWallet) {
                     try {
                         await window.solana.disconnect();
@@ -1018,7 +1023,7 @@ menuToggle.addEventListener('click', () => {
                         disconnectWalletButton.style.display = 'none'; // Hide Disconnect button
                         buyButton.disabled = true;
                         console.log('Wallet disconnected.');
-                        // Optionally, show a message to the user
+                        // Display confirmation message
                         showConfirmationMessage('Wallet successfully disconnected.');
                     } catch (err) {
                         console.error('Failed to disconnect wallet:', err);
@@ -1064,7 +1069,8 @@ menuToggle.addEventListener('click', () => {
                         return;
                     }
 
-                    alert(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}.`);
+                    // Display confirmation message instead of alert
+                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}.`);
                     // Reset the form
                     document.getElementById('token-calculator').reset();
                     calculationResult.innerText = '';
@@ -1191,6 +1197,7 @@ menuToggle.addEventListener('click', () => {
                         walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
                         connectWalletButton.disabled = true;
                         connectWalletButton.innerText = 'Wallet Connected';
+                        disconnectWalletButton.style.display = 'inline-block'; // Show Disconnect button
                         buyButton.disabled = false;
                         console.log('Wallet already connected:', connectedWallet);
                     } catch (err) {
@@ -1200,6 +1207,7 @@ menuToggle.addEventListener('click', () => {
             };
 
             checkIfWalletIsConnected();
+
             // =============================
             //    TRANSACTION CONFIRMATION MESSAGE
             // =============================
@@ -1208,7 +1216,7 @@ menuToggle.addEventListener('click', () => {
              * Displays a confirmation message to the user.
              * @param {string} message 
              */
-             const showConfirmationMessage = (message) => {
+            const showConfirmationMessage = (message) => {
                 const confirmationContainer = document.getElementById('transaction-confirmation');
                 const confirmationMessage = document.getElementById('confirmation-message');
                 confirmationMessage.innerText = message;
@@ -1219,12 +1227,7 @@ menuToggle.addEventListener('click', () => {
                     confirmationContainer.style.display = 'none';
                 }, 5000);
             };
-    
         });
-
-
     </script>
 </body>
 </html>
-
-
