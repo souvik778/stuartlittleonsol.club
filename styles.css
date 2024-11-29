@@ -1967,8 +1967,7 @@ body {
     }
     
 }
-/* for wallet*/
-
+/* Wallet Button Styling */
 .btn {
     background-color: #577ea36b;
     color: white;
@@ -1976,18 +1975,25 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 1em;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .btn:hover {
     background-color: #434190;
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.95);
 }
 
 .connect-wallet-btn {
     display: flex;
     align-items: center;
     gap: 5px;
+    animation: fadeIn 1.2s ease-in-out;
 }
 
 .wallet-address {
@@ -1995,14 +2001,22 @@ body {
     font-size: 0.9em;
     color: #eaecf1b7;
     word-break: break-all;
+    animation: fadeIn 1.5s ease-in-out;
 }
+
 input, select {
     padding: 10px;
     border: 2px solid #e2e8f0;
     border-radius: 5px;
     font-size: 1em;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+input:focus, select:focus {
+    border-color: #434190;
+    box-shadow: 0 0 8px rgba(67, 65, 144, 0.4);
+}
+
 /* Fade In Animation */
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -2021,6 +2035,7 @@ input, select {
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.8s ease-in-out;
     }
 
     .nav-links.active {
@@ -2029,6 +2044,12 @@ input, select {
 
     .menu-toggle {
         display: block;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        transform: rotate(90deg);
     }
 
     .button-container {
@@ -2040,4 +2061,20 @@ input, select {
     }
 }
 
-/*extra*/
+/* Additional Animations */
+@keyframes buttonPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.btn:hover {
+    animation: buttonPulse 0.6s ease-in-out;
+}
+
+.wallet-address {
+    animation: fadeIn 2s ease-in-out;
+} 
