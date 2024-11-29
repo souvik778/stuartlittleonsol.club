@@ -93,7 +93,7 @@ a:hover {
         3px -3px 0 #fff,
         -3px 3px 0 #fff,
         3px 3px 0 #fff,
-        6px 6px 0 #fff;
+      /*  6px 6px 0 #fff;*/
     position: relative;
     animation: wobble 6s infinite;
     padding: 5px 10px;
