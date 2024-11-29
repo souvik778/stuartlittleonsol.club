@@ -86,7 +86,7 @@ a:hover {
 
 .topbar h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 25px;
+    font-size: 35px;
     font-weight: 800;
     
     color: #FFD700;
@@ -254,6 +254,45 @@ a:hover {
         font-size: 0.9rem; /* Slightly smaller font size */
     }
 }
+/* For Tablets and Medium Screens */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .nav-links {
+        display: flex;
+        justify-content: center; /* Center-align links */
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 1rem; /* Adjust font size */
+        padding: 10px 20px;
+    }
+
+    .topbar {
+        padding: 10px 30px; /* Adjust padding dynamically */
+    }
+}
+/* Dynamic Topbar Styles */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px; /* Default padding */
+    background-color: rgba(0, 0, 0, 0.85);
+    transition: padding 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        padding: 10px 20px; /* Smaller padding for phones */
+    }
+}
+
+@media (min-width: 1025px) {
+    .topbar {
+        padding: 20px 40px; /* Larger padding for desktops */
+    }
+}
+
 
 
 /* =============================
@@ -1625,32 +1664,7 @@ footer {
         overflow-y: auto; /* Enable scrolling if content overflows */
         position: fixed;
     }
-
-    .presale-popup .close-btn {
-        font-size: 2rem; /* Reduce font size */
-        top: 10px; /* Adjust position */
-        right: 10px;
     }
-
-    .presale-popup h2 {
-        font-size: 1.8rem; /* Reduce font size */
-    }
-
-    .presale-popup p {
-        font-size: 1rem; /* Reduce font size */
-    }
-
-    .presale-popup img.token-image {
-        max-width: 100%; /* Ensure image fits */
-    }
-}
-
-/* Ensure presale-popup does not exceed viewport height */
-.presale-popup {
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
 
 /* Animations for Interactive Sidebar Elements */
 .presale-section .social-links a {
@@ -1679,39 +1693,6 @@ footer {
     opacity: 0;
     animation: fadeIn 1s ease forwards;
     animation-delay: 1.5s;
-}
-
-/* Adjust presale-popup for smaller screens */
-@media (max-width: 768px) {
-    .presale-popup {
-        padding: 20px 15px; /* Reduce padding */
-        max-height: 90vh; /* Limit height */
-        overflow-y: auto; /* Enable scrolling if content overflows */
-    }
-
-    .presale-popup .close-btn {
-        font-size: 2rem; /* Reduce font size */
-        top: 10px; /* Adjust position */
-        right: 10px;
-    }
-
-    .presale-popup h2 {
-        font-size: 1.8rem; /* Reduce font size */
-    }
-
-    .presale-popup p {
-        font-size: 1rem; /* Reduce font size */
-    }
-
-    .presale-popup img.token-image {
-        max-width: 100%; /* Ensure image fits */
-    }
-}
-
-/* Ensure presale-popup does not exceed viewport height */
-.presale-popup {
-    max-height: 90vh;
-    overflow-y: auto;
 }
 
 /* Add responsive adjustments for 16-inch and 17-inch laptops */
@@ -1950,7 +1931,8 @@ body {
     .presale-popup {
         display: none !important;
     }
-    /* Hide the minimized presale button if it exists */
+    /* Hide the minimized presale button if it 
+    exists */
     .presale-minimized {
         display: none !important;
     }
@@ -1963,7 +1945,7 @@ body {
 @media (max-width: 768px) {
     .chart-legend {
         max-height: 150px;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
 }
@@ -2024,42 +2006,6 @@ input:focus, select:focus {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.95);
-        position: absolute;
-        top: 70px;
-        right: 40px;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 0.8s ease-in-out;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .menu-toggle {
-        display: block;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-
-    .menu-toggle:hover {
-        transform: rotate(90deg);
-    }
-
-    .button-container {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-}
 
 /* Additional Animations */
 @keyframes buttonPulse {
