@@ -199,7 +199,6 @@ a:hover {
 .menu-toggle.open {
     transform: rotate(90deg); /* Rotate icon when active */
 }
-
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
     /* Display Hamburger Menu */
@@ -207,93 +206,45 @@ a:hover {
         display: block;
     }
 
-    /* Hide Navigation Links by Default */
+    /* Style adjustments for navigation links */
     .nav-links {
-        display: flex;
+        display: none; /* Hidden by default, shown on toggle */
         flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center items horizontally */
-        gap: 10px; /* Add consistent spacing between items */
-        position: absolute; /* Ensure it doesn't affect other elements */
+        width: 100%; /* Full width */
+        position: fixed; /* Fixed positioning */
         top: 60px; /* Adjust based on topbar height */
         left: 0;
-        width: 100%; /* Ensure it spans the full width of the screen */
-        padding: 15px 0;
-        background-color: rgba(0, 0, 0, 0.95); /* Set menu background */
-        z-index: 1000; /* Place above other elements */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.95); /* Menu background */
+        padding: 20px 0; /* Vertical padding */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        z-index: 1000; /* Ensure it's above other content */
+        transition: transform 0.3s ease; /* Smooth transition for transform */
     }
-/* Add Padding to Navigation Links */
-.nav-links a {
-    padding: 12px 20px; /* Add padding for better clickability */
-    font-size: 1rem; /* Ensure text size is readable */
-    text-align: center; /* Center-align text */
-    border-bottom: 1px solid #444; /* Optional: Separator */
-    width: 90%; /* Constrain link width to prevent overflow */
-    max-width: 300px; /* Prevent links from becoming too wide */
-    margin: 5px 0; /* Add spacing between items */
-}
 
-    /* Show Navigation Links When Active */
+    /* Ensuring each link has adequate spacing */
+    .nav-links a {
+        display: block; /* Ensure each link is a block for spacing */
+        padding: 15px 20px; /* Adequate padding */
+        font-size: 1.1rem; /* Readable font size */
+        color: #fff; /* Text color */
+        text-align: center; /* Center alignment of text */
+        border-bottom: 1px solid #444; /* Separator between items */
+        transition: background-color 0.3s ease; /* Transition for hover effect */
+    }
+
     .nav-links.active {
-        display: flex;
-        animation: fadeInDown 0.3s ease forwards;
-    }
-
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Navigation Links Styling in Mobile */
-    .nav-links a {
-        padding: 12px 20px;
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-        border-bottom: 1px solid #444;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    
-    }
-
-    /* Prevent Body Scroll When Mobile Menu is Active */
-    body.no-scroll {
-        overflow: hidden;
+        display: flex; /* Display as flex to use flex properties */
     }
 }
 
-/* =============================
-   Additional Mobile Enhancements
-   ============================= */
-
-/* Further Adjustments for Smaller Phones (≤ 480px) */
+/* Ensuring proper display and functionality on even smaller devices */
 @media (max-width: 480px) {
-    /* Reduce Hamburger Menu Size */
-    .menu-toggle {
-        font-size: 1.8rem;
-        padding: 8px;
-        position: absolute;
-        top: 15px; /* Position icon within the topbar */
-        right: 20px; /* Ensure it's aligned to the right */
-        z-index: 1001; /* Place above navigation */
-    }
-    /* Prevent Text Overlapping */
     .nav-links a {
-        display: block; /* Ensure links take full width */
+        padding: 12px 15px; /* Slightly less padding */
+        font-size: 1rem; /* Slightly smaller font size */
     }
- /* Ensure Smooth Transitions */
- .nav-links,
- .nav-links a {
-     transition: all 0.3s ease;
- }
 }
+
 
 /* =============================
    Additional Mobile Enhancements for Ultra-Small Devices (≤375px)
