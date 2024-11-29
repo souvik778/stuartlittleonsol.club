@@ -43,8 +43,6 @@
             <a href="#contact">Contact</a>
             <a href="creatememe.html">Create Meme</a>
 
-           
-           
          <!-- Social Links -->
          <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
             <i class="fab fa-linktree"></i>
@@ -377,6 +375,14 @@
                 });
             };
 
+                    // Toggle mobile menu visibility
+menuToggle.addEventListener('click', () => {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', !isExpanded);
+    navLinks.classList.toggle('active');
+    navLinks.setAttribute('aria-hidden', isExpanded);
+});
+
             // Function to maximize the popup from minimized state
             const maximizePresale = () => {
                 presalePopup.style.display = 'flex';
@@ -407,6 +413,8 @@
                     hidePresale();
                 }
             });
+       
+
 
             // Intersection Observer to detect when Presale section is in view
             const observerOptions = {
@@ -1162,6 +1170,8 @@
 
             checkIfWalletIsConnected();
         });
+
+
     </script>
 </body>
 </html>
