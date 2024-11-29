@@ -1993,7 +1993,7 @@ body {
 .wallet-address {
     margin-left: 15px;
     font-size: 0.9em;
-    color: #2d3748;
+    color: #eaecf1b7;
     word-break: break-all;
 }
 input, select {
