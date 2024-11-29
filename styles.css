@@ -224,24 +224,31 @@ a:hover {
     /* Ensuring each link has adequate spacing */
     .nav-links a {
         display: block; /* Ensure each link is a block for spacing */
-        padding: 15px 20px; /* Adequate padding */
-        font-size: 1.1rem; /* Readable font size */
+        padding: 12px 20px; /* Adequate padding */
+        font-size: 1rem; /* Readable font size */
+        width:100%;
         color: #fff; /* Text color */
         text-align: center; /* Center alignment of text */
         border-bottom: 1px solid #444; /* Separator between items */
         transition: background-color 0.3s ease; /* Transition for hover effect */
+        box-sizing: border-box;
+        
     }
 
     .nav-links.active {
         display: flex; /* Display as flex to use flex properties */
     }
 }
+.nav-links a:hover {
+    background-color: rgba(255, 215, 0, 0.4);
+}
+
 
 /* Ensuring proper display and functionality on even smaller devices */
 @media (max-width: 480px) {
     .nav-links a {
         padding: 12px 15px; /* Slightly less padding */
-        font-size: 1rem; /* Slightly smaller font size */
+        font-size: 0.9rem; /* Slightly smaller font size */
     }
 }
 
