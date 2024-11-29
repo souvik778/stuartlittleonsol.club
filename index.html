@@ -999,6 +999,37 @@ menuToggle.addEventListener('click', () => {
                 return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
             };
 
+            
+            // =============================
+            //    DISCONNECT WALLET FUNCTIONALITY
+            // =============================
+
+            /**
+             * Disconnects the Phantom Wallet.
+             */
+             const disconnectWallet = async () => {
+                if (window.solana && window.solana.isPhantom && connectedWallet) {
+                    try {
+                        await window.solana.disconnect();
+                        connectedWallet = null;
+                        walletAddressSpan.innerText = '';
+                        connectWalletButton.disabled = false;
+                        connectWalletButton.innerText = 'Connect Your Wallet';
+                        disconnectWalletButton.style.display = 'none'; // Hide Disconnect button
+                        buyButton.disabled = true;
+                        console.log('Wallet disconnected.');
+                        // Optionally, show a message to the user
+                        showConfirmationMessage('Wallet successfully disconnected.');
+                    } catch (err) {
+                        console.error('Failed to disconnect wallet:', err);
+                        alert('Failed to disconnect wallet. Please try again.');
+                    }
+                }
+            };
+
+            // Event listener for Disconnect Wallet button
+            disconnectWalletButton.addEventListener('click', disconnectWallet);
+
             // Event listener for Connect Wallet button
             connectWalletButton.addEventListener('click', connectWallet);
 
@@ -1169,6 +1200,26 @@ menuToggle.addEventListener('click', () => {
             };
 
             checkIfWalletIsConnected();
+            // =============================
+            //    TRANSACTION CONFIRMATION MESSAGE
+            // =============================
+
+            /**
+             * Displays a confirmation message to the user.
+             * @param {string} message 
+             */
+             const showConfirmationMessage = (message) => {
+                const confirmationContainer = document.getElementById('transaction-confirmation');
+                const confirmationMessage = document.getElementById('confirmation-message');
+                confirmationMessage.innerText = message;
+                confirmationContainer.style.display = 'block';
+
+                // Hide the message after 5 seconds
+                setTimeout(() => {
+                    confirmationContainer.style.display = 'none';
+                }, 5000);
+            };
+    
         });
 
 
