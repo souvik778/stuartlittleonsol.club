@@ -410,48 +410,7 @@ a:hover {
     transform: scale(1.2);
 }
 
-/* Hide navigation links and show menu toggle on mobile */
-@media (max-width: 768px) {
-    .topbar {
-        position: fixed;
-        top: 0;
-        flex-wrap: wrap;
-        height: auto;
 
-    }
-    .topbar h1 {
-        font-size: 1.8rem;
-    }
-
-    .topbar nav {
-        display: none;
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.95);
-        width: 100%;
-        padding: 10px 0;
-        position: fixed;
-        top: 100%;
-        left: 0;
-        z-index: 999;
-    }
-
- 
-
-    .topbar .menu-toggle {
-        display: block;
-        font-size: 2rem;
-        color: #FFD700;
-        cursor: pointer;
-        padding: 10px;
-    }
-
-    .topbar nav a {
-        padding: 12px;
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-    }
-}
 .presale-popup {
     display: none; /* Hide the popup on mobile devices */
 }
