@@ -1749,15 +1749,7 @@ footer {
 
 /* Mobile Phones (up to 480px) */
 @media (max-width: 480px) {
-    .topbar nav a {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-        position:fixed;
-    }
-
-    .topbar h1 {
-        font-size: 1.8rem;
-    }
+  
 
     .main-container {
         padding: 10px;
@@ -1831,14 +1823,7 @@ footer {
 
 /* Tablets and Small Laptops (481px to 1024px) */
 @media (min-width: 481px) and (max-width: 1024px) {
-    .topbar nav a {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-    }
 
-    .topbar h1 {
-        font-size: 2rem;
-    }
 
     .tokenomics-item,
     .feature-card {
