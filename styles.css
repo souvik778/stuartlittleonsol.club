@@ -220,7 +220,7 @@ a:hover {
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        z-index: 10000; /* Ensure it appears above other elements */
+        z-index: 1000; /* Ensure it appears above other elements */
     }
 
     /* Show Navigation Links When Active */
@@ -250,7 +250,7 @@ a:hover {
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 10000;
+    
     }
 
     /* Prevent Body Scroll When Mobile Menu is Active */
@@ -489,7 +489,7 @@ a:hover {
         background-color: rgba(0, 0, 0, 0.95);
         width: 100%;
         padding: 10px 0;
-        position: absolute;
+        position: fixed;
         top: 100%;
         left: 0;
         z-index: 999;
