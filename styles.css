@@ -209,19 +209,29 @@ a:hover {
 
     /* Hide Navigation Links by Default */
     .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.95);
-        position: absolute;
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items horizontally */
+        gap: 10px; /* Add consistent spacing between items */
+        position: absolute; /* Ensure it doesn't affect other elements */
         top: 60px; /* Adjust based on topbar height */
         left: 0;
-        padding: 10px 0;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+        width: 100%; /* Ensure it spans the full width of the screen */
+        padding: 15px 0;
+        background-color: rgba(0, 0, 0, 0.95); /* Set menu background */
+        z-index: 1000; /* Place above other elements */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        z-index: 1000; /* Ensure it appears above other elements */
     }
+/* Add Padding to Navigation Links */
+.nav-links a {
+    padding: 12px 20px; /* Add padding for better clickability */
+    font-size: 1rem; /* Ensure text size is readable */
+    text-align: center; /* Center-align text */
+    border-bottom: 1px solid #444; /* Optional: Separator */
+    width: 90%; /* Constrain link width to prevent overflow */
+    max-width: 300px; /* Prevent links from becoming too wide */
+    margin: 5px 0; /* Add spacing between items */
+}
 
     /* Show Navigation Links When Active */
     .nav-links.active {
@@ -269,50 +279,22 @@ a:hover {
     .menu-toggle {
         font-size: 1.8rem;
         padding: 8px;
+        position: absolute;
+        top: 15px; /* Position icon within the topbar */
+        right: 20px; /* Ensure it's aligned to the right */
+        z-index: 1001; /* Place above navigation */
     }
-
-    /* Adjust Navigation Links */
+    /* Prevent Text Overlapping */
     .nav-links a {
-        padding: 10px 15px;
-        font-size: 0.9rem;
+        display: block; /* Ensure links take full width */
     }
-
-    /* Ensure Icons and Images Within Nav Links Scale Down */
-    .nav-links a i,
-    .nav-links a img {
-        width: 18px;
-        height: 18px;
-        margin-left: 5px;
-    }
-
-    /* Adjust Topbar Padding */
-    .topbar {
-        padding: 10px 20px;
-    }
-
-    /* Adjust Topbar Heading Font Size */
-    .topbar h1 {
-        font-size: 2rem;
-        padding: 5px 8px;
-    }
-
-    /* Navigation Background and Border Radius */
-    .nav-links {
-        top: 50px; /* Adjust based on topbar height for smaller screens */
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-    }
-
-    /* Remove Unnecessary Box Shadows for Clarity */
-    .nav-links {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Enhance Click Targets */
-    .nav-links a {
-        padding: 12px 15px;
-    }
+ /* Ensure Smooth Transitions */
+ .nav-links,
+ .nav-links a {
+     transition: all 0.3s ease;
+ }
 }
+
 /* =============================
    Additional Mobile Enhancements for Ultra-Small Devices (≤375px)
    ============================= */
