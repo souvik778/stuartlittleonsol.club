@@ -80,11 +80,11 @@ a:hover {
     to {
         top: 0;
     }
-}
+}x
 
 .topbar h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 700;
     text-transform: uppercase;
     color: #FFD700;
@@ -99,6 +99,7 @@ a:hover {
     padding: 5px 10px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
+    text-align: center;
 }
 
 @keyframes wobble {
@@ -264,8 +265,9 @@ a:hover {
     }
 
     .topbar h1 {
-        font-size: 1.8rem; /* Reduce font size for smaller screens */
+        font-size: 1rem; /* Reduce font size for smaller screens */
         padding: 3px 5px;
+        text-align: center;
     }
 
     /* 2. Ensure Hamburger Menu is Always Visible and Positioned Correctly */
@@ -423,6 +425,7 @@ a:hover {
     .topbar h1 {
         font-size: 1rem;
         align-items: center;
+        padding: 3px 5px;
 
     }
 
