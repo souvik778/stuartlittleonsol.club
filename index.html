@@ -160,6 +160,11 @@
                 <p>Follow us on socials to stay updated:</p>
                 <div class="social-links">
                     <!-- Repeated Social Links for clarity -->
+                      <!-- Social Links -->
+            <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
+                <i class="fab fa-linktree"></i>
+                <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
+            </a>
                 </div>
             </section>
             <br><br>
@@ -1344,11 +1349,11 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
 
             checkIfWalletIsConnected();
             
-        //    <!-- Include this script before the closing </body> tag -->
+      
         // Function to toggle the navigation menu
     function toggleMenu() {
         menuToggle.classList.toggle('open'); // Rotate the hamburger icon
-        navLinks.classList.toggle('auto'); // Show or hide the navigation links
+        navLinks.classList.toggle('open'); // Show or hide the navigation links
         // Optionally, toggle the body overflow to prevent background scrolling when menu is open
         document.body.classList.toggle('no-scroll');
     }
@@ -1362,14 +1367,34 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('open');
-            navLinks.classList.toggle('active');
+            navLinks.classList.toggle('open');
         });
+    
+        /**
+ * Debounce function to limit how often a function can fire.
+ * @param {Function} func - The function to debounce.
+ * @param {number} wait - The time to wait in milliseconds.
+ * @returns {Function}
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function () {
+        const context = this,
+            args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// Replace the resize event listener with a debounced version
+window.addEventListener('resize', debounce(handleDisplay, 700));
+
 
         // Close the menu when a link is clicked (optional)
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('open');
-                navLinks.classList.remove('active');
+                navLinks.classList.remove('open');
             });
         });
     });
