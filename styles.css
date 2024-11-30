@@ -197,6 +197,8 @@ a:hover {
     padding: 10px;
     transition: transform 0.3s ease;
     z-index: 1001; /* Ensure it's above other elements */
+    background: none;
+    border: none;
 }
 
 .menu-toggle.open {
@@ -222,6 +224,9 @@ a:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow for depth */
         z-index: 1000; /* Ensure it's above other content */
         transition: transform 0.3s ease; /* Smooth transition for transform */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
     }
 
     /* Ensuring each link has adequate spacing */
@@ -240,6 +245,9 @@ a:hover {
 
     .nav-links.active {
         display: flex; /* Display as flex to use flex properties */
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
     }
 }
 .nav-links a:hover {
@@ -327,6 +335,9 @@ a:hover {
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         z-index: 1000;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
     }
 
     .nav-links a {
@@ -349,6 +360,8 @@ a:hover {
         box-shadow: none;
         padding: 0;
         animation: fadeInOverlay 0.3s ease forwards;
+        opacity: 1;
+    visibility: visible;
         
     }
 
@@ -385,10 +398,29 @@ a:hover {
         transition: all 0.3s ease;
     }
 }
-.no-scroll {
+
+.nav-links a {
+    touch-action: manipulation;
+}
+
+.menu-toggle {
+    touch-action: manipulation;
+}
+/* =============================
+   Prevent Background Scrolling
+   ============================= */
+   .no-scroll {
     overflow: hidden;
 }
 
+/* =============================
+   Exit Animation for Menu
+   ============================= */
+.nav-links.closing {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+}
 
 /* Main Container */
 .main-container {
