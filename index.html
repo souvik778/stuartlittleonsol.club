@@ -13,11 +13,29 @@
        window.Buffer = window.Buffer || Buffer;
    </script>
 
-   
-<!-- Confirmation Message Container -->
-<div id="transaction-confirmation" class="transaction-confirmation" style="display: none; margin-top: 20px;">
-    <p id="confirmation-message" style="color: green; font-weight: bold;"></p>
-</div>
+   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+   <script type="module">
+    import { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
+    
+    // Assign to global window object
+    window.solanaWeb3 = { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    };
+    window.splToken = splToken;
+</script>
 
     <!-- Verification Script -->
     <script>
@@ -1131,7 +1149,6 @@
                     alert('Please enter a valid amount.');
                     return;
                 }
-                        
 
                 try {
                     let signature;
@@ -1146,7 +1163,7 @@
                     }
 
                     // Display confirmation message with Solscan link
-                    showConfirmationMessage(`Thank you for buying $lilstu! Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`, signature);
+                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`, signature);
                     // Reset the form
                     document.getElementById('token-calculator').reset();
                     calculationResult.innerText = '';
@@ -1182,21 +1199,12 @@
     const roundedLamports = Math.round(lamports);
 
     // Initialize connection
-    const { solanaWeb3, splToken } = window;
-
-// Replace 'YOUR_HELIUS_API_KEY' with your actual Helius API key
-const HELIUS_RPC_URL = 'https://solana-mainnet.g.alchemy.com/v2/PDBwFdllqfG3KRHb1iwlJjcwVSAEMsSO';
-
-// Initialize connection using Helius RPC
-const connection = new solanaWeb3.Connection(HELIUS_RPC_URL, 'confirmed');
-
-
    // Replace with your custom RPC URL
-const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a';
+const CUSTOM_RPC_URL = 'https://solana-mainnet.g.alchemy.com/v2/PDBwFdllqfG3KRHb1iwlJjcwVSAEMsSO';
 
 
 // Initialize connection with custom RPC
- connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
+const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
 
     // Fetch recent blockhash
     const { blockhash } = await connection.getLatestBlockhash();
@@ -1338,72 +1346,6 @@ const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-46
             };
 
             checkIfWalletIsConnected();
-/**
- * Handles the Buy action by sending SOL or USDC to the target address.
- */
-  buyTokens = async () => {
-    if (!connectedWallet) {
-        alert('Please connect your wallet first.');
-        return;
-    }
-
-    const amount = parseFloat(amountInput.value);
-    const currency = currencySelect.value;
-
-    if (!isValidAmount(amount)) {
-        alert('Please enter a valid amount.');
-        return;
-    }
-
-    try {
-        if (currency === 'USDC') {
-            // Check USDC balance before proceeding
-            const usdcBalance = await getUSDCBalance(connectedWallet);
-            if (amount > usdcBalance) {
-                alert('Low balance');
-                return;
-            }
-        }
-
-        let signature;
-
-        if (currency === 'SOL') {
-            signature = await sendSOL(amount);
-        } else if (currency === 'USDC') {
-            signature = await sendUSDC(amount);
-        } else {
-            alert('Unsupported currency selected.');
-            return;
-        }
-
-        // Display confirmation message with thank you note and Solscan link
-        showConfirmationMessage(`Thank you for buying $lilstu! Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`);
-        // Reset the form
-        document.getElementById('token-calculator').reset();
-        calculationResult.innerText = '';
-        buyButton.disabled = true;
-    } catch (error) {
-        console.error('Transaction failed:', error);
-        alert(`Transaction failed: ${error.message}`);
-    }
-};
-/**
- * Displays a confirmation message to the user.
- * @param {string} message 
- */
-  showConfirmationMessage = (message) => {
-    const confirmationContainer = document.getElementById('transaction-confirmation');
-    const confirmationMessage = document.getElementById('confirmation-message');
-    confirmationMessage.innerHTML = message;
-    confirmationContainer.style.display = 'block';
-
-    // Hide the message after 10 seconds
-    setTimeout(() => {
-        confirmationContainer.style.display = 'none';
-    }, 10000);
-};
-
-
 
         });
     </script>
