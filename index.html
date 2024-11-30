@@ -1199,10 +1199,14 @@
     const roundedLamports = Math.round(lamports);
 
     // Initialize connection
-    connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+   // Replace with your custom RPC URL
+const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a'; 
+
+// Initialize connection with custom RPC
+const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
 
     // Fetch recent blockhash
-    const { blockhash } = await connection.getRecentBlockhash();
+    const { blockhash } = await connection.getLatestBlockhash();
 
     const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
         solanaWeb3.SystemProgram.transfer({
@@ -1238,7 +1242,7 @@
     const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
 
     // Fetch recent blockhash
-    const { blockhash } = await connection.getRecentBlockhash();
+    const { blockhash } = await connection.getLatestBlockhash();
 
     // Create transfer instruction using @solana/spl-token
     const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
