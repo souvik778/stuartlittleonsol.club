@@ -10,12 +10,13 @@
       <!-- Buffer Polyfill -->
     <!-- Buffer Polyfill -->
 <!-- Buffer Polyfill via jsDelivr -->
-<script src="https://unpkg.com/buffer@6.0.3/buffer.umd.min.js"></script>
-<script>
+<!-- Buffer Polyfill via jsDelivr (buffer@6.0.3) -->
+<!-- Buffer Polyfill via jsDelivr (buffer@5.7.1) -->
+<script src="https://cdn.jsdelivr.net/npm/buffer@6.0/index.min.js"></script>
+    <script>
+    // Assign Buffer to window.Buffer if it's not already defined
     window.Buffer = window.Buffer || Buffer;
 </script>
-
-
 
 
      <!-- Include @solana/web3.js via Corrected CDN -->
