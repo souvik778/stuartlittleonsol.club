@@ -7,60 +7,19 @@
     <title>StuartLittleOnSol Homepage</title>
 
     <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
-    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
     <script>
         // Assign Buffer to window.Buffer if it's not already defined
         window.Buffer = window.Buffer || Buffer;
     </script>
-
-    <!-- Verification Script -->
-    <script>
-        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-        if (typeof Buffer !== 'undefined') {
-            console.log('Buffer.from works:', typeof Buffer.from === 'function');
-            
-            // If Buffer.from is not a function, implement a fallback
-            if (typeof Buffer.from !== 'function') {
-                console.warn('Buffer.from is not defined. Implementing a basic fallback.');
-                Buffer.from = function (str, encoding) {
-                    if (typeof str === 'string') {
-                        switch (encoding) {
-                            case 'utf8':
-                            case 'utf-8':
-                                return new Uint8Array(new TextEncoder().encode(str));
-                            case 'hex':
-                                return new Uint8Array(str.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
-                            case 'base64':
-                                return new Uint8Array(atob(str).split('').map(c => c.charCodeAt(0)));
-                            default:
-                                throw new Error('Unsupported encoding: ' + encoding);
-                        }
-                    } else if (Array.isArray(str) || str instanceof Uint8Array) {
-                        return new Uint8Array(str);
-                    } else {
-                        throw new Error('Unsupported type for Buffer.from');
-                    }
-                };
-            }
-
-            // Test Buffer.from
-            try {
-                const buf = Buffer.from('Hello, World!', 'utf8');
-                console.log('Buffer content:', Buffer.toString.call(buf));
-            } catch (error) {
-                console.error('Error using Buffer.from:', error);
-            }
-        }
-    </script>
-
     <!-- Include @solana/web3.js -->
     <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
 
     <!-- Include @solana/spl-token -->
-    <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.9/lib/cjs/index.js"></script>
 
     <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
 
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -1165,69 +1124,76 @@
              * @param {number} amount 
              * @returns {string} Transaction signature
              */
-            const sendSOL = async (amount) => {
-                const provider = window.solana;
-                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             const sendSOL = async (amount) => {
+    const provider = window.solana;
+    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-                // Ensure lamports are integers
-                const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
-                const roundedLamports = Math.round(lamports);
+    // Ensure lamports are integers
+    const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
+    const roundedLamports = Math.round(lamports);
 
-                const transaction = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey,
-                        toPubkey,
-                        lamports: roundedLamports,
-                    })
-                );
+    // Initialize connection
+    connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
 
-                // Sign and send transaction
-                const signature = await provider.signAndSendTransaction(transaction);
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-                await connection.confirmTransaction(signature, 'confirmed');
+    // Fetch recent blockhash
+    const { blockhash } = await connection.getRecentBlockhash();
 
-                return signature; // Return the transaction signature
-            };
+    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+        solanaWeb3.SystemProgram.transfer({
+            fromPubkey,
+            toPubkey,
+            lamports: roundedLamports,
+        })
+    );
+                  // Sign and send transaction
+    const signature = await provider.signAndSendTransaction(transaction);
+    await connection.confirmTransaction(signature, 'confirmed');
 
+    return signature; // Return the transaction signature
+};
             /**
              * Sends USDC (SPL Token) from the user's wallet to the target address.
              * @param {number} amount 
              * @returns {string} Transaction signature
              */
-            const sendUSDC = async (amount) => {
-                const provider = window.solana;
-                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             const sendUSDC = async (amount) => {
+    const provider = window.solana;
+    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-                // Get the token program ID
-                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+    // Get the token program ID
+    const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
-                // Initialize connection
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    // Initialize connection
+    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
 
-                // Find the associated token accounts
-                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
-                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
+    // Find the associated token accounts
+    const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
+    const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
 
-                // Create transfer instruction using @solana/spl-token
-                const transaction = new solanaWeb3.Transaction().add(
-                    splToken.createTransferInstruction(
-                        fromTokenAccount,
-                        toTokenAccount,
-                        fromPubkey,
-                        amount * (10 ** 6), // USDC has 6 decimals
-                        [],
-                        TOKEN_PROGRAM_ID
-                    )
-                );
+    // Fetch recent blockhash
+    const { blockhash } = await connection.getRecentBlockhash();
 
-                // Sign and send transaction
-                const signature = await provider.signAndSendTransaction(transaction);
-                await connection.confirmTransaction(signature, 'confirmed');
+    // Create transfer instruction using @solana/spl-token
+    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+        splToken.createTransferInstruction(
+            fromTokenAccount,
+            toTokenAccount,
+            fromPubkey,
+            amount * (10 ** 6), // USDC has 6 decimals
+            [],
+            TOKEN_PROGRAM_ID
+        )
+    );
 
-                return signature; // Return the transaction signature
-            };
+    // Sign and send transaction
+    const signature = await provider.signAndSendTransaction(transaction);
+    await connection.confirmTransaction(signature, 'confirmed');
+
+    return signature; // Return the transaction signature
+};
+
 
             /**
              * Gets or creates the associated token account for a given owner and mint.
