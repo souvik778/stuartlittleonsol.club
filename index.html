@@ -1214,6 +1214,28 @@
 
                 return associatedTokenAddress;
             };
+
+
+            // =============================
+            //    TRANSACTION CONFIRMATION MESSAGE
+            // =============================
+
+            /**
+             * Displays a confirmation message to the user.
+             * @param {string} message 
+             */
+             const showConfirmationMessage = (message) => {
+                const confirmationContainer = document.getElementById('transaction-confirmation');
+                const confirmationMessage = document.getElementById('confirmation-message');
+                confirmationMessage.innerText = message;
+                confirmationContainer.style.display = 'block';
+
+                // Hide the message after 5 seconds
+                setTimeout(() => {
+                    confirmationContainer.style.display = 'none';
+                },   1000);
+            };
+            
             // =============================
             //   AUTOMATIC WALLET CONNECTION
             // =============================
@@ -1240,25 +1262,6 @@
 
             checkIfWalletIsConnected();
 
-            // =============================
-            //    TRANSACTION CONFIRMATION MESSAGE
-            // =============================
-
-            /**
-             * Displays a confirmation message to the user.
-             * @param {string} message 
-             */
-            const showConfirmationMessage = (message) => {
-                const confirmationContainer = document.getElementById('transaction-confirmation');
-                const confirmationMessage = document.getElementById('confirmation-message');
-                confirmationMessage.innerText = message;
-                confirmationContainer.style.display = 'block';
-
-                // Hide the message after 5 seconds
-                setTimeout(() => {
-                    confirmationContainer.style.display = 'none';
-                },   1000);
-            };
         });
     </script>
 </body>
