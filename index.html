@@ -13,6 +13,30 @@
        window.Buffer = window.Buffer || Buffer;
    </script>
 
+   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+   <script type="module">
+    import { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
+    
+    // Assign to global window object
+    window.solanaWeb3 = { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    };
+    window.splToken = splToken;
+</script>
+
     <!-- Verification Script -->
     <script>
         console.log('Buffer is defined:', typeof Buffer !== 'undefined');
