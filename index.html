@@ -10,7 +10,7 @@
       <!-- Buffer Polyfill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
     <script>
-        window.Buffer = window.Buffer || buffer.Buffer;
+        window.Buffer = window.Buffer || Buffer;
     </script>
      <!-- Include @solana/web3.js via Corrected CDN -->
      <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
@@ -1235,7 +1235,7 @@
                     confirmationContainer.style.display = 'none';
                 },   1000);
             };
-            
+
             // =============================
             //   AUTOMATIC WALLET CONNECTION
             // =============================
