@@ -385,6 +385,10 @@ a:hover {
         transition: all 0.3s ease;
     }
 }
+.no-scroll {
+    overflow: hidden;
+}
+
 
 /* Main Container */
 .main-container {
