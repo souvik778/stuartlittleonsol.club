@@ -6,31 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StuartLittleOnSol Homepage</title>
 
-    <!-- External Libraries -->
+   <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+   <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
+   <script>
+       // Assign Buffer to window.Buffer if it's not already defined
+       window.Buffer = window.Buffer || Buffer;
+   </script>
+
+   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+   <script type="module">
+    import { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
+    
+    // Assign to global window object
+    window.solanaWeb3 = { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    };
+    window.splToken = splToken;
+</script>
+
+    <!-- Verification Script -->
+    <script>
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        if (typeof Buffer !== 'undefined') {
+            console.log('Buffer.from works:', typeof Buffer.from === 'function');
+            
+            // If Buffer.from is not a function, implement a fallback
+            if (typeof Buffer.from !== 'function') {
+                console.warn('Buffer.from is not defined. Implementing a basic fallback.');
+                Buffer.from = function (str, encoding) {
+                    if (typeof str === 'string') {
+                        switch (encoding) {
+                            case 'utf8':
+                            case 'utf-8':
+                                return new Uint8Array(new TextEncoder().encode(str));
+                            case 'hex':
+                                return new Uint8Array(str.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+                            case 'base64':
+                                return new Uint8Array(atob(str).split('').map(c => c.charCodeAt(0)));
+                            default:
+                                throw new Error('Unsupported encoding: ' + encoding);
+                        }
+                    } else if (Array.isArray(str) || str instanceof Uint8Array) {
+                        return new Uint8Array(str);
+                    } else {
+                        throw new Error('Unsupported type for Buffer.from');
+                    }
+                };
+            }
+
+            // Test Buffer.from
+            try {
+                const buf = Buffer.from('Hello, World!', 'utf8');
+                console.log('Buffer content:', Buffer.toString.call(buf));
+            } catch (error) {
+                console.error('Error using Buffer.from:', error);
+            }
+        }
+    </script>
+
+    <!-- Include @solana/web3.js -->
+    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
+
+    <!-- Include @solana/spl-token -->
+    <script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.9/lib/cjs/index.js"></script>
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
           rel="stylesheet">
+
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <!-- Include Solana Web3.js via CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/@solana/web3.js/1.73.0/web3.min.js"></script>
-    <!-- Include @solana/spl-token via CDN -->
-    <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
-    <!-- Buffer Polyfill -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
-    <script>
-        window.Buffer = window.Buffer || buffer.Buffer;
-    </script>
 </head>
+<body>
+    <!-- Your existing HTML content -->
+
+    <!-- Rest of your HTML -->
+</body>
+</html>
+
 
 <body>
     <!-- Interactive Background Canvas -->
@@ -48,16 +125,16 @@
             <a href="#contact">Contact</a>
             <a href="creatememe.html">Create Meme</a>
 
-         <!-- Social Links -->
-         <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
-            <i class="fab fa-linktree"></i>
-            <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
-        </a>
-         <!-- Connect Wallet Button -->
-         <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
-         <!-- Disconnect Wallet Button (Initially Hidden) -->
-         <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
-         <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
+            <!-- Social Links -->
+            <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
+                <i class="fab fa-linktree"></i>
+                <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
+            </a>
+            <!-- Connect Wallet Button -->
+            <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
+            <!-- Disconnect Wallet Button (Initially Hidden) -->
+            <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
+            <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
     </header>
 
@@ -473,7 +550,7 @@
                 mouse.x = e.x;
                 mouse.y = e.y;
             });
-
+  
             // =============================
             //        TOUCH INTERACTION
             // =============================
@@ -858,6 +935,11 @@
 
                     // Display the result with comma separators and appropriate decimal places
                     calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} STUART tokens.`;
+
+                    // Enable Buy button if wallet is connected
+                    if (connectedWallet) {
+                        buyButton.disabled = false;
+                    }
                 });
             }
 
@@ -1018,10 +1100,10 @@
             //    DISCONNECT WALLET FUNCTIONALITY
             // =============================
 
-             /**
+            /**
              * Disconnects the Phantom Wallet.
              */
-             const disconnectWallet = async () => {
+            const disconnectWallet = async () => {
                 if (window.solana && window.solana.isPhantom && connectedWallet) {
                     try {
                         await window.solana.disconnect();
@@ -1047,7 +1129,7 @@
             // Event listener for Connect Wallet button
             connectWalletButton.addEventListener('click', connectWallet);
 
-            // =============================
+             // =============================
             //         BUY BUTTON CODE
             // =============================
 
@@ -1069,17 +1151,19 @@
                 }
 
                 try {
+                    let signature;
+
                     if (currency === 'SOL') {
-                        await sendSOL(amount);
+                        signature = await sendSOL(amount);
                     } else if (currency === 'USDC') {
-                        await sendUSDC(amount);
+                        signature = await sendUSDC(amount);
                     } else {
                         alert('Unsupported currency selected.');
                         return;
                     }
 
-                    // Display confirmation message instead of alert
-                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}.`);
+                    // Display confirmation message with Solscan link
+                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`, signature);
                     // Reset the form
                     document.getElementById('token-calculator').reset();
                     calculationResult.innerText = '';
@@ -1103,65 +1187,83 @@
             /**
              * Sends SOL from the user's wallet to the target address.
              * @param {number} amount 
+             * @returns {string} Transaction signature
              */
-            const sendSOL = async (amount) => {
-                const provider = window.solana;
-                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             const sendSOL = async (amount) => {
+    const provider = window.solana;
+    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-                // Ensure lamports are integers
-                const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
-                const roundedLamports = Math.round(lamports);
+    // Ensure lamports are integers
+    const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
+    const roundedLamports = Math.round(lamports);
 
-                const transaction = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey,
-                        toPubkey,
-                        lamports: roundedLamports,
-                    })
-                );
+    // Initialize connection
+   // Replace with your custom RPC URL
+const CUSTOM_RPC_URL = 'https://solana-mainnet.g.alchemy.com/v2/PDBwFdllqfG3KRHb1iwlJjcwVSAEMsSO';
 
-                // Sign and send transaction
-                const signature = await provider.signAndSendTransaction(transaction);
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-                await connection.confirmTransaction(signature, 'confirmed');
-            };
 
+// Initialize connection with custom RPC
+const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
+
+    // Fetch recent blockhash
+    const { blockhash } = await connection.getLatestBlockhash();
+
+    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+        solanaWeb3.SystemProgram.transfer({
+            fromPubkey,
+            toPubkey,
+            lamports: roundedLamports,
+        })
+    );
+                  // Sign and send transaction
+    const signature = await provider.signAndSendTransaction(transaction);
+    await connection.confirmTransaction(signature, 'confirmed');
+
+    return signature; // Return the transaction signature
+};
             /**
              * Sends USDC (SPL Token) from the user's wallet to the target address.
              * @param {number} amount 
+             * @returns {string} Transaction signature
              */
-            const sendUSDC = async (amount) => {
-                const provider = window.solana;
-                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             const sendUSDC = async (amount) => {
+    const provider = window.solana;
+    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-                // Get the token program ID
-                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+    // Get the token program ID
+    const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
-                // Initialize connection
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    // Initialize connection
+    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
 
-                // Find the associated token accounts
-                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
-                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
+    // Find the associated token accounts
+    const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
+    const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
 
-                // Create transfer instruction using @solana/spl-token
-                const transaction = new solanaWeb3.Transaction().add(
-                    splToken.createTransferInstruction(
-                        fromTokenAccount,
-                        toTokenAccount,
-                        fromPubkey,
-                        amount * (10 ** 6), // USDC has 6 decimals
-                        [],
-                        TOKEN_PROGRAM_ID
-                    )
-                );
+    // Fetch recent blockhash
+    const { blockhash } = await connection.getLatestBlockhash();
 
-                // Sign and send transaction
-                const signature = await provider.signAndSendTransaction(transaction);
-                await connection.confirmTransaction(signature, 'confirmed');
-            };
+    // Create transfer instruction using @solana/spl-token
+    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+        splToken.createTransferInstruction(
+            fromTokenAccount,
+            toTokenAccount,
+            fromPubkey,
+            amount * (10 ** 6), // USDC has 6 decimals
+            [],
+            TOKEN_PROGRAM_ID
+        )
+    );
+
+    // Sign and send transaction
+    const signature = await provider.signAndSendTransaction(transaction);
+    await connection.confirmTransaction(signature, 'confirmed');
+
+    return signature; // Return the transaction signature
+};
+
 
             /**
              * Gets or creates the associated token account for a given owner and mint.
@@ -1198,6 +1300,27 @@
                 return associatedTokenAddress;
             };
 
+
+            // =============================
+            //    TRANSACTION CONFIRMATION MESSAGE
+            // =============================
+
+            /**
+             * Displays a confirmation message to the user.
+             * @param {string} message 
+             */
+             const showConfirmationMessage = (message) => {
+                const confirmationContainer = document.getElementById('transaction-confirmation');
+                const confirmationMessage = document.getElementById('confirmation-message');
+                confirmationMessage.innerText = message;
+                confirmationContainer.style.display = 'block';
+
+                // Hide the message after 5 seconds
+                setTimeout(() => {
+                    confirmationContainer.style.display = 'none';
+                },   1000);
+            };
+
             // =============================
             //   AUTOMATIC WALLET CONNECTION
             // =============================
@@ -1224,25 +1347,6 @@
 
             checkIfWalletIsConnected();
 
-            // =============================
-            //    TRANSACTION CONFIRMATION MESSAGE
-            // =============================
-
-            /**
-             * Displays a confirmation message to the user.
-             * @param {string} message 
-             */
-            const showConfirmationMessage = (message) => {
-                const confirmationContainer = document.getElementById('transaction-confirmation');
-                const confirmationMessage = document.getElementById('confirmation-message');
-                confirmationMessage.innerText = message;
-                confirmationContainer.style.display = 'block';
-
-                // Hide the message after 5 seconds
-                setTimeout(() => {
-                    confirmationContainer.style.display = 'none';
-                }, 5000);
-            };
         });
     </script>
 </body>
