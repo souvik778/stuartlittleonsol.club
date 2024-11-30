@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags and Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StuartLittleOnSol Homepage</title>
+
+    <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
+    <script>
+        // Assign Buffer to window.Buffer if it's not already defined
+        window.Buffer = window.Buffer || Buffer;
+    </script>
+
+    <!-- Verification Script -->
+    <script>
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        if (typeof Buffer !== 'undefined') {
+            console.log('Buffer.from works:', typeof Buffer.from === 'function');
+            
+            // If Buffer.from is not a function, implement a fallback
+            if (typeof Buffer.from !== 'function') {
+                console.warn('Buffer.from is not defined. Implementing a basic fallback.');
+                Buffer.from = function (str, encoding) {
+                    if (typeof str === 'string') {
+                        switch (encoding) {
+                            case 'utf8':
+                            case 'utf-8':
+                                return new Uint8Array(new TextEncoder().encode(str));
+                            case 'hex':
+                                return new Uint8Array(str.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+                            case 'base64':
+                                return new Uint8Array(atob(str).split('').map(c => c.charCodeAt(0)));
+                            default:
+                                throw new Error('Unsupported encoding: ' + encoding);
+                        }
+                    } else if (Array.isArray(str) || str instanceof Uint8Array) {
+                        return new Uint8Array(str);
+                    } else {
+                        throw new Error('Unsupported type for Buffer.from');
+                    }
+                };
+            }
+
+            // Test Buffer.from
+            try {
+                const buf = Buffer.from('Hello, World!', 'utf8');
+                console.log('Buffer content:', Buffer.toString.call(buf));
+            } catch (error) {
+                console.error('Error using Buffer.from:', error);
+            }
+        }
+    </script>
+
+    <!-- Include @solana/web3.js -->
+    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
+
+    <!-- Include @solana/spl-token as an IIFE -->
+    <script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.9/lib/index.iife.js"></script>
+    <script>
+        // Assign splToken to window.splToken if it's not already defined
+        window.splToken = window.splToken || splToken;
+    </script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- TradingView Widget Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body>
+    <!-- Your existing HTML content -->
+
+    <!-- Interactive Background Canvas -->
+    <canvas id="interactive-background"></canvas>
+
+    <!-- Top Bar -->
+    <header class="topbar" role="banner">
+        <h1><a href="index.html">StuartLittleOnSol</a></h1>
+        <div class="menu-toggle" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">☰</div>
+        <nav class="nav-links" id="nav-links" aria-hidden="true">
+            <a href="#features">Features</a>
+            <a href="#tokenomics">Tokenomics</a>
+            <a href="#piechart">Token Distribution</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+            <a href="creatememe.html">Create Meme</a>
+
+            <!-- Social Links -->
+            <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
+                <i class="fab fa-linktree"></i>
+                <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
+            </a>
+            <!-- Connect Wallet Button -->
+            <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
+            <!-- Disconnect Wallet Button (Initially Hidden) -->
+            <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
+            <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <main class="content">
+            <!-- Hero Section with Stuart Image -->
+            <section class="hero-section animate-on-scroll" id="home">
+                <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
+            </section>
+
+            <!-- Presale Information Section -->
+            <section class="presale-section" id="presale">
+                <h2>Presale Information</h2>
+                <p><strong>Presale Softcap:</strong> 50 SOL</p>
+                <p><strong>Token Live:</strong> After presale ends</p>
+                <p><strong>Airdrop:</strong> All tokens will be airdropped following week to respective wallets by 12 am EST (next week)</p>
+                <p><strong>Contract Address:</strong></p>
+                <div class="contract-address">
+                    SOL- HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
+                </div>
+                <div class="contract-address"> 
+                    USDC- Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL
+                </div>
+                <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
+                <p>Follow us on socials to stay updated:</p>
+                <div class="social-links">
+                    <!-- Repeated Social Links for clarity -->
+                </div>
+            </section>
+            <br><br>
+
+            <!-- Token Price Calculation Section -->
+            <section class="presale-section" id="token-price">
+                <h2>Token Price Calculator</h2>
+                <p><strong>Current Token Price:</strong> 1 $lilstu = <span id="token-price-usd">Loading...</span> USD</p>
+                <p><strong>Token Price in USDC:</strong> <span id="token-price-usdc">Loading...</span></p>
+                <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span></p>
+                <p><strong>USDC Price:</strong> <span id="usdc-price-usd">Loading...</span></p>
+                <p><strong>SOL Price:</strong> <span id="sol-price-usd">Loading...</span></p>
+
+                <!-- Calculator Form -->
+                <div class="calculator-container">
+                    <h3>Calculate Tokens You'll Receive</h3>
+                    <form id="token-calculator" onsubmit="return false;">
+                        <label for="amount-input">Enter Amount:</label>
+                        <input type="number" id="amount-input" placeholder="Amount in USDC or SOL" min="0" step="any" required>
+                        <select id="currency-select">
+                            <option value="USDC">USDC</option>
+                            <option value="SOL">SOL</option>
+                        </select>
+                        <button type="button" id="calculate-button">Calculate</button>
+                        <br> 
+                        <button type="button" id="buy-button" class="btn" disabled>Buy</button>
+                    </form>
+                    <p id="calculation-result"></p>
+                </div>
+
+                <!-- Chart Toggle Button -->
+                <button id="toggle-chart-btn">Show Price Chart</button>
+
+                <!-- Chart Container (Initially Hidden) -->
+                <div class="price-chart-container" id="price-chart-container" style="display: none;">
+                    <div id="tradingview-widget"></div>
+                </div>
+
+                <!-- Confirmation Message Container -->
+                <div id="transaction-confirmation" class="transaction-confirmation" style="display: none; margin-top: 20px;">
+                    <p id="confirmation-message" style="color: green; font-weight: bold;"></p>
+                </div>
+            </section>
+
+            <!-- Rest of your HTML content... -->
+            
+            <!-- Disclaimer Section -->
+            <section class="disclaimer-section" id="disclaimer">
+                <p>By purchasing $LILSTU, you acknowledge that it is not a security or investment. The team is not liable for any potential losses or tax implications. LILSTU is a community-driven DeFi ecosystem, and you are solely responsible for understanding and complying with local laws and regulations.</p>
+            </section>
+
+            <!-- Footer -->
+            <footer role="contentinfo">
+                <p>&copy; 2024 StuartLittleOnSol. All Rights Reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- JavaScript for All Functionalities -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // =============================
+            //      GLOBAL VARIABLES
+            // =============================
+            let solPriceInUsd = null;
+            let usdcPriceInUsd = null;
+            const tokenPriceInUsd = 0.0001; // Fixed token price in USD
+            let connectedWallet = null; // Initialize as null
+
+            // Assign global variables from CDN libraries
+            const solanaWeb3 = window.solanaWeb3;
+            const splToken = window.splToken;
+
+            // =============================
+            //       ELEMENT SELECTORS
+            // =============================
+            const presalePopup = document.getElementById("presale-popup");
+            const presaleCloseBtn = document.getElementById("presale-close");
+            const presaleMinimized = document.getElementById('presale-minimized');
+            const presaleMinimizedBtn = document.getElementById('presale-minimized-btn');
+            const countdownElement = document.getElementById("countdown");
+            const kingImageTokenomics = document.getElementById("king-image-tokenomics");
+            const tokenomicsSection = document.getElementById("tokenomics");
+            const menuToggle = document.querySelector('.menu-toggle');
+            const topbar = document.querySelector('.topbar');
+            const calculateButton = document.getElementById('calculate-button');
+            const amountInput = document.getElementById('amount-input');
+            const currencySelect = document.getElementById('currency-select');
+            const calculationResult = document.getElementById('calculation-result');
+            const toggleChartBtn = document.getElementById('toggle-chart-btn');
+            const chartContainer = document.getElementById('price-chart-container');
+            const navLinks = document.querySelector('.nav-links');
+            const connectWalletButton = document.getElementById('connect-wallet');
+            const disconnectWalletButton = document.getElementById('disconnect-wallet'); // New
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const buyButton = document.getElementById('buy-button');
+            const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
+            const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
+
+            // =============================
+            //      PRESALE POPUP CODE
+            // =============================
+            let presaleShown = false; // Flag to ensure popup is shown only once
+
+            // Countdown Timer Setup
+            const launchDate = new Date("December 20, 2024 00:00:00").getTime();
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                if (distance < 0) {
+                    countdownElement.innerHTML = "<div>Presale Launched!</div>";
+                    clearInterval(countdownInterval);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+            };
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Initial call
+
+            // Function to show presale popup
+            const showPresale = () => {
+                if (!presaleShown) {
+                    presalePopup.classList.add("active");
+                    presalePopup.style.display = 'flex'; // Ensure it's displayed
+                    presaleShown = true;
+                    observer.disconnect(); // Stop observing after first trigger
+                }
+            };
+
+            // Function to hide presale popup (minimize)
+            const hidePresale = () => {
+                // Add minimize animation
+                presalePopup.classList.add('minimize');
+
+                // After animation ends, hide popup and show minimized button
+                presalePopup.addEventListener('animationend', function handler() {
+                    presalePopup.classList.remove('active', 'minimize');
+                    presalePopup.style.display = 'none';
+                    presaleMinimized.style.display = 'block';
+                    presalePopup.removeEventListener('animationend', handler);
+                });
+            };
+
+            // Toggle mobile menu visibility
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+                navLinks.setAttribute('aria-hidden', isExpanded);
+            });
+
+            // Function to maximize the popup from minimized state
+            const maximizePresale = () => {
+                presalePopup.style.display = 'flex';
+                presalePopup.classList.add('maximize');
+
+                presalePopup.addEventListener('animationend', function handler() {
+                    presalePopup.classList.remove('maximize');
+                    presalePopup.classList.add('active');
+                    presalePopup.removeEventListener('animationend', handler);
+                });
+
+                presaleMinimized.style.display = 'none';
+            };
+
+            // Close button event
+            presaleCloseBtn.addEventListener("click", hidePresale);
+            // Minimized button click event
+            presaleMinimizedBtn.addEventListener('click', maximizePresale);
+
+            // Close popup when clicking outside of it (optional)
+            window.addEventListener("click", (e) => {
+                if (
+                    presalePopup.classList.contains('active') && // Ensure popup is active
+                    !presalePopup.contains(e.target) && // Click not inside popup
+                    !presaleMinimized.contains(e.target) && // Click not on minimized button
+                    e.target !== presaleMinimizedBtn // Click not on the minimized button itself
+                ) {
+                    hidePresale();
+                }
+            });
+
+            // Intersection Observer to detect when Presale section is in view
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the Presale section is visible
+            };
+
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        showPresale();
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            const presaleSection = document.getElementById("presale");
+            if (presaleSection) {
+                observer.observe(presaleSection);
+            }
+
+            // =============================
+            //    INTERACTIVE BACKGROUND
+            // =============================
+            const canvas = document.getElementById('interactive-background');
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 200; // Increased number for denser background
+            const mouse = { x: null, y: null, radius: 150 }; // Increased radius for better interaction
+
+            // Handle Canvas Resize
+            const resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Handle Mouse Movement
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+
+            // =============================
+            //        TOUCH INTERACTION
+            // =============================
+
+            // Handle Touch Start
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    mouse.x = touch.clientX;
+                    mouse.y = touch.clientY;
+                }
+            }, false);
+
+            // Handle Touch Move
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    mouse.x = touch.clientX;
+                    mouse.y = touch.clientY;
+                }
+            }, false);
+
+            // Handle Touch End and Touch Cancel
+            window.addEventListener('touchend', () => {
+                mouse.x = null;
+                mouse.y = null;
+            }, false);
+
+            window.addEventListener('touchcancel', () => {
+                mouse.x = null;
+                mouse.y = null;
+            }, false);
+
+            // =============================
+            //         PARTICLE CLASS
+            // =============================
+
+            class Particle {
+                constructor(x, y, dx, dy, size, color, opacity) {
+                    this.x = x;
+                    this.y = y;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.size = size;
+                    this.color = color;
+                    this.opacity = opacity;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold color with variable opacity
+                    ctx.fill();
+                }
+
+                update() {
+                    this.x += this.dx;
+                    this.y += this.dy;
+
+                    // Bounce off edges
+                    if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
+                    if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
+
+                    // Move away from mouse or touch
+                    if (mouse.x !== null && mouse.y !== null) { // Ensure mouse coordinates are valid
+                        const dxMouse = mouse.x - this.x;
+                        const dyMouse = mouse.y - this.y;
+                        const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+                        if (distance < mouse.radius + this.size) {
+                            const angle = Math.atan2(dyMouse, dxMouse);
+                            const moveX = Math.cos(angle) * 5;
+                            const moveY = Math.sin(angle) * 5;
+                            this.x -= moveX;
+                            this.y -= moveY;
+                        }
+                    }
+
+                    this.draw();
+                }
+            }
+
+            // =============================
+            //      INITIALIZE PARTICLES
+            // =============================
+
+            const initParticles = () => {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    const size = Math.random() * 3 + 1;
+                    const x = Math.random() * (canvas.width - size * 2) + size;
+                    const y = Math.random() * (canvas.height - size * 2) + size;
+                    const dx = (Math.random() * 1) - 0.5;
+                    const dy = (Math.random() * 1) - 0.5;
+                    const opacity = Math.random() * 0.5 + 0.3; // Variable opacity for depth
+                    particlesArray.push(new Particle(x, y, dx, dy, size, 'gold', opacity));
+                }
+            };
+
+            // =============================
+            //    CONNECT PARTICLES
+            // =============================
+
+            const connectParticles = () => {
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a + 1; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 120) { // Increased distance for more connections
+                            const opacity = 1 - distance / 120;
+                            ctx.strokeStyle = `rgba(255,215,0,${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            };
+
+            // =============================
+            //       ANIMATE PARTICLES
+            // =============================
+
+            const animateParticles = () => {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesArray.forEach(particle => particle.update());
+                connectParticles();
+            };
+
+            // =============================
+            //       INITIALIZATION
+            // =============================
+
+            initParticles();
+            animateParticles();
+
+            // =============================
+            //    FAQ TOGGLE FUNCTIONALITY
+            // =============================
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+
+            // =============================
+            //  KING IMAGE INTERACTIVITY
+            // =============================
+            kingImageTokenomics.addEventListener('mousemove', (e) => {
+                const rect = tokenomicsSection.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                // Normalize the values
+                const maxOffset = 30; // Increased offset for better visibility
+                const offsetX = (x / (rect.width / 2)) * maxOffset;
+                const offsetY = (y / (rect.height / 2)) * maxOffset;
+
+                // Apply the offset
+                kingImageTokenomics.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(15deg)`;
+            });
+
+            kingImageTokenomics.addEventListener('mouseleave', () => {
+                // Reset the position
+                kingImageTokenomics.style.transform = `translate(0px, 0px) rotate(0deg)`;
+            });
+
+            // =============================
+            //        PIE CHART CODE
+            // =============================
+            const ctxPie = document.getElementById('tokenomics-piechart').getContext('2d');
+            const tokenomicsPieChart = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Public Sale', 'Dev & Management', 'Presale', 'Marketing & Promotions', 'Airdrop (Contest)'],
+                    datasets: [{
+                        label: 'Token Distribution',
+                        data: [50, 15, 15, 15, 5], // Percentages
+                        backgroundColor: [
+                            'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
+                            'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
+                            'rgba(255, 99, 132, 0.9)',  // Presale - Red
+                            'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
+                            'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
+                        ],
+                        borderColor: [
+                            'rgba(255, 215, 0, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 2,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    return `${label}: ${value}%`;
+                                }
+                            },
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#FFD700',
+                            bodyColor: '#fff',
+                            borderColor: '#FFD700',
+                            borderWidth: 1,
+                            cornerRadius: 10,
+                        },
+                        legend: {
+                            display: true // Show default legend
+                        },
+                        title: {
+                            display: false
+                        },
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        }
+                    },
+                    cutout: '50%', // Creates the doughnut effect
+                    maintainAspectRatio: false
+                }
+            });
+
+            // =============================
+            //    TOKEN CALCULATOR CODE
+            // =============================
+
+            /**
+             * Fetches real-time SOL and USDC prices in USD from CoinGecko and updates the DOM.
+             */
+            async function fetchPrices() {
+                const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+                const params = new URLSearchParams({
+                    ids: 'solana,usd-coin',
+                    vs_currencies: 'usd'
+                });
+
+                try {
+                    const response = await fetch(`${COINGECKO_API_URL}?${params.toString()}`);
+                    if (!response.ok) {
+                        throw new Error(`CoinGecko API responded with status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    // Assign fetched prices
+                    solPriceInUsd = parseFloat(data.solana?.usd);
+                    usdcPriceInUsd = parseFloat(data['usd-coin']?.usd);
+
+                    // Validate the fetched prices
+                    if (!isValidPrice(solPriceInUsd) || !isValidPrice(usdcPriceInUsd)) {
+                        throw new Error('Invalid price data received from CoinGecko API.');
+                    }
+
+                    // Update the DOM elements for prices
+                    updatePriceElements();
+
+                } catch (error) {
+                    console.error('Error fetching prices:', error);
+                    displayPriceError();
+                }
+            }
+
+            /**
+             * Validates the price data.
+             * @param {number} price 
+             * @returns {boolean}
+             */
+            function isValidPrice(price) {
+                return typeof price === 'number' && !isNaN(price) && price > 0;
+            }
+
+            /**
+             * Updates the DOM elements with the latest prices.
+             */
+            function updatePriceElements() {
+                // Update USDC price
+                const usdcPriceElement = document.getElementById('usdc-price-usd');
+                if (usdcPriceElement && usdcPriceInUsd !== null) {
+                    usdcPriceElement.innerText = `$${usdcPriceInUsd.toFixed(4)}`;
+                }
+
+                // Update SOL price
+                const solPriceElement = document.getElementById('sol-price-usd');
+                if (solPriceElement && solPriceInUsd !== null) {
+                    solPriceElement.innerText = `$${solPriceInUsd.toFixed(2)}`;
+                }
+
+                // Update Token price in USD
+                const tokenPriceElement = document.getElementById('token-price-usd');
+                if (tokenPriceElement && tokenPriceInUsd !== null) {
+                    tokenPriceElement.innerText = `$${tokenPriceInUsd.toFixed(5)}`;
+                }
+
+                // Calculate and update token price in SOL and USDC
+                if (solPriceInUsd && tokenPriceInUsd && usdcPriceInUsd) {
+                    const tokenPriceInSol = (tokenPriceInUsd / solPriceInUsd).toFixed(8);
+                    const tokenPriceInUsdc = (tokenPriceInUsd / usdcPriceInUsd).toFixed(8);
+
+                    const priceSolElement = document.getElementById('token-price-sol');
+                    if (priceSolElement) {
+                        priceSolElement.innerText = `${tokenPriceInSol} SOL`;
+                    }
+
+                    const priceUsdcElement = document.getElementById('token-price-usdc');
+                    if (priceUsdcElement) {
+                        priceUsdcElement.innerText = `${tokenPriceInUsdc} USDC`;
+                    }
+                }
+            }
+
+            /**
+             * Displays an error message in the price elements.
+             */
+            function displayPriceError() {
+                const priceElements = ['usdc-price-usd', 'sol-price-usd', 'token-price-usd', 'token-price-sol', 'token-price-usdc'];
+                priceElements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.innerText = 'Error fetching price';
+                    }
+                });
+            }
+
+            /**
+             * Sets up the token calculator functionality.
+             */
+            function setupTokenCalculator() {
+                if (!calculateButton || !amountInput || !currencySelect || !calculationResult) {
+                    console.error('One or more calculator elements are missing in the DOM.');
+                    return;
+                }
+
+                calculateButton.addEventListener('click', () => {
+                    // Clear previous result
+                    calculationResult.innerText = '';
+
+                    // Parse and sanitize user input
+                    const amount = parseFloat(amountInput.value);
+                    const currency = currencySelect.value;
+
+                    // Input Validation
+                    if (!isValidAmount(amount)) {
+                        calculationResult.innerText = 'Please enter a valid positive amount.';
+                        return;
+                    }
+
+                    if (!solPriceInUsd || !usdcPriceInUsd) {
+                        calculationResult.innerText = 'Price data not loaded yet. Please try again in a moment.';
+                        return;
+                    }
+
+                    let tokensReceived = 0;
+
+                    // Simple calculation logic
+                    if (currency === 'USDC') {
+                        tokensReceived = amount / tokenPriceInUsd;
+                    } else if (currency === 'SOL') {
+                        const amountInUsd = amount * solPriceInUsd;
+                        tokensReceived = amountInUsd / tokenPriceInUsd;
+                    } else {
+                        calculationResult.innerText = 'Unsupported currency selected.';
+                        return;
+                    }
+
+                    // Ensure tokensReceived is a finite number
+                    if (!isFinite(tokensReceived)) {
+                        calculationResult.innerText = 'Calculation error. Please check your inputs.';
+                        return;
+                    }
+
+                    // Display the result with comma separators and appropriate decimal places
+                    calculationResult.innerText = `You will receive ${tokensReceived.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} STUART tokens.`;
+
+                    // Enable Buy button if wallet is connected
+                    if (connectedWallet) {
+                        buyButton.disabled = false;
+                    }
+                });
+            }
+
+            /**
+             * Validates the input amount.
+             * @param {number} amount 
+             * @returns {boolean}
+             */
+            function isValidAmount(amount) {
+                return typeof amount === 'number' && !isNaN(amount) && amount > 0;
+            }
+
+            // Initialize Token Calculator
+            setupTokenCalculator();
+            fetchPrices(); // Initial fetch when the page loads
+            // Update the prices every minute (60000 milliseconds)
+            setInterval(fetchPrices, 60000);
+
+            // =============================
+            //   SCROLL ANIMATIONS CODE
+            // =============================
+            const scrollAnimations = () => {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', debounce(scrollAnimations));
+            scrollAnimations(); // Initial call
+
+            // Debounce function to limit how often scrollAnimations is called
+            function debounce(func, wait = 10, immediate = true) {
+                let timeout;
+                return function () {
+                    const context = this, args = arguments;
+                    const later = function () {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    };
+                    const callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) func.apply(context, args);
+                };
+            }
+
+            // =============================
+            //     PRESALE POPUP RESIZE
+            // =============================
+            const adjustPopupSize = () => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const aspectRatio = width / height;
+
+                if (aspectRatio > 1.6) {
+                    // Wide screens (e.g., 16:9 or wider)
+                    presalePopup.style.width = '60vw';
+                    presalePopup.style.maxWidth = '1200px';
+                    presalePopup.style.padding = '50px';
+                } else if (aspectRatio > 1.4) {
+                    // Moderate wide screens (e.g., 3:2)
+                    presalePopup.style.width = '70vw';
+                    presalePopup.style.maxWidth = '1000px';
+                    presalePopup.style.padding = '40px';
+                } else {
+                    // Square or tall screens
+                    presalePopup.style.width = '80vw';
+                    presalePopup.style.maxWidth = '800px';
+                    presalePopup.style.padding = '30px';
+                }
+            };
+
+            // Initial adjustment
+            adjustPopupSize();
+
+            // Adjust on window resize
+            window.addEventListener('resize', adjustPopupSize);
+
+            // =============================
+            //      TRADINGVIEW WIDGET
+            // =============================
+            let chartInitialized = false;
+
+            toggleChartBtn.addEventListener('click', () => {
+                if (!chartInitialized) {
+                    new TradingView.widget({
+                        "width": "100%",
+                        "height": 500,
+                        "symbol": "BINANCE:SOLUSDT",
+                        "interval": "D",
+                        "timezone": "Etc/UTC",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "en",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "withdateranges": true,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview-widget"
+                    });
+                    chartInitialized = true;
+                }
+
+                if (chartContainer.style.display === 'none' || chartContainer.style.display === '') {
+                    chartContainer.style.display = 'block';
+                    toggleChartBtn.innerText = 'Hide Price Chart';
+                } else {
+                    chartContainer.style.display = 'none';
+                    toggleChartBtn.innerText = 'Show Price Chart';
+                }
+            });
+
+            // =============================
+            //    CONNECT WALLET FUNCTIONALITY
+            // =============================
+
+            /**
+             * Connects to the Phantom Wallet.
+             */
+            const connectWallet = async () => {
+                if (window.solana && window.solana.isPhantom) {
+                    try {
+                        const response = await window.solana.connect();
+                        connectedWallet = response.publicKey.toString();
+                        walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
+                        connectWalletButton.disabled = true;
+                        connectWalletButton.innerText = 'Wallet Connected';
+                        disconnectWalletButton.style.display = 'inline-block'; // Show Disconnect button
+                        console.log('Connected wallet address:', connectedWallet);
+                        // Enable Buy button if calculation is already done
+                        if (calculationResult.innerText.includes('STUART tokens')) {
+                            buyButton.disabled = false;
+                        }
+                    } catch (err) {
+                        console.error('Failed to connect wallet:', err);
+                        alert('Failed to connect wallet. Please try again.');
+                    }
+                } else {
+                    alert('Phantom Wallet not found. Please install it from https://phantom.app');
+                }
+            };
+
+            /**
+             * Truncates the wallet address for display.
+             * @param {string} address 
+             * @returns {string}
+             */
+            const truncateAddress = (address) => {
+                return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
+            };
+
+            // =============================
+            //    DISCONNECT WALLET FUNCTIONALITY
+            // =============================
+
+            /**
+             * Disconnects the Phantom Wallet.
+             */
+            const disconnectWallet = async () => {
+                if (window.solana && window.solana.isPhantom && connectedWallet) {
+                    try {
+                        await window.solana.disconnect();
+                        connectedWallet = null;
+                        walletAddressSpan.innerText = '';
+                        connectWalletButton.disabled = false;
+                        connectWalletButton.innerText = 'Connect Your Wallet';
+                        disconnectWalletButton.style.display = 'none'; // Hide Disconnect button
+                        buyButton.disabled = true;
+                        console.log('Wallet disconnected.');
+                        // Display confirmation message
+                        showConfirmationMessage('Wallet successfully disconnected.');
+                    } catch (err) {
+                        console.error('Failed to disconnect wallet:', err);
+                        alert('Failed to disconnect wallet. Please try again.');
+                    }
+                }
+            };
+
+            // Event listener for Disconnect Wallet button
+            disconnectWalletButton.addEventListener('click', disconnectWallet);
+
+            // Event listener for Connect Wallet button
+            connectWalletButton.addEventListener('click', connectWallet);
+
+            // =============================
+            //         BUY BUTTON CODE
+            // =============================
+
+            /**
+             * Handles the Buy action by sending SOL or USDC to the target address.
+             */
+            const buyTokens = async () => {
+                if (!connectedWallet) {
+                    alert('Please connect your wallet first.');
+                    return;
+                }
+
+                const amount = parseFloat(amountInput.value);
+                const currency = currencySelect.value;
+
+                if (!isValidAmount(amount)) {
+                    alert('Please enter a valid amount.');
+                    return;
+                }
+
+                try {
+                    if (currency === 'USDC') {
+                        // Check USDC balance before proceeding
+                        const usdcBalance = await getUSDCBalance(connectedWallet);
+                        if (amount > usdcBalance) {
+                            alert('Low balance');
+                            return;
+                        }
+                    }
+
+                    let signature;
+
+                    if (currency === 'SOL') {
+                        signature = await sendSOL(amount);
+                    } else if (currency === 'USDC') {
+                        signature = await sendUSDC(amount);
+                    } else {
+                        alert('Unsupported currency selected.');
+                        return;
+                    }
+
+                    // Display confirmation message with thank you note and Solscan link
+                    showConfirmationMessage(`Thank you for buying $lilstu! Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`);
+                    // Reset the form
+                    document.getElementById('token-calculator').reset();
+                    calculationResult.innerText = '';
+                    buyButton.disabled = true;
+                } catch (error) {
+                    console.error('Transaction failed:', error);
+                    alert(`Transaction failed: ${error.message}`);
+                }
+            };
+
+            // Event listener for Buy button
+            buyButton.addEventListener('click', () => {
+                // Add animation to buy action (assuming animate.css is included)
+                buyButton.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => {
+                    buyTokens();
+                    buyButton.classList.remove('animate__animated', 'animate__pulse');
+                }, 500);
+            });
+
+            /**
+             * Sends SOL from the user's wallet to the target address.
+             * @param {number} amount 
+             * @returns {string} Transaction signature
+             */
+            const sendSOL = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+
+                // Ensure lamports are integers
+                const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
+                const roundedLamports = Math.round(lamports);
+
+                // Initialize connection with custom RPC
+                const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a';
+
+                const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
+
+                // Fetch recent blockhash
+                const { blockhash } = await connection.getLatestBlockhash();
+
+                const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+                    solanaWeb3.SystemProgram.transfer({
+                        fromPubkey,
+                        toPubkey,
+                        lamports: roundedLamports,
+                    })
+                );
+
+                // Sign and send transaction
+                const signature = await provider.signAndSendTransaction(transaction);
+                await connection.confirmTransaction(signature, 'confirmed');
+
+                return signature; // Return the transaction signature
+            };
+
+            /**
+             * Sends USDC (SPL Token) from the user's wallet to the target address.
+             * @param {number} amount 
+             * @returns {string} Transaction signature
+             */
+            const sendUSDC = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+
+                // Get the token program ID
+                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+
+                // Initialize connection
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+
+                // Find the associated token accounts
+                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
+                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
+
+                // Fetch recent blockhash
+                const { blockhash } = await connection.getLatestBlockhash();
+
+                // Create transfer instruction using @solana/spl-token
+                const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+                    splToken.createTransferInstruction(
+                        fromTokenAccount,
+                        toTokenAccount,
+                        fromPubkey,
+                        amount * (10 ** 6), // USDC has 6 decimals
+                        [],
+                        TOKEN_PROGRAM_ID
+                    )
+                );
+
+                // Sign and send transaction
+                const signature = await provider.signAndSendTransaction(transaction);
+                await connection.confirmTransaction(signature, 'confirmed');
+
+                return signature; // Return the transaction signature
+            };
+
+            /**
+             * Gets or creates the associated token account for a given owner and mint.
+             * @param {PublicKey} owner 
+             * @param {string} mint 
+             * @param {PublicKey} payer 
+             * @param {Connection} connection
+             * @returns {PublicKey}
+             */
+            const getOrCreateAssociatedTokenAccount = async (owner, mint, payer, connection) => {
+                const associatedTokenAddress = await splToken.getAssociatedTokenAddress(
+                    splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
+                    splToken.TOKEN_PROGRAM_ID,
+                    new solanaWeb3.PublicKey(mint),
+                    new solanaWeb3.PublicKey(owner)
+                );
+
+                // Check if the account exists
+                const account = await connection.getAccountInfo(associatedTokenAddress);
+                if (account === null) {
+                    // Create the account
+                    const transaction = new solanaWeb3.Transaction().add(
+                        splToken.createAssociatedTokenAccountInstruction(
+                            new solanaWeb3.PublicKey(payer), // Payer
+                            associatedTokenAddress,         // Associated Token Account
+                            new solanaWeb3.PublicKey(owner), // Owner
+                            new solanaWeb3.PublicKey(mint)  // Mint
+                        )
+                    );
+                    const signature = await window.solana.signAndSendTransaction(transaction);
+                    await connection.confirmTransaction(signature, 'confirmed');
+                }
+
+                return associatedTokenAddress;
+            };
+
+            // =============================
+            //    TRANSACTION CONFIRMATION MESSAGE
+            // =============================
+
+            /**
+             * Displays a confirmation message to the user.
+             * @param {string} message 
+             */
+            const showConfirmationMessage = (message) => {
+                const confirmationContainer = document.getElementById('transaction-confirmation');
+                const confirmationMessage = document.getElementById('confirmation-message');
+                confirmationMessage.innerHTML = message;
+                confirmationContainer.style.display = 'block';
+
+                // Hide the message after 10 seconds
+                setTimeout(() => {
+                    confirmationContainer.style.display = 'none';
+                }, 10000);
+            };
+
+            // =============================
+            //    FETCH USDC BALANCE FUNCTION
+            // =============================
+
+            /**
+             * Fetches the user's USDC balance.
+             * @param {string} userAddress 
+             * @returns {number} USDC balance in human-readable format
+             */
+            const getUSDCBalance = async (userAddress) => {
+                try {
+                    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+                    const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+                        new solanaWeb3.PublicKey(userAddress),
+                        { mint: new solanaWeb3.PublicKey(USDC_MINT_ADDRESS) }
+                    );
+
+                    if (tokenAccounts.value.length === 0) {
+                        return 0;
+                    }
+
+                    // Assuming the first token account is the primary USDC account
+                    const balance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+                    return balance;
+                } catch (error) {
+                    console.error('Error fetching USDC balance:', error);
+                    return 0;
+                }
+            };
+
+            // =============================
+            //   AUTOMATIC WALLET CONNECTION
+            // =============================
+
+            /**
+             * Automatically connects to the wallet if already connected (persistent session).
+             */
+            const checkIfWalletIsConnected = async () => {
+                if (window.solana && window.solana.isPhantom) {
+                    try {
+                        const response = await window.solana.connect({ onlyIfTrusted: true });
+                        connectedWallet = response.publicKey.toString();
+                        walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
+                        connectWalletButton.disabled = true;
+                        connectWalletButton.innerText = 'Wallet Connected';
+                        disconnectWalletButton.style.display = 'inline-block'; // Show Disconnect button
+                        console.log('Wallet already connected:', connectedWallet);
+                        // Enable Buy button if calculation is already done
+                        if (calculationResult.innerText.includes('STUART tokens')) {
+                            buyButton.disabled = false;
+                        }
+                    } catch (err) {
+                        console.log('No wallet connection found:', err);
+                    }
+                }
+            };
+
+            checkIfWalletIsConnected();
+
+        });
+    </script>
+</body>
+</html>
