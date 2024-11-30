@@ -8,10 +8,12 @@
 
     <!-- External Libraries -->
       <!-- Buffer Polyfill -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
-    <script>
-        window.Buffer = window.Buffer || Buffer;
-    </script>
+    <!-- Buffer Polyfill -->
+<script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script>
+<script>
+    window.Buffer = window.Buffer || Buffer;
+</script>
+
      <!-- Include @solana/web3.js via Corrected CDN -->
      <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
      <!-- Include @solana/spl-token via CDN -->
@@ -31,9 +33,7 @@
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-   
-   
-   
+    
 </head>
 
 <body>
