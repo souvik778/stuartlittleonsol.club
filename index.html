@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/buffer@6.0/index.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,40 +7,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StuartLittleOnSol Homepage</title>
 
-    <!-- External Libraries -->
-      <!-- Buffer Polyfill -->
-    <!-- Buffer Polyfill -->
-<!-- Buffer Polyfill via jsDelivr -->
-<!-- Buffer Polyfill via jsDelivr (buffer@6.0.3) -->
-<!-- Buffer Polyfill via jsDelivr (buffer@5.7.1) -->
-<script src="https://cdn.jsdelivr.net/npm/buffer@6.0/index.min.js"></script>
+    <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.min.js"></script>
     <script>
-    // Assign Buffer to window.Buffer if it's not already defined
-    window.Buffer = window.Buffer || Buffer;
-</script>
+        // Assign Buffer to window.Buffer if it's not already defined
+        window.Buffer = window.Buffer || Buffer;
+    </script>
 
+    <!-- Verification Script -->
+    <script>
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        if (typeof Buffer !== 'undefined') {
+            console.log('Buffer.from works:', typeof Buffer.from === 'function');
+            
+            // If Buffer.from is not a function, implement a fallback
+            if (typeof Buffer.from !== 'function') {
+                console.warn('Buffer.from is not defined. Implementing a basic fallback.');
+                Buffer.from = function (str, encoding) {
+                    if (typeof str === 'string') {
+                        switch (encoding) {
+                            case 'utf8':
+                            case 'utf-8':
+                                return new Uint8Array(new TextEncoder().encode(str));
+                            case 'hex':
+                                return new Uint8Array(str.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+                            case 'base64':
+                                return new Uint8Array(atob(str).split('').map(c => c.charCodeAt(0)));
+                            default:
+                                throw new Error('Unsupported encoding: ' + encoding);
+                        }
+                    } else if (Array.isArray(str) || str instanceof Uint8Array) {
+                        return new Uint8Array(str);
+                    } else {
+                        throw new Error('Unsupported type for Buffer.from');
+                    }
+                };
+            }
 
-     <!-- Include @solana/web3.js via Corrected CDN -->
-     <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
-     <!-- Include @solana/spl-token via CDN -->
-     <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
+            // Test Buffer.from
+            try {
+                const buf = Buffer.from('Hello, World!', 'utf8');
+                console.log('Buffer content:', Buffer.toString.call(buf));
+            } catch (error) {
+                console.error('Error using Buffer.from:', error);
+            }
+        }
+    </script>
+
+    <!-- Include @solana/web3.js -->
+    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
+
+    <!-- Include @solana/spl-token -->
+    <script src="https://unpkg.com/@solana/spl-token@0.3.5/dist/spl-token.min.js"></script>
 
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
           rel="stylesheet">
+
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    
 </head>
+<body>
+    <!-- Your existing HTML content -->
+
+    <!-- Rest of your HTML -->
+</body>
+</html>
+
 
 <body>
     <!-- Interactive Background Canvas -->
