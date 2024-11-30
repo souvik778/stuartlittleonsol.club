@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buffer Polyfill Test</title>
+    
+    <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+    <script src="https://unpkg.com/buffer@5.7.1/buffer.min.js"></script>
+    <script>
+        // Assign Buffer to window.Buffer if it's not already defined
+        window.Buffer = window.Buffer || Buffer;
+    </script>
+    
+    <!-- Verification Script -->
+    <script>
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        if (typeof Buffer !== 'undefined') {
+            console.log('Buffer.from works:', typeof Buffer.from === 'function');
+            
+            // Test Buffer.from
+            const buf = Buffer.from('Hello, World!', 'utf8');
+            console.log('Buffer content:', buf.toString());
+        }
+    </script>
+</head>
+<body>
+    <h1>Buffer Polyfill Test</h1>
+</body>
+</html>
