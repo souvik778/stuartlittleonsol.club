@@ -70,6 +70,9 @@
             
         }
     </script>
+    <meta name="application-name" content="StuartLittleOnSol">
+    <link rel="icon" href="token.png">
+    
 
     <!-- Include @solana/web3.js -->
     <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
@@ -1140,7 +1143,8 @@
             const connectWallet = async () => {
                 if (window.solana && window.solana.isPhantom) {
                     try {
-                        const response = await window.solana.connect();
+                        const response = await window.solana.connect({ onlyIfTrusted: false });
+                        console.log('Connected wallet:', response.publicKey.toString());
                         connectedWallet = response.publicKey.toString();
                         walletAddressSpan.innerText = `Connected: ${truncateAddress(connectedWallet)}`;
                         connectWalletButton.disabled = true;
