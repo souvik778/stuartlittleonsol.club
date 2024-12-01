@@ -7,19 +7,10 @@
     <title>StuartLittleOnSol Homepage</title>
     <meta name="$lilstu" content="StuartLittleOnSol">
     <link rel="icon" href="logo.jpeg">
-   <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
-   <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
-   <script>
-       // Assign Buffer from the polyfill
-    window.Buffer = window.Buffer || require('buffer').Buffer;
+ 
 
-console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-console.log('Buffer.from works:', typeof Buffer.from === 'function')
-
-   </script>
-
-   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
-   <script type="module">
+ <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+ <script type="module">
     import { 
         Connection, 
         PublicKey, 
@@ -29,8 +20,15 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
         Transaction 
     } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
     import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-    
-    // Assign to global window object
+    import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js';
+
+    // Assign Buffer to the global window object
+    window.Buffer = window.Buffer || Buffer;
+
+    console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+    console.log('Buffer.from works:', typeof Buffer.from === 'function');
+
+    // Assign Solana and SPL Token libraries to global window object
     window.solanaWeb3 = { 
         Connection, 
         PublicKey, 
@@ -41,9 +39,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
     };
     window.splToken = splToken;
 </script>
-
- 
- 
     
 
     <!-- Include @solana/web3.js -->
