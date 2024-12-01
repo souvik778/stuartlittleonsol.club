@@ -96,7 +96,29 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <!--animate.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        h1 span.presale-live {
+            color: #FFD700; /* Warm gold color */
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.6), 0 0 10px rgba(255, 215, 0, 0.4);
+            font-size: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, text-shadow 0.2s ease, color 0.2s ease;
+        }
 
+        /* Change color on hover */
+        h1 span.presale-live:hover, 
+        h1 span.presale-live:active {
+            color: #FF69B4; /* Light pink for interaction */
+            transform: scale(1.05); /* Subtle scale-up */
+            text-shadow: 0 0 8px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Slight scale down on active (click/touch) */
+        h1 span.presale-live:active {
+            transform: scale(0.95);
+        }
+    </style>
 </head>
 <body>
     <!-- Your existing HTML content -->
@@ -113,6 +135,7 @@
     <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1><a href="index.html">StuartLittleOnSol</a></h1>
+    
         <div class="menu-toggle" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">☰</div>
         <nav class="nav-links" id="nav-links" aria-hidden="true">
             <a href="#features">Features</a>
@@ -132,10 +155,16 @@
             <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
             <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
+        
     </header>
-
+    
+    
     <!-- Main Container -->
     <div class="main-container">
+        <h1>
+            <span class="presale-live animate__animated animate__flash animate__infinite" style="margin-top: 50%;">Presale is Live!</span>
+        </h1>
+    
         <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
