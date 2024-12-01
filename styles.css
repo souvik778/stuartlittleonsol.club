@@ -6,6 +6,63 @@
     padding: 0;
 }
 
+h1 span.presale-live {
+  
+  color: #ab3219;
+  text-shadow: 0 0 5px rgba(180, 104, 29, 0.6), 0 0 10px rgba(255, 47, 0, 0.4);
+  font-size: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 2s, text-shadow 2s ease, color 2s ease;
+}
+
+/* Change color on hover */
+h1 span.presale-live:hover, 
+h1 span.presale-live:active {
+  color: #FFD700; /* Warm gold color */ /* Light pink for interaction */
+  transform: scale(1.05); /* Subtle scale-up */
+  text-shadow: 0 0 8px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.6);
+}
+
+/* Slight scale down on active (click/touch) */
+h1 span.presale-live:active {
+  transform: scale(0.95);
+}
+.scroll-down-btn {
+margin-top: 20px;
+padding: 10px 15px;
+font-size: 1.2rem;
+background-color: #FFD700; /* Warm gold */
+color: #000;
+border: none;
+border-radius: 30px;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.3s ease;
+text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+animation: bounce 2s infinite ease-in-out;
+}
+
+.scroll-down-btn:hover {
+background-color: #e6c200; /* Slightly darker gold */
+transform: scale(1.05); /* Subtle scale-up on hover */
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-down-btn:active {
+transform: scale(0.95); /* Subtle scale-down on click */
+}
+
+@keyframes bounce {
+0%, 100% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-5px); /* Small upward bounce */
+}
+}
+
+
 body {
     font-family: 'Roboto', sans-serif;
     color: white;
@@ -96,7 +153,7 @@ a:hover {
         4px 4px 0 #524c4c5c;
     position: relative;
 
-    animation: subtleWobble 12s infinite ease-in-out; /* Reduced wobble intensity */
+    animation: Wobble 4s infinite ease-in-out; /* Reduced wobble intensity */
     padding: 8px 12px;
     transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
     cursor: pointer;
@@ -105,7 +162,7 @@ a:hover {
 }
 
 /* Keyframe for refined wobble animation */
-@keyframes subtleWobble {
+@keyframes Wobble {
     0%, 100% {
         transform: translateX(0) rotate(0deg) scale(1); /* Keep text in place at start/end */
     }
