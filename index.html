@@ -7,38 +7,43 @@
     <title>StuartLittleOnSol Homepage</title>
     <meta name="$lilstu" content="StuartLittleOnSol">
     <link rel="icon" href="logo.jpeg">
+   <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+   <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
+   <script>
+       // Assign Buffer from the polyfill
+    window.Buffer = window.Buffer || require('buffer').Buffer;
+
+console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+console.log('Buffer.from works:', typeof Buffer.from === 'function')
+
+   </script>
+
+   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+   <script type="module">
+    import { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
+    
+    // Assign to global window object
+    window.solanaWeb3 = { 
+        Connection, 
+        PublicKey, 
+        clusterApiUrl, 
+        LAMPORTS_PER_SOL, 
+        SystemProgram, 
+        Transaction 
+    };
+    window.splToken = splToken;
+</script>
+
  
-
- <!-- @solana/web3.js and @solana/spl-token ESM builds -->
-    <script type="module">
-        import { 
-            Connection, 
-            PublicKey, 
-            clusterApiUrl, 
-            LAMPORTS_PER_SOL, 
-            SystemProgram, 
-            Transaction 
-        } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
-        import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-        import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.esm.js';
-
-        // Assign Buffer to the global window object
-        window.Buffer = window.Buffer || Buffer;
-
-        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-        console.log('Buffer.from works:', typeof Buffer.from === 'function');
-
-        // Assign Solana and SPL Token libraries to global window object
-        window.solanaWeb3 = { 
-            Connection, 
-            PublicKey, 
-            clusterApiUrl, 
-            LAMPORTS_PER_SOL, 
-            SystemProgram, 
-            Transaction 
-        };
-        window.splToken = splToken;
-    </script>
+ 
     
 
     <!-- Include @solana/web3.js -->
@@ -1185,7 +1190,7 @@
 
     // Initialize connection
    // Replace with your custom RPC URL
-const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a';
+const CUSTOM_RPC_URL = 'https://solana-mainnet.g.alchemy.com/v2/PDBwFdllqfG3KRHb1iwlJjcwVSAEMsSO';
 
 
 // Initialize connection with custom RPC
