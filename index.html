@@ -9,8 +9,12 @@
    <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
    <script>
-       // Assign Buffer to window.Buffer if it's not already defined
-       window.Buffer = window.Buffer || Buffer;
+       // Assign Buffer from the polyfill
+    window.Buffer = window.Buffer || require('buffer').Buffer;
+
+console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+console.log('Buffer.from works:', typeof Buffer.from === 'function')
+
    </script>
 
    <!-- @solana/web3.js and @solana/spl-token ESM builds -->
@@ -39,39 +43,45 @@
 
     <!-- Verification Script -->
     <script>
+        // Ensure Buffer is defined
+        window.Buffer = window.Buffer || require('buffer').Buffer;
+    
+        // Check if Buffer.from is working correctly
         console.log('Buffer is defined:', typeof Buffer !== 'undefined');
         if (typeof Buffer !== 'undefined') {
             console.log('Buffer.from works:', typeof Buffer.from === 'function');
-            
-            // If Buffer.from is not a function, implement a fallback
+    
+            // If Buffer.from doesn't work as expected, provide a fallback implementation
             if (typeof Buffer.from !== 'function') {
-                console.warn('Buffer.from is not defined. Implementing a basic fallback.');
-                Buffer.from = function (str, encoding) {
-                    if (typeof str === 'string') {
+                console.warn('Buffer.from is not defined or not working. Implementing a fallback.');
+                Buffer.from = function (data, encoding) {
+                    if (typeof data === 'string') {
                         switch (encoding) {
                             case 'utf8':
                             case 'utf-8':
-                                return new Uint8Array(new TextEncoder().encode(str));
+                                return new Uint8Array(new TextEncoder().encode(data));
                             case 'hex':
-                                return new Uint8Array(str.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+                                return new Uint8Array(
+                                    data.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+                                );
                             case 'base64':
-                                return new Uint8Array(atob(str).split('').map(c => c.charCodeAt(0)));
+                                return new Uint8Array(
+                                    atob(data).split('').map((char) => char.charCodeAt(0))
+                                );
                             default:
                                 throw new Error('Unsupported encoding: ' + encoding);
                         }
-                    } else if (Array.isArray(str) || str instanceof Uint8Array) {
-                        return new Uint8Array(str);
+                    } else if (Array.isArray(data) || data instanceof Uint8Array) {
+                        return new Uint8Array(data);
                     } else {
                         throw new Error('Unsupported type for Buffer.from');
                     }
                 };
             }
-
-            
         }
     </script>
     <meta name="$lilstu" content="StuartLittleOnSol">
-    <link rel="icon" href="king.png">
+    <link rel="icon" href="logo.jpeg">
     
 
     <!-- Include @solana/web3.js -->
@@ -1452,7 +1462,7 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
          * Function to handle the display based on window width
          */
         function handleDisplay() {
-            if (window.innerWidth > 768) { // Define breakpoint as 768px
+            if (window.innerWidth > 1440) { // Define breakpoint as 768px
                 // For larger screens, ensure nav links are visible and hamburger is hidden
                 navLinks.classList.add('active'); // Ensure menu is visible
                 navLinks.classList.remove('closing'); // Remove any closing animation classes
