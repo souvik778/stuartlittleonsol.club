@@ -198,13 +198,13 @@
                     ⬇ Scroll Down
                 </button>
             </h1>
-         
+    
+        <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
-              
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
-           
+
             <!-- Presale Information Section -->
             <section class="presale-section" id="presale">
                 <h2>Presale Information</h2>
@@ -476,18 +476,7 @@
             const walletAddressSpan = document.getElementById('wallet-address');
             const buyButton = document.getElementById('buy-button');
             const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
-         //   const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
-         window.addEventListener('scroll', () => {
-    const scrollBtn = document.querySelector('.scroll-down-btn');
-    if (window.scrollY > 200) {
-        scrollBtn.style.opacity = '0';
-        scrollBtn.style.pointerEvents = 'none';
-    } else {
-        scrollBtn.style.opacity = '1';
-        scrollBtn.style.pointerEvents = 'auto';
-    }
-});
-
+           const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
 
             // =============================
             //      PRESALE POPUP CODE
@@ -877,7 +866,7 @@
              * Fetches real-time SOL and USDC prices in USD from CoinGecko and updates the DOM.
              */
             async function fetchPrices() {
-                //const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+                const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
                 const params = new URLSearchParams({
                     ids: 'solana,usd-coin',
                     vs_currencies: 'usd'
