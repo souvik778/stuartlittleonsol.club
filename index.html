@@ -728,15 +728,16 @@
             const tokenomicsPieChart = new Chart(ctxPie, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Public Sale', 'Dev & Management', 'Presale', 'Marketing & Promotions', 'Airdrop (Contest)'],
+                    labels: ['Public Sale', 'Dev & Management', 'Presale', 'Marketing & Promotions', 'Airdrop (Contest)','liquidity pool burn'],
                     datasets: [{
                         label: 'Token Distribution',
-                        data: [50, 15, 15, 15, 5], // Percentages
+                        data: [35, 15, 15, 10, 5, 20], // Percentages
                         backgroundColor: [
                             'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
                             'rgba(54, 162, 235, 0.9)',  // Dev and Management - Blue
                             'rgba(255, 99, 132, 0.9)',  // Presale - Red
-                            'rgba(75, 192, 192, 0.9)',  // Marketing and Promotions - Teal
+                            'rgba(75, 192, 192, 0.9)',
+                            'rgba(255, 215, 0, 0.9)',  // Marketing and Promotions - Teal
                             'rgba(153, 102, 255, 0.9)'  // Airdrop (Contest) - Purple
                         ],
                         borderColor: [
