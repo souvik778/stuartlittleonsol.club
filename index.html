@@ -42,7 +42,45 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
     window.splToken = splToken;
 </script>
 
- 
+    <!-- Verification Script -->
+    <script>
+        // Ensure Buffer is defined
+        window.Buffer = window.Buffer || require('buffer').Buffer;
+    
+        // Check if Buffer.from is working correctly
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        if (typeof Buffer !== 'undefined') {
+            console.log('Buffer.from works:', typeof Buffer.from === 'function');
+    
+            // If Buffer.from doesn't work as expected, provide a fallback implementation
+            if (typeof Buffer.from !== 'function') {
+                console.warn('Buffer.from is not defined or not working. Implementing a fallback.');
+                Buffer.from = function (data, encoding) {
+                    if (typeof data === 'string') {
+                        switch (encoding) {
+                            case 'utf8':
+                            case 'utf-8':
+                                return new Uint8Array(new TextEncoder().encode(data));
+                            case 'hex':
+                                return new Uint8Array(
+                                    data.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+                                );
+                            case 'base64':
+                                return new Uint8Array(
+                                    atob(data).split('').map((char) => char.charCodeAt(0))
+                                );
+                            default:
+                                throw new Error('Unsupported encoding: ' + encoding);
+                        }
+                    } else if (Array.isArray(data) || data instanceof Uint8Array) {
+                        return new Uint8Array(data);
+                    } else {
+                        throw new Error('Unsupported type for Buffer.from');
+                    }
+                };
+            }
+        }
+    </script>
  
     
 
@@ -55,7 +93,11 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-   
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-pIVfEV+LlxG3XVvKxGlt5VxN8i3W2VllLkmE/1BjF8uPjnmFQjm25YMjRrI6QW+/KgeF95K5s1NVW8Vh4X4j4w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap"
           rel="stylesheet">
@@ -68,6 +110,64 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
     <!--animate.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
           
+    <style>
+         h1 span.presale-live {
+           
+           color: #ab3219;
+           text-shadow: 0 0 5px rgba(180, 104, 29, 0.6), 0 0 10px rgba(255, 47, 0, 0.4);
+           font-size: inherit;
+           font-weight: bold;
+           cursor: pointer;
+           transition: transform 2s, text-shadow 2s ease, color 2s ease;
+       }
+
+       /* Change color on hover */
+       h1 span.presale-live:hover, 
+       h1 span.presale-live:active {
+           color: #FFD700; /* Warm gold color */ /* Light pink for interaction */
+           transform: scale(1.05); /* Subtle scale-up */
+           text-shadow: 0 0 8px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.6);
+       }
+
+       /* Slight scale down on active (click/touch) */
+       h1 span.presale-live:active {
+           transform: scale(0.95);
+       }
+       .scroll-down-btn {
+   margin-top: 20px;
+   padding: 10px 15px;
+   font-size: 1.2rem;
+   background-color: #FFD700; /* Warm gold */
+   color: #000;
+   border: none;
+   border-radius: 30px;
+   cursor: pointer;
+   transition: background-color 0.3s ease, transform 0.3s ease;
+   text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   animation: bounce 2s infinite ease-in-out;
+}
+
+.scroll-down-btn:hover {
+   background-color: #e6c200; /* Slightly darker gold */
+   transform: scale(1.05); /* Subtle scale-up on hover */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-down-btn:active {
+   transform: scale(0.95); /* Subtle scale-down on click */
+}
+
+@keyframes bounce {
+   0%, 100% {
+       transform: translateY(0);
+   }
+   50% {
+       transform: translateY(-5px); /* Small upward bounce */
+   }
+}
+
+    </style>
 </head>
 <body>
     
