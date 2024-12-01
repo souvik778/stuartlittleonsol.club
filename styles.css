@@ -187,6 +187,7 @@ a:hover {
 /* =============================
    Mobile Navigation Toggle
    ============================= */
+   
 
 /* Hamburger Menu Icon */
 .menu-toggle {
@@ -205,11 +206,23 @@ a:hover {
     transform: rotate(90deg); /* Rotate icon when active */
 }
 /* Mobile Navigation Styles */
-@media (max-width: 768px) {
+@media (max-width: 1440px) {
+    
+    .topbar h1 {
+        font-size: 1.8rem;
+        padding: 3px 5px;
+    }
     /* Display Hamburger Menu */
     .menu-toggle {
         display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        padding: 5px;
     }
+    
 
     /* Style adjustments for navigation links */
     .nav-links {
@@ -256,14 +269,14 @@ a:hover {
 
 
 /* Ensuring proper display and functionality on even smaller devices */
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
     .nav-links a {
         padding: 12px 15px; /* Slightly less padding */
         font-size: 0.9rem; /* Slightly smaller font size */
     }
 }
 /* For Tablets and Medium Screens */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 48px) and (max-width: 1024px) {
     .nav-links {
         display: flex;
         justify-content: center; /* Center-align links */
@@ -284,14 +297,25 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px; /* Default padding */
     background-color: rgba(0, 0, 0, 0.85);
-    transition: padding 0.3s ease;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: slideDown 1s ease forwards;
+    flex-wrap: nowrap; /* Prevent wrapping by default */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .topbar {
-        padding: 10px 20px; /* Smaller padding for phones */
+        padding: 20px 40px; /* Smaller padding for phones */
     }
 }
 
@@ -490,7 +514,7 @@ a:hover {
 }
 
 /* Hide navigation links and show menu toggle on mobile */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .topbar {
         position: fixed;
         top: 0;
@@ -535,7 +559,7 @@ a:hover {
     display: none; /* Hide the popup on mobile devices */
 }
 /* Hide menu toggle on larger screens */
-@media (min-width: 769px) {
+@media (min-width: 1440px) {
     .topbar .menu-toggle {
         display: none;
     }
@@ -728,7 +752,7 @@ height: auto;
 
 /* Presale Popup */
 /* Hide the presale popup on mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .presale-popup {
         display: none;
     }
@@ -744,7 +768,7 @@ height: auto;
 }
 
 /* Show and style the mobile presale section on mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .mobile-presale-section {
         display: block;
         background-color: rgba(255, 215, 0, 0.1);
@@ -1317,7 +1341,7 @@ height: auto;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .calculator-container {
         width: 100%;
         padding: 0 20px;
@@ -1693,7 +1717,7 @@ footer {
 
 
 /* Adjust presale-popup for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .presale-popup {
         padding: 20px 15px; /* Reduce padding */
         max-height: 90vh; /* Limit height */
@@ -1769,7 +1793,7 @@ footer {
 }
 
 /* Mobile Phones (up to 480px) */
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   
 
     .main-container {
@@ -1832,7 +1856,7 @@ footer {
     .sticky-note h3 {
         font-size: 1.5rem;
     }
-}@media (max-width: 768px) {
+}@media (max-width: 1280px) {
     .presale-section {
         background-color: rgba(255, 215, 0, 0.1); /* Adjusted background for presale section */
     }
@@ -1950,7 +1974,7 @@ body {
 }
 /* Disable the presale popup on mobile devices */
 /* Show the mobile presale section on mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .mobile-presale-section {
         display: block !important;
     }
@@ -1963,7 +1987,7 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .presale-popup {
         display: none !important;
     }
@@ -1978,7 +2002,7 @@ body {
     }
     
 }
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
     .chart-legend {
         max-height: 150px;
         font-size: 1rem;
