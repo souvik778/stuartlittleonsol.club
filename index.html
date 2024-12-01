@@ -70,8 +70,8 @@
             
         }
     </script>
-    <meta name="application-name" content="StuartLittleOnSol">
-    <link rel="icon" href="token.png">
+    <meta name="$lilstu" content="StuartLittleOnSol">
+    <link rel="icon" href="king.png">
     
 
     <!-- Include @solana/web3.js -->
@@ -99,61 +99,62 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <!--animate.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+          
     <style>
-        h1 span.presale-live {
+         h1 span.presale-live {
            
-            color: #ab3219;
-            text-shadow: 0 0 5px rgba(180, 104, 29, 0.6), 0 0 10px rgba(255, 47, 0, 0.4);
-            font-size: inherit;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 2s, text-shadow 2s ease, color 2s ease;
-        }
+           color: #ab3219;
+           text-shadow: 0 0 5px rgba(180, 104, 29, 0.6), 0 0 10px rgba(255, 47, 0, 0.4);
+           font-size: inherit;
+           font-weight: bold;
+           cursor: pointer;
+           transition: transform 2s, text-shadow 2s ease, color 2s ease;
+       }
 
-        /* Change color on hover */
-        h1 span.presale-live:hover, 
-        h1 span.presale-live:active {
-            color: #FFD700; /* Warm gold color */ /* Light pink for interaction */
-            transform: scale(1.05); /* Subtle scale-up */
-            text-shadow: 0 0 8px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.6);
-        }
+       /* Change color on hover */
+       h1 span.presale-live:hover, 
+       h1 span.presale-live:active {
+           color: #FFD700; /* Warm gold color */ /* Light pink for interaction */
+           transform: scale(1.05); /* Subtle scale-up */
+           text-shadow: 0 0 8px rgba(255, 105, 180, 0.8), 0 0 15px rgba(255, 105, 180, 0.6);
+       }
 
-        /* Slight scale down on active (click/touch) */
-        h1 span.presale-live:active {
-            transform: scale(0.95);
-        }
-        .scroll-down-btn {
-    margin-top: 20px;
-    padding: 10px 15px;
-    font-size: 1.2rem;
-    background-color: #FFD700; /* Warm gold */
-    color: #000;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: bounce 2s infinite ease-in-out;
+       /* Slight scale down on active (click/touch) */
+       h1 span.presale-live:active {
+           transform: scale(0.95);
+       }
+       .scroll-down-btn {
+   margin-top: 20px;
+   padding: 10px 15px;
+   font-size: 1.2rem;
+   background-color: #FFD700; /* Warm gold */
+   color: #000;
+   border: none;
+   border-radius: 30px;
+   cursor: pointer;
+   transition: background-color 0.3s ease, transform 0.3s ease;
+   text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   animation: bounce 2s infinite ease-in-out;
 }
 
 .scroll-down-btn:hover {
-    background-color: #e6c200; /* Slightly darker gold */
-    transform: scale(1.05); /* Subtle scale-up on hover */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+   background-color: #e6c200; /* Slightly darker gold */
+   transform: scale(1.05); /* Subtle scale-up on hover */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
 .scroll-down-btn:active {
-    transform: scale(0.95); /* Subtle scale-down on click */
+   transform: scale(0.95); /* Subtle scale-down on click */
 }
 
 @keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px); /* Small upward bounce */
-    }
+   0%, 100% {
+       transform: translateY(0);
+   }
+   50% {
+       transform: translateY(-5px); /* Small upward bounce */
+   }
 }
 
     </style>
@@ -189,18 +190,18 @@
         
     </header>
     
-    
+   
     <!-- Main Container -->
     <div class="main-container">
-        
+        <h1 style="text-align: center;">
+            <span class="presale-live animate__animated animate__flash animate__infinite">Presale is Live!</span>
+            <button class="scroll-down-btn" onclick="document.querySelector('#presale').scrollIntoView({ behavior: 'smooth' });" aria-label="Scroll Down">
+                ⬇ Scroll Down
+            </button>
+        </h1> 
     
         <main class="content">
-            <h1 style="text-align: center;">
-                <span class="presale-live animate__animated animate__pulse animate__infinite">Presale is Live!</span>
-                <button class="scroll-down-btn" onclick="document.querySelector('#presale').scrollIntoView({ behavior: 'smooth' });" aria-label="Scroll Down">
-                    ⬇ Scroll Down
-                </button>
-            </h1>
+            
     
         <main class="content">
             <!-- Hero Section with Stuart Image -->
@@ -481,7 +482,8 @@
             const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
            const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
 
-            // =============================
+ 
+           // =============================
             //      PRESALE POPUP CODE
             // =============================
             let presaleShown = false; // Flag to ensure popup is shown only once
