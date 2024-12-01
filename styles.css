@@ -99,25 +99,27 @@ a:hover {
     position: relative;
 
     animation: wobble 6s infinite;
-    padding: 5px 10px;
-    transition: transform 0.3s ease-in-out;
-    cursor: pointer;
+padding: 5px 10px;
+transition: transform 0.3s ease-in-out;
+cursor: pointer;
 }
 
 @keyframes wobble {
-    0%, 100% {
+    0%, 40% {
         transform: rotate(0deg);
     }
     25% {
-        transform: rotate(5deg);
+        transform: rotate(1deg); /* Minimal tilt */
     }
     50% {
-        transform: rotate(-5deg);
+        transform: rotate(-1deg); /* Minimal tilt */
     }
     75% {
-        transform: rotate(3deg);
+        transform: rotate(0.5deg); /* Very slight adjustment */
     }
 }
+
+    
 
 .topbar h1:hover {
     transform: scale(1.2);
