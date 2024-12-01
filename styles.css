@@ -72,7 +72,7 @@ a:hover {
     transition: background-color 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    animation: slideDown 1s ease forwards;
+    animation: slideDown 1s ease-in forwards;
 }
 
 @keyframes slideDown {
@@ -96,7 +96,7 @@ a:hover {
         4px 4px 0 #524c4c5c;
     position: relative;
 
-    animation: subtleWobble 4s infinite ease-in-out; /* Reduced wobble intensity */
+    animation: subtleWobble 12s infinite ease-in-out; /* Reduced wobble intensity */
     padding: 8px 12px;
     transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
     cursor: pointer;
@@ -139,23 +139,32 @@ a:hover {
    2. Navigation
    ============================= */
 
-.topbar nav {
+   .topbar nav {
     display: flex;
     gap: 20px;
-
-    animation: fadeInRight 1s ease forwards;
+    justify-content: center; /* Ensures alignment */
+    align-items: center; /* Ensures vertical alignment */
+    opacity: 0; /* Start hidden to avoid a flash before animation */
+    animation: fadeInRight 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transform: translateX(50px); /* Matches the animation start state */
+    will-change: opacity, transform; /* Optimizes animation performance */
 }
 
 @keyframes fadeInRight {
-    from {
+    0% {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(50px); /* Start slightly off-screen */
     }
-    to {
+    60% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateX(-10px); /* Add a subtle overshoot effect */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Settle in place */
     }
 }
+
 
 .topbar nav a {
     font-size: 1rem;
