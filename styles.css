@@ -206,7 +206,7 @@ a:hover {
     transform: rotate(90deg); /* Rotate icon when active */
 }
 /* Mobile Navigation Styles */
-@media (max-width: 1440px) {
+@media (max-width: 1780px) {
     
     .topbar h1 {
         font-size: 1.8rem;
@@ -559,7 +559,7 @@ a:hover {
     display: none; /* Hide the popup on mobile devices */
 }
 /* Hide menu toggle on larger screens */
-@media (min-width: 1440px) {
+@media (min-width: 1780px) {
     .topbar .menu-toggle {
         display: none;
     }
@@ -1898,7 +1898,7 @@ footer {
 }
 
 /* Medium Laptops (1025px to 1440px) */
-@media (min-width: 1025px) and (max-width: 1440px) {
+@media (min-width: 1025px) and (max-width: 1780px) {
     .tokenomics-section .king-image-tokenomics {
         width: 500px;
     }
@@ -1940,7 +1940,7 @@ footer {
 }
 
 /* 15" Laptop (Typical width: 1440px) */
-@media (max-width: 1440px) {
+@media (max-width: 1780px) {
     .tokenomics-section .king-image-tokenomics {
         width: 550px;
     }
