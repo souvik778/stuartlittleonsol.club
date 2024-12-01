@@ -8,17 +8,7 @@
     <meta name="$lilstu" content="StuartLittleOnSol">
     <link rel="icon" href="logo.jpeg">
 
-   <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
-   <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
-   <script>
-       // Assign Buffer from the polyfill
-    window.Buffer = window.Buffer || require('buffer').Buffer;
-
-console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-console.log('Buffer.from works:', typeof Buffer.from === 'function')
-
-   </script>
-
+   
    <!-- @solana/web3.js and @solana/spl-token ESM builds -->
    <script type="module">
     import { 
@@ -30,7 +20,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
         Transaction 
     } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
     import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-    import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.esm.js';
+    import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js';
 
     // Assign Buffer to the global window object
     window.Buffer = window.Buffer || Buffer;
@@ -50,46 +40,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
     window.splToken = splToken;
 </script>
 
-    <!-- Verification Script -->
-    <script>
-        // Ensure Buffer is defined
-        window.Buffer = window.Buffer || require('buffer').Buffer;
-    
-        // Check if Buffer.from is working correctly
-        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-        if (typeof Buffer !== 'undefined') {
-            console.log('Buffer.from works:', typeof Buffer.from === 'function');
-    
-            // If Buffer.from doesn't work as expected, provide a fallback implementation
-            if (typeof Buffer.from !== 'function') {
-                console.warn('Buffer.from is not defined or not working. Implementing a fallback.');
-                Buffer.from = function (data, encoding) {
-                    if (typeof data === 'string') {
-                        switch (encoding) {
-                            case 'utf8':
-                            case 'utf-8':
-                                return new Uint8Array(new TextEncoder().encode(data));
-                            case 'hex':
-                                return new Uint8Array(
-                                    data.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
-                                );
-                            case 'base64':
-                                return new Uint8Array(
-                                    atob(data).split('').map((char) => char.charCodeAt(0))
-                                );
-                            default:
-                                throw new Error('Unsupported encoding: ' + encoding);
-                        }
-                    } else if (Array.isArray(data) || data instanceof Uint8Array) {
-                        return new Uint8Array(data);
-                    } else {
-                        throw new Error('Unsupported type for Buffer.from');
-                    }
-                };
-            }
-        }
-    </script>
-    
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
