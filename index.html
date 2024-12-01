@@ -30,8 +30,15 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
         Transaction 
     } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
     import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-    
-    // Assign to global window object
+    import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.esm.js';
+
+    // Assign Buffer to the global window object
+    window.Buffer = window.Buffer || Buffer;
+
+    console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+    console.log('Buffer.from works:', typeof Buffer.from === 'function');
+
+    // Assign Solana and SPL Token libraries to global window object
     window.solanaWeb3 = { 
         Connection, 
         PublicKey, 
@@ -82,12 +89,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             }
         }
     </script>
-    <!-- Include @solana/web3.js -->
-    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
-
-    <!-- Include @solana/spl-token -->
-    <script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.9/lib/cjs/index.js"></script>
-
+    
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
