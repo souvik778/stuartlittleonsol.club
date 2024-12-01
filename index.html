@@ -10,35 +10,35 @@
  
 
  <!-- @solana/web3.js and @solana/spl-token ESM builds -->
- <script type="module">
-    import { 
-        Connection, 
-        PublicKey, 
-        clusterApiUrl, 
-        LAMPORTS_PER_SOL, 
-        SystemProgram, 
-        Transaction 
-    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
-    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-    import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js';
+    <script type="module">
+        import { 
+            Connection, 
+            PublicKey, 
+            clusterApiUrl, 
+            LAMPORTS_PER_SOL, 
+            SystemProgram, 
+            Transaction 
+        } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+        import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
+        import { Buffer } from 'https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.esm.js';
 
-    // Assign Buffer to the global window object
-    window.Buffer = window.Buffer || Buffer;
+        // Assign Buffer to the global window object
+        window.Buffer = window.Buffer || Buffer;
 
-    console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-    console.log('Buffer.from works:', typeof Buffer.from === 'function');
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        console.log('Buffer.from works:', typeof Buffer.from === 'function');
 
-    // Assign Solana and SPL Token libraries to global window object
-    window.solanaWeb3 = { 
-        Connection, 
-        PublicKey, 
-        clusterApiUrl, 
-        LAMPORTS_PER_SOL, 
-        SystemProgram, 
-        Transaction 
-    };
-    window.splToken = splToken;
-</script>
+        // Assign Solana and SPL Token libraries to global window object
+        window.solanaWeb3 = { 
+            Connection, 
+            PublicKey, 
+            clusterApiUrl, 
+            LAMPORTS_PER_SOL, 
+            SystemProgram, 
+            Transaction 
+        };
+        window.splToken = splToken;
+    </script>
     
 
     <!-- Include @solana/web3.js -->
