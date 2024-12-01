@@ -119,17 +119,44 @@
         h1 span.presale-live:active {
             transform: scale(0.95);
         }
+        .scroll-down-btn {
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    background-color: #FFD700; /* Warm gold */
+    color: #000;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.scroll-down-btn:hover {
+    background-color: #e6c200; /* Slightly darker gold */
+    transform: scale(1.05); /* Subtle scale-up on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-down-btn:active {
+    transform: scale(0.95); /* Subtle scale-down on click */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px); /* Small upward bounce */
+    }
+}
+
     </style>
 </head>
 <body>
-    <!-- Your existing HTML content -->
-
-    <!-- Rest of your HTML -->
-</body>
-</html>
-
-
-<body>
+    
     <!-- Interactive Background Canvas -->
     <canvas id="interactive-background"></canvas>
 
@@ -162,16 +189,22 @@
     
     <!-- Main Container -->
     <div class="main-container">
-        <h1>
-            <span class="presale-live animate__animated animate__flash animate__infinite">Presale is Live!</span>
-        </h1>
+        
     
         <main class="content">
+            <h1 style="text-align: center;">
+                <span class="presale-live animate__animated animate__pulse animate__infinite">Presale is Live!</span>
+                <button class="scroll-down-btn" onclick="document.querySelector('#presale').scrollIntoView({ behavior: 'smooth' });" aria-label="Scroll Down">
+                    ⬇ Scroll Down
+                </button>
+            </h1>
+         
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
+              
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
-
+           
             <!-- Presale Information Section -->
             <section class="presale-section" id="presale">
                 <h2>Presale Information</h2>
@@ -444,6 +477,17 @@
             const buyButton = document.getElementById('buy-button');
             const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
          //   const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
+         window.addEventListener('scroll', () => {
+    const scrollBtn = document.querySelector('.scroll-down-btn');
+    if (window.scrollY > 200) {
+        scrollBtn.style.opacity = '0';
+        scrollBtn.style.pointerEvents = 'none';
+    } else {
+        scrollBtn.style.opacity = '1';
+        scrollBtn.style.pointerEvents = 'auto';
+    }
+});
+
 
             // =============================
             //      PRESALE POPUP CODE
