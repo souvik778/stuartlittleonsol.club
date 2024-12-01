@@ -94,6 +94,9 @@
 
     <!-- TradingView Widget Script -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <!--animate.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 </head>
 <body>
     <!-- Your existing HTML content -->
@@ -147,7 +150,7 @@
                
                 <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
                 <div class="contract-address">
-                    <p><strong><u>Airdrop:</u></strong> <li style="margin-right:18.5%;">vesting period (distribution period)</li><li>70% will be airdropped one day before the launch</li><li>10% will be airdropped each day after the launch</li></p>
+                    <p><strong><u>Airdrop:vesting period </u></strong><li>70% will be airdropped one day before the launch</li><li>10% will be airdropped each day after the launch</li></p>
                 </div>
                 
               
@@ -789,7 +792,7 @@
              * Fetches real-time SOL and USDC prices in USD from CoinGecko and updates the DOM.
              */
             async function fetchPrices() {
-                const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+                //const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
                 const params = new URLSearchParams({
                     ids: 'solana,usd-coin',
                     vs_currencies: 'usd'
@@ -1079,7 +1082,7 @@
                         alert('Failed to connect wallet. Please try again.');
                     }
                 } else {
-                    alert('Phantom Wallet not found. Please install it from https://phantom.app');
+                    alert('Phantom Wallet not found. Please install it from https://phantom.app/download');
                 }
             };
 
