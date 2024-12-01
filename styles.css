@@ -88,46 +88,52 @@ a:hover {
     font-family: 'Orbitron', sans-serif;
     font-size: 35px;
     font-weight: 800;
-    
     color: #FFD700;
     text-shadow:
         -3px -3px 0 #ca777792,
         3px -3px 0 #a6606089,
         -3px 3px 0 #765f5f73,
         4px 4px 0 #524c4c5c;
-       
     position: relative;
 
-    animation: wobble 6s infinite;
-padding: 5px 10px;
-transition: transform 0.3s ease-in-out;
-cursor: pointer;
+    animation: subtleWobble 4s infinite ease-in-out; /* Reduced wobble intensity */
+    padding: 8px 12px;
+    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes wobble {
-    0%, 0% {
-        transform: rotate(0deg);
+/* Keyframe for refined wobble animation */
+@keyframes subtleWobble {
+    0%, 100% {
+        transform: translateX(0) rotate(0deg) scale(1); /* Keep text in place at start/end */
     }
-    25% {
-        transform: rotate(1deg); /* Minimal tilt */
+    20% {
+        transform: translateX(2px) rotate(1deg) scale(1.02); /* Slight shift and tilt */
     }
-    50% {
-        transform: rotate(-1deg); /* Minimal tilt */
+    40% {
+        transform: translateX(-2px) rotate(-1deg) scale(1.02);
     }
-    75% {
-        transform: rotate(0.5deg); /* Very slight adjustment */
+    60% {
+        transform: translateX(1px) rotate(0.5deg) scale(1.01);
+    }
+    80% {
+        transform: translateX(-1px) rotate(-0.5deg) scale(1.01);
     }
 }
 
-    
-
+/* Hover effect with smooth scaling and glowing effect */
 .topbar h1:hover {
-    transform: scale(1.2);
+    transform: scale(1.1); /* Slight zoom effect */
     text-shadow:
-        0 0 20px #FFD700,
-        0 0 30px #FF69B4,
-        0 0 40px #00BFFF;
+        0 0 10px #FFD700,
+        0 0 20px #FF69B4,
+        0 0 30px #00BFFF,
+        0 0 40px #FFD700;
+    transition: transform 0.4s ease-in-out, text-shadow 0.4s ease-in-out; /* Smooth hover effect */
 }
+
 
 /* =============================
    2. Navigation
