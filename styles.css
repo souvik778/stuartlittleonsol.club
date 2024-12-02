@@ -1623,7 +1623,7 @@ height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeIn 2s ease forwards;
+    animation: fadeIn 0.25s ease forwards;
 }
 
 .contact-section h2 {
