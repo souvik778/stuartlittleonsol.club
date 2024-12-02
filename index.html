@@ -191,9 +191,9 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 <i class="fab fa-linktree"></i>
                 <img src="linktree.webp" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
             </a>
-            <!-- Connect Wallet Button -->
+            <!-- Connect Wallet Button 
             <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
-            <!-- Disconnect Wallet Button (Initially Hidden) -->
+             Disconnect Wallet Button (Initially Hidden) -->
             <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
             <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
@@ -220,19 +220,34 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
 
-            <!-- Presale Information Section -->
-            <section class="presale-section" id="presale">
-                <h2>Presale Information</h2>
-                <p><strong>Presale Softcap:</strong> 50 SOL (44 sol remainig)- 105 holders</p>
-                <p><strong>Token Live:</strong> After presale ends</p>
-               
-                <p><strong>Anticipated launch date:</strong> 20 December 2024 </p>
-                <div class="contract-address">
-                    <p><strong><u>Airdrop:vesting period </u></strong><li>70% will be airdropped one day before the launch</li><li>10% will be airdropped each day after the launch</li></p>
+           <!-- Presale Information Section -->
+    <section class="presale-section" id="presale">
+        <h2>Presale Information</h2>
+        <u><p><strong>Presale Softcap:</strong></u> 50 SOL (44 SOL remaining) - 105 holders</p>
+        <u><p><strong>Token Live:</u></strong> After presale ends</p>
+        <u><p><strong>Anticipated Launch Date:</u></strong> 20 December 2024</p>
+
+        <!-- Airdrop Vesting Period -->
+        <div class="airdrop-vesting">
+            <p><strong><u>Airdrop: Vesting Period</u></strong></p>
+            <p>&bull; 70% will be airdropped one day before the launch</p><br>
+            <p>&bull; 10% will be airdropped each day after the launch</p>
+        </div> 
+
+        <!-- Contract Address with Copy Button -->
+        <div class="contract-section">
+            <p><strong><u>Contract Address</u></strong></p>
+            <div class="copy-container">
+                <div class="contract-address" id="contractAddress">
+                    HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM
                 </div>
-                
-              
-                <p>Follow us on socials to stay updated:</p>
+                <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+            </div>
+            <span class="copy-success" id="copySuccess">Copied!</span>
+        </div>
+
+        <!-- Socials Section -->
+
                 <div class="social-links">
                     <!-- Repeated Social Links for clarity -->
                       <!-- Social Links -->
@@ -265,7 +280,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
                         <br> 
-                        <button type="button" id="buy-button" class="btn" disabled>Buy</button>
+                     <!--<button type="button" id="buy-button" class="btn" disabled>Buy</button>-->
                     </form>
                     <p id="calculation-result"></p>
                 </div>
@@ -406,16 +421,20 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             <h3>What is StuartLittleOnSol?</h3>
             <p>StuartLittleOnSol is a decentralized token designed for meme enthusiasts, offering secure transactions on Solana, community governance, and a vibrant ecosystem.</p>
         </div>
-        
         <div class="faq-item">
-            <h3>How can I participate in the presale?</h3>
-            <p>You can participate in the presale by following the instructions on our presale window.</p>
+            <h3>How to Participate in the Token Presale:</h3>
+            <p>
+                <u>Locate the Contract Address:</u><br>
+                Go to the "Presale Information" section and copy the provided contract address.<br>
+                <u>Make the Payment:</u><br>
+                Open your wallet and paste the contract address. Send the desired amount in Sol to complete your token purchase.</p>
         </div>
+       
         
-        <div class="faq-item">
+       <!-- <div class="faq-item">
             <h3>How do I buy $lilstu coin?</h3>
             <p>Connect your wallet, enter your desired amount in the token price calculator section, hit calculate, then hit buy.</p>
-        </div>
+        </div>-->
         
         <div class="faq-item">
             <h3>What blockchain is StuartLittleOnSol built on?</h3>
@@ -432,18 +451,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             <p>We will get back to you within 2 hours.</p>
         </div>
         
-        <div class="faq-item">
-            <h3>Why is Phantom showing a warning message like "For your safety, Phantom has blocked this request"?</h3>
-            <p>
-                Phantom displays this warning to protect your wallet from unauthorized or suspicious requests. It's a security feature designed to ensure that only trusted applications can access your wallet. If you encounter this message while interacting with our platform, please follow these steps to ensure your safety:<br>
-            <br>
-                <li><strong>Verify the URL:</strong> Ensure you're on our official website ( <a href="https://stuartlittleonsol.club" target="_blank" rel="noopener noreferrer">stuartlittleonsol.club</a>).</li><br>
-                <li><strong>Avoid Sharing Sensitive Information:</strong> Never share your wallet's private keys or seed phrases with anyone.</li><br>
-                <li><strong>Check for Phishing Attempts:</strong> Be cautious of unsolicited messages or links claiming to be from Phantom or our team.</li><br>
-                <li><strong>Update Phantom:</strong> Make sure your Phantom Wallet extension is up-to-date to benefit from the latest security features.</li><br>
-                <li><strong>Contact Support:</strong> If you're unsure why the warning appeared or believe it was shown in error, please reach out to our support team for assistance.</li>
-            </p>
-        </div>
     </div>
 </section>
 
@@ -477,6 +484,60 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
 
     <!-- JavaScript for All Functionalities -->
     <script>
+        
+        function copyToClipboard() {
+            const contractAddress = document.getElementById('contractAddress').innerText;
+
+            // Check if the Clipboard API is available
+            if (navigator.clipboard && window.isSecureContext) {
+                // Use the modern Clipboard API
+                navigator.clipboard.writeText(contractAddress).then(() => {
+                    showCopySuccess();
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    fallbackCopyText(contractAddress);
+                });
+            } else {
+                // Fallback to the older method
+                fallbackCopyText(contractAddress);
+            }
+        }
+
+        function fallbackCopyText(text) {
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            // Make sure the textarea is not visible
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    console.error('Fallback: Copy command was unsuccessful');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+
+            // Remove the temporary textarea
+            document.body.removeChild(textarea);
+        }
+
+        function showCopySuccess() {
+            const copySuccess = document.getElementById('copySuccess');
+            copySuccess.style.display = 'block';
+            // Hide after 2 seconds
+            setTimeout(() => {
+                copySuccess.style.display = 'none';
+            }, 2000);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             // =============================
             //      GLOBAL VARIABLES
@@ -1249,7 +1310,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             /**
              * Handles the Buy action by sending SOL or USDC to the target address.
              */
-            const buyTokens = async () => {
+           /**  const buyTokens = async () => {
                 if (!connectedWallet) {
                     alert('Please connect your wallet first.');
                     return;
@@ -1301,7 +1362,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
              * Sends SOL from the user's wallet to the target address.
              * @param {number} amount 
              * @returns {string} Transaction signature
-             */
+            
              const sendSOL = async (amount) => {
     const provider = window.solana;
     const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
@@ -1339,7 +1400,7 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
              * Sends USDC (SPL Token) from the user's wallet to the target address.
              * @param {number} amount 
              * @returns {string} Transaction signature
-             */
+             
              const sendUSDC = async (amount) => {
     const provider = window.solana;
     const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
@@ -1385,7 +1446,7 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
              * @param {PublicKey} payer 
              * @param {Connection} connection
              * @returns {PublicKey}
-             */
+             
             const getOrCreateAssociatedTokenAccount = async (owner, mint, payer, connection) => {
                 const associatedTokenAddress = await splToken.getAssociatedTokenAddress(
                     splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
