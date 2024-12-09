@@ -210,8 +210,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 ⬇ Scroll Down
             </button>
         </h1> 
-    
-        <main class="content">
             
     
         <main class="content">
@@ -392,7 +390,66 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 </div>
                 <div id="custom-legend" class="chart-legend"></div>
             </section>
+            <h2>Project Roadmap</h2>
 
+            <div class="container">
+                <div class="events">
+                    <div class="event-wrapper" data-id="event-1">
+                        <div class="event-dot" data-target="event-1"></div>
+                        <div class="event-card" id="event-1">
+                            <h3>Pre-Sale Ends (Dec 18)</h3>
+                            <p>This marks the close of our presale round, setting the stage for the upcoming token distribution.</p>
+                        </div>
+                    </div>
+                    <div class="event-wrapper" data-id="event-2">
+                        <div class="event-dot" data-target="event-2"></div>
+                        <div class="event-card" id="event-2">
+                            <h3>Airdrop (Dec 18-23)</h3>
+                            <p>Our token airdrop campaign runs from Dec 18 to Dec 23, rewarding early supporters.</p>
+                        </div>
+                    </div>
+                    <div class="event-wrapper" data-id="event-3">
+                        <div class="event-dot" data-target="event-3"></div>
+                        <div class="event-card" id="event-3">
+                            <h3>Launch (Dec 20)</h3>
+                            <p>Official project launch on Dec 20, making tokens available for public trading.</p>
+                        </div>
+                    </div>
+                    <div class="event-wrapper" data-id="event-4">
+                        <div class="event-dot" data-target="event-4"></div>
+                        <div class="event-card" id="event-4">
+                            <h3>KYC Audit Submission (Dec 25)</h3>
+                            <p>Submission of KYC audit on Dec 25, ensuring trust and compliance for all participants.</p>
+                        </div>
+                    </div>
+                    <div class="event-wrapper" data-id="event-5">
+                        <div class="event-dot" data-target="event-5"></div>
+                        <div class="event-card" id="event-5">
+                            <h3>All DEX Listing (Dec 30)</h3>
+                            <p>On Dec 30, our token will be listed on all major decentralized exchanges (DEX).</p>
+                        </div>
+                    </div>
+                    <div class="event-wrapper" data-id="event-6">
+                        <div class="event-dot" data-target="event-6"></div>
+                        <div class="event-card" id="event-6">
+                            <h3>CEX Listing (Feb 1)</h3>
+                            <p>By Feb 1, we anticipate the token to be listed on major centralized exchanges (CEX).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="svg-container">
+                    <svg id="timeline-svg" width="400" height="0" style="overflow: visible;">
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#00f5c9" />
+                                <stop offset="100%" stop-color="#00c9f5" />
+                            </linearGradient>
+                        </defs>
+                        <path id="timeline-path" class="timeline-path"></path>
+                    </svg>
+                </div>
+            </div>
+            
             <!-- Features Section -->
             <section class="features-section animate-on-scroll" id="features">
                 <h2>Features</h2>
@@ -485,6 +542,104 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
 
     <!-- JavaScript for All Functionalities -->
     <script>
+                const dots = document.querySelectorAll('.event-dot');
+    const cards = document.querySelectorAll('.event-card');
+    const svg = document.getElementById('timeline-svg');
+    const path = document.getElementById('timeline-path');
+    const heading = document.querySelector('h1');
+
+    window.addEventListener('load', adjustTimeline);
+    window.addEventListener('resize', adjustTimeline);
+
+    function adjustTimeline() {
+        const dotPositions = [];
+        dots.forEach(dot => {
+            const rect = dot.getBoundingClientRect();
+            const top = rect.top + rect.height / 2 + window.scrollY;
+            const left = rect.left + rect.width / 2;
+            dotPositions.push({x: left, y: top});
+        });
+
+        let d = "";
+        if (dotPositions.length > 0) {
+            const start = dotPositions[0];
+            d = `M ${start.x},${start.y}`;
+            for (let i = 1; i < dotPositions.length; i++) {
+                const p = dotPositions[i];
+                const prev = dotPositions[i-1];
+                // Quadratic curve for smoothness
+                d += ` Q ${prev.x},${p.y} ${p.x},${p.y}`;
+            }
+        }
+
+        path.setAttribute('d', d);
+
+        if (dotPositions.length > 0) {
+            const minY = Math.min(...dotPositions.map(p => p.y));
+            const maxY = Math.max(...dotPositions.map(p => p.y));
+            const minX = Math.min(...dotPositions.map(p => p.x));
+            const maxX = Math.max(...dotPositions.map(p => p.x));
+
+            svg.setAttribute('height', maxY - minY + 100);
+            svg.setAttribute('width', maxX - minX + 100);
+            svg.style.position = 'absolute';
+            svg.style.top = (minY - 50) + 'px';
+            svg.style.left = (minX - 50) + 'px';
+        }
+    }
+
+    // Highlight logic when dot is clicked
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const targetId = dot.getAttribute('data-target');
+            highlightCard(targetId);
+        });
+    });
+
+    // Highlight logic when card is clicked
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const targetId = card.id;
+            highlightCard(targetId);
+        });
+    });
+
+    function highlightCard(id) {
+        const targetCard = document.getElementById(id);
+        cards.forEach(c => {
+            c.classList.remove('highlight');
+            void c.offsetWidth; 
+        });
+        targetCard.classList.add('highlight');
+        targetCard.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }
+
+    // Interactive underline feature: move gradient angle based on mouse X
+    heading.addEventListener('mousemove', (e) => {
+        const rect = heading.getBoundingClientRect();
+        const xPos = e.clientX - rect.left;
+        const percent = xPos / rect.width;
+        const angle = Math.floor(percent * 180); 
+        heading.style.setProperty('--underline-angle', angle + 'deg');
+        heading.style.setProperty('--underline-color1', '#00f5c9');
+        heading.style.setProperty('--underline-color2', '#00c9f5');
+        heading.style.setProperty('--underline-gradient', `linear-gradient(${angle}deg, var(--underline-color1), var(--underline-color2))`);
+        heading.style.setProperty('--underline-transform', `translateX(-50%)`);
+
+        heading.style.cssText = `
+            ${heading.style.cssText}
+            --underline-gradient: linear-gradient(${angle}deg, #00f5c9, #00c9f5);
+        `;
+        heading.querySelector('::after')?.style?.setProperty('background', `linear-gradient(${angle}deg, #00f5c9, #00c9f5)`);
+    });
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+        h1::after {
+            background: var(--underline-gradient, linear-gradient(to right, #00f5c9, #00c9f5));
+        }
+    `;
+    document.head.appendChild(style);
         
         function copyToClipboard() {
             const contractAddress = document.getElementById('contractAddress').innerText;
