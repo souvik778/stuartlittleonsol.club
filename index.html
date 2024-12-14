@@ -207,7 +207,8 @@
         </h1>
     </div>
     
-            
+
+   
 
 
         <main class="content">
@@ -275,7 +276,7 @@
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
                         <br> 
-                        <button type="button" id="buy-button" class="btn" disabled>Buy</button>
+                     <!--   <button type="button" id="buy-button" class="btn" disabled>Buy</button>-->
                     </form>
                     <p id="calculation-result"></p>
                 </div>
@@ -386,7 +387,22 @@
                     <canvas id="tokenomics-piechart"></canvas>
                 </div>
                 <div id="custom-legend" class="chart-legend"></div>
+                
             </section>
+            <!-- Fixed Thought Cloud -->
+            <div class="thought-cloud-container">
+                <div class="thought-cloud">
+                    <div class="main-quote">
+                        Because just like Stuart was an easy pick for that family in the orphanage,
+                        this coin will be an easy pick in the memecoin market.
+                        Who wouldn’t want to invest in the mouse who stole hearts?
+                    </div>
+                    <div class="rotating-quote">
+                        <em>Lil' Coin, Big Dreams, No Cap</em>
+                    </div>
+                    <button class="change-quote-btn">Next Quote</button>
+                </div>
+            </div>
             <!--road map section-->
             
             <div class="container" id="map">
@@ -1636,9 +1652,29 @@ if (presaleSection) {
             }, 2000);
         }
 
-  
-   
 
+    const rotatingQuoteEl = document.querySelector('.thought-cloud .rotating-quote');
+
+    const extraQuotes = [
+        "We Small, But Our Gains Large",
+        "Stuart Little Coin: Because Adulting is Hard",
+        "This Coin May Be Small, But Our Community Is Lowkey Gigantic",
+        "Invest in Us, We're Like Stuart Little, But With Better Financial Prospects",
+        "Our Coin is Like Stuart's Car: Small, Fast, and Totally Lit",
+        "We're Not a Scam, Just Underdogs Trying to Make It Big",
+        "Stuart Little Coin: Where Memes Reign Supreme",
+        "Lil' Coin, Big Dreams, No Cap" // Include the original rotating quote as well
+    ];
+
+    let currentIndex = 0;
+    const button = document.querySelector('.change-quote-btn');
+    button.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % extraQuotes.length;
+        rotatingQuoteEl.innerHTML = `<em>${extraQuotes[currentIndex]}</em>`;
+    });
+
+
+   
     </script>
 </body>
 </html>
