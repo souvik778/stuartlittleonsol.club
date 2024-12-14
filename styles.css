@@ -5,6 +5,22 @@
     margin: 0;
     padding: 0;
 }
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 
 
 h2 {
@@ -368,8 +384,8 @@ a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
-    background-color: #0d0d0d;
+    z-index: -5;
+    background-color:#1a1a1a;
     opacity: 0.8; /* Increased opacity for better visibility */
     overflow: hidden;
 }
@@ -1839,65 +1855,67 @@ height: auto;
 }
 
 /* Hero Section */
-.hero-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 150px 20px 80px;
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    z-index: 850;
-    animation: fadeIn 2s ease forwards;
-    position: relative;
-    overflow: hidden;
 }
 
-.hero-image {
-    max-width: 90%;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-    transition: transform 0.4s, box-shadow 0.4s;
-    animation: bounceIn 1.5s ease forwards, glow 4s ease-in-out infinite;
-    position: relative;
-    --glow-x: 0px;
-    --glow-y: 0px;
-    --glow-color: #FFD700;
-    box-shadow:
-        0 0 15px var(--glow-color),
-        0 0 30px var(--glow-color),
-        0 0 45px var(--glow-color);
+body {
+    background: #1a1a1a; /* Dark background to highlight the glow */
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
-/* Glowing Animation */
-@keyframes glow {
-    0% {
-        box-shadow:
-            0 0 15px var(--glow-color),
-            0 0 30px var(--glow-color),
-            0 0 45px var(--glow-color);
+/* Hero Section */
+.hero-section {
+    position: relative;
+    overflow: visible; /* Changed to visible to prevent glow clipping */
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Subtle Gradient Overlay with Gentle Pulse */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent 70%);
+    pointer-events: none;
+    animation: subtlePulse 20s infinite;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+/* Keyframes for Subtle Pulse */
+@keyframes subtlePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
     }
     50% {
-        box-shadow:
-            var(--glow-x) var(--glow-y) 20px #FFD700,
-            var(--glow-x) var(--glow-y) 30px #FF69B4,
-            var(--glow-x) var(--glow-y) 40px #00BFFF;
-    }
-    100% {
-        box-shadow:
-            0 0 15px var(--glow-color),
-            0 0 30px var(--glow-color),
-            0 0 45px var(--glow-color);
+        transform: scale(1.02);
+        opacity: 0.5;
     }
 }
 
+/* Bounce In Animation */
 @keyframes bounceIn {
     0% {
-        transform: scale(0.5);
+        transform: scale(0.8);
         opacity: 0;
     }
     60% {
-        transform: scale(1.1);
+        transform: scale(1.05);
         opacity: 1;
     }
     100% {
@@ -1905,31 +1923,128 @@ height: auto;
     }
 }
 
-.hero-image:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9);
+/* Glow Animation with Smooth Color Transition */
+@keyframes glow {
+    0%, 100% {
+        box-shadow:
+            0 0 10px var(--glow-color),
+            0 0 20px var(--glow-color),
+            0 0 30px var(--glow-color);
+    }
+    50% {
+        box-shadow:
+            0 0 15px #FF69B4,
+            0 0 25px #FF69B4,
+            0 0 35px #00BFFF;
+    }
 }
 
-/* Additional Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+/* Subtle Color Shift Animation */
+@keyframes colorShift {
+    0% {
+        --glow-color: #FFD700;
     }
-    to {
-        opacity: 1;
+    50% {
+        --glow-color: #FF69B4;
+    }
+    100% {
+        --glow-color: #00BFFF;
     }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+/* Hero Image Styling */
+.hero-image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    position: relative;
+    --glow-color: #FFD700;
+    --dynamic-glow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        var(--dynamic-glow);
+    filter: brightness(1);
+    transition: box-shadow 0.4s ease, filter 0.4s ease;
+    animation: bounceIn 1.5s ease forwards, glow 6s ease-in-out infinite;
+    will-change: box-shadow, filter, --dynamic-glow;
+    /* Ensure responsiveness */
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+}
+
+/* Animate Color on Hover-supported Devices */
+.hero-image.animate-color {
+    animation: bounceIn 1.5s ease forwards, glow 6s ease-in-out infinite, colorShift 15s ease-in-out infinite;
+}
+
+/* Enhanced Hover Effect - Subtle and Smooth */
+@media (hover: hover) and (pointer: fine) {
+    .hero-image:hover {
+        box-shadow: 
+            0 0 15px #FF69B4, 
+            0 0 25px #00BFFF, 
+            0 0 35px #FFD700;
+        filter: brightness(1.1) saturate(1.1);
+        transition: box-shadow 0.4s ease, filter 0.4s ease;
+        cursor: pointer;
     }
 }
+
+/* Active State for Click Interaction */
+.hero-image:active {
+    box-shadow: 
+        0 0 12px #FF69B4, 
+        0 0 22px #00BFFF, 
+        0 0 32px #FFD700;
+    filter: brightness(1) saturate(1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .hero-image {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-image {
+        max-width: 90%;
+    }
+    .hero-section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section::before {
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+    }
+    .hero-image {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .hero-image,
+    .hero-section::before {
+        animation: none;
+    }
+    
+    .hero-image {
+        box-shadow:
+            0 0 10px #FFD700,
+            0 0 20px #FFD700,
+            0 0 30px #FFD700;
+        filter: brightness(1);
+    }
+}
+
 
 /* Disclaimer Section */
 .disclaimer-section {
@@ -2422,4 +2537,4 @@ input:focus, select:focus {
 
 .wallet-address {
     animation: fadeIn 2s ease-in-out;
-} F*
+} 
