@@ -2625,7 +2625,7 @@ body {
         transform: none;
         right: auto;
         top: auto;
-        margin: 40px 0; 
+        margin: auto; 
         display: flex;
         justify-content: center;
         pointer-events: auto; /* Allow interactions */
