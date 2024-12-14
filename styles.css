@@ -327,7 +327,6 @@ transform: translateY(-5px); /* Small upward bounce */
 }
 }
 
-
 body {
     font-family: 'Roboto', sans-serif;
     color: white;
@@ -362,16 +361,23 @@ a:hover {
 }
 
 /* Interactive Background Styling */
+/* Interactive Background Styling */
+/* Ensure the canvas covers the entire viewport */
 #interactive-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
-    background-color: #0d0d0d;
-    opacity: 0.8; /* Increased opacity for better visibility */
-    overflow: hidden;
+    z-index: -1; /* Place it behind other elements */
+    background-color: #000; /* Optional: Set a base background color */
+}
+
+/* Adjust canvas for better performance on mobile devices */
+@media (max-width: 767px) {
+    #interactive-background {
+        background-color: #111; /* Slightly lighter background for visibility */
+    }
 }
 
 /* =============================
@@ -1417,17 +1423,7 @@ height: auto;
         transform: translateY(-10px);
     }
 }
-/* Interactive Background Canvas Styles */
-#interactive-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Ensure it's behind other content */
-    background-color: #000; /* Optional: Set a background color */
-    pointer-events: none; /* Allow clicks to pass through the canvas */
-}
+
 
 /* Pie Chart Section */
 .piechart-section {
