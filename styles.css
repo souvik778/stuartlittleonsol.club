@@ -1030,7 +1030,7 @@ a:hover {
     height: auto;
     border-radius: 15px;
     margin-top: 20px;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 25px rgba(0, 255, 8, 0.7);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -2506,19 +2506,13 @@ input:focus, select:focus {
 .wallet-address {
     animation: fadeIn 2s ease-in-out;
 } 
-/* Base Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
+
 
 /* Thought Cloud Container */
 .thought-cloud-container {
     position: fixed;
     top: 50%;
-    right: 60px; /* Increased spacing from the right edge */
+    left: 60px; /* Increased spacing from the right edge */
     transform: translateY(-50%);
     z-index: 3000;
     pointer-events: none; /* Allows interaction only within the cloud */
@@ -2526,7 +2520,7 @@ body {
 
 /* Thought Cloud */
 .thought-cloud {
-    position: relative;
+    position:relative;
     width: 350px; /* Increased width for better visibility */
     min-height: 250px; /* Ensures sufficient height */
     padding: 30px 25px; /* Increased padding for spacious content area */
@@ -2626,6 +2620,7 @@ body {
         position: static;
         transform: none;
         right: auto;
+        left:auto;
         top: auto;
         margin: auto; 
         display: flex;
