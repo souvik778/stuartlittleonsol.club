@@ -384,8 +384,8 @@ a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -5;
-    background-color:#1a1a1a;
+    z-index: -2;
+    background-color: #0d0d0d;
     opacity: 0.8; /* Increased opacity for better visibility */
     overflow: hidden;
 }
@@ -1855,30 +1855,10 @@ height: auto;
 }
 
 /* Hero Section */
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #1a1a1a; /* Dark background to highlight the glow */
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
-
 /* Hero Section */
 .hero-section {
     position: relative;
-    overflow: visible; /* Changed to visible to prevent glow clipping */
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* Subtle Gradient Overlay with Gentle Pulse */
@@ -1893,10 +1873,8 @@ body {
     pointer-events: none;
     animation: subtlePulse 20s infinite;
     opacity: 0.3;
-    transition: opacity 0.3s ease;
 }
 
-/* Keyframes for Subtle Pulse */
 @keyframes subtlePulse {
     0%, 100% {
         transform: scale(1);
@@ -1908,19 +1886,21 @@ body {
     }
 }
 
-/* Bounce In Animation */
-@keyframes bounceIn {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    60% {
-        transform: scale(1.05);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-    }
+/* Hero Image Styling */
+.hero-image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.4s ease, filter 0.4s ease;
+    animation: bounceIn 1.5s ease forwards, glow 6s ease-in-out infinite;
+    position: relative;
+    --glow-color: #FFD700;
+    box-shadow:
+        0 0 10px var(--glow-color),
+        0 0 20px var(--glow-color),
+        0 0 30px var(--glow-color);
+    filter: brightness(1);
 }
 
 /* Glow Animation with Smooth Color Transition */
@@ -1939,6 +1919,21 @@ body {
     }
 }
 
+/* Bounce In Animation */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 /* Subtle Color Shift Animation */
 @keyframes colorShift {
     0% {
@@ -1952,43 +1947,18 @@ body {
     }
 }
 
-/* Hero Image Styling */
-.hero-image {
-    max-width: 90%;
-    height: auto;
-    border-radius: 15px;
-    position: relative;
-    --glow-color: #FFD700;
-    --dynamic-glow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.5),
-        var(--dynamic-glow);
-    filter: brightness(1);
-    transition: box-shadow 0.4s ease, filter 0.4s ease;
-    animation: bounceIn 1.5s ease forwards, glow 6s ease-in-out infinite;
-    will-change: box-shadow, filter, --dynamic-glow;
-    /* Ensure responsiveness */
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-}
-
-/* Animate Color on Hover-supported Devices */
 .hero-image.animate-color {
     animation: bounceIn 1.5s ease forwards, glow 6s ease-in-out infinite, colorShift 15s ease-in-out infinite;
 }
 
 /* Enhanced Hover Effect - Subtle and Smooth */
-@media (hover: hover) and (pointer: fine) {
-    .hero-image:hover {
-        box-shadow: 
-            0 0 15px #FF69B4, 
-            0 0 25px #00BFFF, 
-            0 0 35px #FFD700;
-        filter: brightness(1.1) saturate(1.1);
-        transition: box-shadow 0.4s ease, filter 0.4s ease;
-        cursor: pointer;
-    }
+.hero-image:hover {
+    box-shadow: 
+        0 0 15px #FF69B4, 
+        0 0 25px #00BFFF, 
+        0 0 35px #FFD700;
+    filter: brightness(1.1) saturate(1.1);
+    transition: box-shadow 0.4s ease, filter 0.4s ease;
 }
 
 /* Active State for Click Interaction */
@@ -1999,37 +1969,10 @@ body {
         0 0 32px #FFD700;
     filter: brightness(1) saturate(1);
 }
-
-/* Responsive Adjustments */
-@media (max-width: 1200px) {
-    .hero-image {
-        max-width: 80%;
-    }
+.hero-image {
+    /* Existing styles */
+    will-change: box-shadow, filter;
 }
-
-@media (max-width: 768px) {
-    .hero-image {
-        max-width: 90%;
-    }
-    .hero-section {
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-section::before {
-        top: -100%;
-        left: -100%;
-        width: 300%;
-        height: 300%;
-    }
-    .hero-image {
-        max-width: 100%;
-        border-radius: 10px;
-    }
-}
-
-/* Reduced Motion Preferences */
 @media (prefers-reduced-motion: reduce) {
     .hero-image,
     .hero-section::before {
