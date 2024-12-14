@@ -2506,107 +2506,214 @@ input:focus, select:focus {
 .wallet-address {
     animation: fadeIn 2s ease-in-out;
 } 
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
 
-/* Default (Large Screens) - Fixed, Colorful, Floating */
+/* Thought Cloud Container */
 .thought-cloud-container {
     position: fixed;
     top: 50%;
-    right: 40px;
+    right: 60px; /* Increased spacing from the right edge */
     transform: translateY(-50%);
     z-index: 3000;
-    pointer-events: none;
+    pointer-events: none; /* Allows interaction only within the cloud */
 }
 
+/* Thought Cloud */
 .thought-cloud {
     position: relative;
-    width: 250px;
-    padding: 30px;
-    background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
-    border-radius: 50px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    color: #000;
-    font-size: 1rem;
+    width: 400px; /* Increased width for better visibility */
+    min-height: 250px; /* Ensures sufficient height */
+    padding: 40px 30px; /* Increased padding for spacious content area */
+    color: #333;
+    font-size: 1.1rem; /* Slightly larger font for readability */
     font-weight: bold;
-    text-align: center;
-    line-height: 1.5;
-    pointer-events: auto;
-    overflow: hidden;
+    text-align: justify; /* Justify text for a clean look */
+    line-height: 1.6;
+    pointer-events: auto; /* Enables interaction within the cloud */
+    overflow: visible; /* Allows fluffs to be visible */
     transition: transform 0.3s, box-shadow 0.3s;
-    animation: gentleFloat 3s ease-in-out infinite alternate;
+    animation: gentleFloat 10s ease-in-out infinite alternate; /* Slower float */
+    background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
+    border-radius: 60% 60% 70% 70%; /* More rounded shape */
+    box-shadow: 0 16px 35px rgba(0,0,0,0.3); /* Larger shadow for depth */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Gentle floating animation */
-@keyframes gentleFloat {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-5px); }
+/* Hover Effect */
+.thought-cloud:hover {
+    transform: scale(1.07);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4); /* Enhanced shadow on hover */
 }
 
-/* Cloud tail */
-.thought-cloud::before,
-.thought-cloud::after {
-    content: "";
+/* Cloud Fluffs */
+.cloud-fluff {
     position: absolute;
     background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
-    z-index: -1;
-}
-
-.thought-cloud::before {
-    width: 40px;
-    height: 40px;
-    bottom: -10px;
-    left: 50px;
     border-radius: 50%;
+    opacity: 0.85; /* Slightly reduced opacity */
+    animation: fluffFloat 8s ease-in-out infinite alternate; /* Slower fluff float */
+    pointer-events: none; /* Prevent fluffs from capturing mouse events */
 }
 
-.thought-cloud::after {
-    width: 20px;
-    height: 20px;
-    bottom: -25px;
-    left: 65px;
-    border-radius: 50%;
+/* Specific Fluff Positions and Sizes */
+.fluff1 {
+    width: 140px;
+    height: 140px;
+    top: -50px;
+    left: 60px;
+    animation-delay: 0s;
 }
 
-/* Hover effect */
-.thought-cloud:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+.fluff2 {
+    width: 160px;
+    height: 160px;
+    top: -60px;
+    left: 220px;
+    animation-delay: 1s;
 }
 
+.fluff3 {
+    width: 120px;
+    height: 120px;
+    bottom: -50px;
+    left: 80px;
+    animation-delay: 2s;
+}
+
+.fluff4 {
+    width: 90px;
+    height: 90px;
+    bottom: -20px;
+    left: 300px;
+    animation-delay: 3s;
+}
+
+.fluff5 {
+    width: 110px;
+    height: 110px;
+    top: 110px;
+    left: 180px;
+    animation-delay: 4s;
+}
+
+.fluff6 {
+    width: 80px;
+    height: 80px;
+    top: 80px;
+    left: 360px;
+    animation-delay: 5s;
+}
+
+/* Fluff Floating Animation: Combined Vertical and Horizontal Movement */
+@keyframes fluffFloat {
+    0% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-10px) translateX(10px); }
+    50% { transform: translateY(0px) translateX(20px); }
+    75% { transform: translateY(10px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* Main Quote Styling */
 .main-quote {
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.rotating-quote {
     margin-bottom: 20px;
-    font-size: 0.9rem;
-    font-style: italic;
+    font-weight: bold;
     color: #333;
+    width: 80%; /* Ensures text wraps nicely within the cloud */
+    text-align: justify; /* Justifies text for a cleaner look */
 }
 
+/* Rotating Quote Styling */
+.rotating-quote {
+    margin-bottom: 25px;
+    font-size: 1rem;
+    font-style: italic;
+    color: #555;
+    font-weight: normal;
+    width: 80%;
+    text-align: justify;
+}
+
+/* "Next Quote" Button Styling */
 .change-quote-btn {
-    background: #fff;
-    color: #000;
-    border: 2px solid #FF69B4;
-    border-radius: 20px;
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: background-color 0.3s, transform 0.2s, color 0.3s;
-}
-
-.change-quote-btn:hover {
-    background-color: #FF69B4;
+    background: linear-gradient(45deg, #FF69B4, #FFD700);
     color: #fff;
-    transform: scale(1.1);
+    border: none; /* Removed border for a cleaner look */
+    border-radius: 25px;
+    padding: 14px 30px; /* Increased padding for better visibility */
+    font-size: 1rem; /* Increased font size */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    
+    /* Text Transformation */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* Button Hover Effects */
+.change-quote-btn:hover {
+    background: linear-gradient(45deg, #FFD700, #FF69B4); /* Gradient reversed */
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* Button Active State */
 .change-quote-btn:active {
     transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Responsive Adjustments for even smaller screens */
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 1280px) {
+    .thought-cloud-container {
+        position: static;
+        transform: none;
+        right: auto;
+        top: auto;
+        margin: 40px 0; 
+        display: flex;
+        justify-content: center;
+        pointer-events: auto; /* Allow interactions */
+    }
+
+    .thought-cloud {
+        animation: none; /* Remove floating animation */
+        transform: none;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 500px; /* Adjusted to accommodate increased size */
+        margin: 0 auto;
+        padding: 30px 20px;
+        border-radius: 60% 60% 70% 70%;
+    }
+
+    /* Simplify Cloud Fluffs */
+    .fluff3,
+    .fluff4,
+    .fluff5,
+    .fluff6 {
+        display: none; /* Hide extra fluffs for a cleaner look */
+    }
+
+    .thought-cloud:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .change-quote-btn:hover {
+        transform: scale(1.05);
+    }
+}
+
 @media (max-width: 768px) {
     .thought-cloud-container {
         right: 20px;
@@ -2615,60 +2722,43 @@ input:focus, select:focus {
 
     .thought-cloud {
         width: 220px;
-        font-size: 0.9rem;
+        min-height: 200px; /* Adjusted height */
+        font-size: 1rem;
         padding: 20px;
     }
 
-    .thought-cloud::before {
-        width: 30px;
-        height: 30px;
+    /* Adjust Cloud Fluffs */
+    .fluff1 {
+        width: 100px;
+        height: 100px;
+        top: -30px;
         left: 40px;
-        bottom: -8px;
     }
 
-    .thought-cloud::after {
-        width: 15px;
-        height: 15px;
+    .fluff2 {
+        width: 120px;
+        height: 120px;
+        top: -40px;
+        left: 130px;
+    }
+
+    .fluff3 {
+        width: 80px;
+        height: 80px;
+        bottom: -30px;
         left: 50px;
-        bottom: -20px;
-    }
-}
-
-/* When the hamburger icon activates, switch to block-level style */
-/* Adjust the breakpoint to match your hamburger menu appearance */
-@media (max-width: 1780px) {
-    /* Instead of fixed, make it a normal block element above tokenomics */
-    .thought-cloud-container {
-        position: static;
-        transform: none;
-        right: auto;
-        top: auto;
-        margin:auto; 
-        display: flex;
-        justify-content: center;
-        pointer-events: auto; /* Normal interaction */
     }
 
-    .thought-cloud {
-        animation: none; /* Remove floating animation for simplicity */
-        transform: none; /* No translate needed */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        width: 90%;
-        max-width: 300px;
-        margin: 0 auto;
+    .fluff4 {
+        width: 70px;
+        height: 70px;
+        bottom: -10px;
+        left: 180px;
     }
 
-    /* You can also modify colors or remove tail if desired */
-    .thought-cloud::before,
-    .thought-cloud::after {
-        display: none; /* Remove tail for simpler look if you want */
-    }
-
-    .thought-cloud:hover {
-        transform: scale(1.02);
-    }
-
-    .change-quote-btn:hover {
-        transform: scale(1.05);
+    /* Ensure Button Fits Well */
+    .change-quote-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
