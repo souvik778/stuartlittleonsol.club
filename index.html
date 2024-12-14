@@ -7,6 +7,7 @@
     <title>StuartLittleOnSol Homepage</title>
     <meta name="$lilstu" content="StuartLittleOnSol">
     <link rel="icon" href="logo.jpeg">
+    
    
     <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
     <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
@@ -160,9 +161,62 @@
 }
 
     </style>
+   
 </head>
 <body>
     
+<!-- Loader Overlay -->
+<div class="loader-overlay" id="loader" role="alert" aria-live="assertive" aria-label="Loading">
+    <!-- Background Particle Animation -->
+  
+
+    <!-- Blockchain Animation -->
+    <div class="blockchain">
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+    </div>
+    <div class="loading-text">Welcome to our $lilstu wesite <br> &nbsp;&nbsp;&nbsp;A community driven project
+    </div>
+
+    <!-- Optional Sparkles for Added Elegance -->
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+  </div>
+
+  
+  <!-- JavaScript to Handle Loader -->
+  <script>
+    // Wait for the entire page to load
+    window.addEventListener('load', () => {
+      // Set a timeout to hide the loader after 2 seconds
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        const mainContent = document.getElementById('mainContent');
+
+        if (loader) {
+          // Add the 'hidden' class to initiate the fade-out transition
+          loader.classList.add('hidden');
+
+          // After the transition duration, hide the loader and show the main content
+          setTimeout(() => {
+            loader.style.display = 'none';
+            if (mainContent) {
+              mainContent.classList.add('active');
+            }
+          }, 1000); // Match this duration with the CSS transition duration (1s)
+        }
+      }, 2000); // 2000 milliseconds = 2 seconds
+    });
+  </script>
+
     <!-- Interactive Background Canvas -->
     <canvas id="interactive-background"></canvas>
 
@@ -216,6 +270,18 @@
             <section class="hero-section animate-on-scroll" id="home">
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
+ <section>
+            <!-- Integrated Video with Styling and Animation -->
+ <div class="presale-video animate__animated animate__fadeInUp">
+    <iframe 
+        src="https://www.youtube.com/embed/RB5lRbm0qjU" 
+        title="Crypto Presale Video" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+</div>
+</section>
+<br>
 
            <!-- Presale Information Section -->
     <section class="presale-section" id="presale">
@@ -1674,7 +1740,6 @@ if (presaleSection) {
     });
 
 
-   
     </script>
 </body>
 </html>
