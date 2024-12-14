@@ -7,51 +7,51 @@
     <title>StuartLittleOnSol Homepage</title>
     <meta name="$lilstu" content="StuartLittleOnSol">
     <link rel="icon" href="logo.jpeg">
-   <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
-   <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
-   <script>
-       // Assign Buffer from the polyfill
-    window.Buffer = window.Buffer || require('buffer').Buffer;
+   
+    <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
+    <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
+    <script>
+        // Assign Buffer from the polyfill
+        window.Buffer = window.Buffer || Buffer;
 
-console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-console.log('Buffer.from works:', typeof Buffer.from === 'function')
+        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
+        console.log('Buffer.from works:', typeof Buffer.from === 'function');
+    </script>
 
-   </script>
-
-   <!-- @solana/web3.js and @solana/spl-token ESM builds -->
-   <script type="module">
-    import { 
-        Connection, 
-        PublicKey, 
-        clusterApiUrl, 
-        LAMPORTS_PER_SOL, 
-        SystemProgram, 
-        Transaction 
-    } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
-    import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9';
-    
-    // Assign to global window object
-    window.solanaWeb3 = { 
-        Connection, 
-        PublicKey, 
-        clusterApiUrl, 
-        LAMPORTS_PER_SOL, 
-        SystemProgram, 
-        Transaction 
-    };
-    window.splToken = splToken;
-</script>
+    <!-- @solana/web3.js and @solana/spl-token ESM builds -->
+    <script type="module">
+        import { 
+            Connection, 
+            PublicKey, 
+            clusterApiUrl, 
+            LAMPORTS_PER_SOL, 
+            SystemProgram, 
+            Transaction 
+        } from 'https://unpkg.com/@solana/web3.js@1.73.0/lib/index.esm.js';
+        import * as splToken from 'https://unpkg.com/@solana/spl-token@0.4.9/lib/index.esm.js';
+        
+        // Assign to global window object
+        window.solanaWeb3 = { 
+            Connection, 
+            PublicKey, 
+            clusterApiUrl, 
+            LAMPORTS_PER_SOL, 
+            SystemProgram, 
+            Transaction 
+        };
+        window.splToken = splToken;
+    </script>
 
     <!-- Verification Script -->
     <script>
         // Ensure Buffer is defined
-        window.Buffer = window.Buffer || require('buffer').Buffer;
-    
+        window.Buffer = window.Buffer || Buffer;
+
         // Check if Buffer.from is working correctly
         console.log('Buffer is defined:', typeof Buffer !== 'undefined');
         if (typeof Buffer !== 'undefined') {
             console.log('Buffer.from works:', typeof Buffer.from === 'function');
-    
+
             // If Buffer.from doesn't work as expected, provide a fallback implementation
             if (typeof Buffer.from !== 'function') {
                 console.warn('Buffer.from is not defined or not working. Implementing a fallback.');
@@ -81,14 +81,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             }
         }
     </script>
- 
-    
-
-    <!-- Include @solana/web3.js -->
-    <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.js"></script>
-
-    <!-- Include @solana/spl-token -->
-    <script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.9/lib/cjs/index.js"></script>
 
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -196,7 +188,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             </a>
             <!-- Connect Wallet Button 
             <button id="connect-wallet" class="btn connect-wallet-btn">Connect Your Wallet</button>
-             Disconnect Wallet Button (Initially Hidden) -->
+              Disconnect Wallet Button (Initially Hidden) -->
             <button id="disconnect-wallet" class="btn disconnect-wallet-btn" style="display: none; margin-left: 10px;">Disconnect Wallet</button>
             <span id="wallet-address" class="wallet-address" style="margin-left: 10px; font-weight: bold;"></span>
         </nav>
@@ -214,7 +206,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             </button>
         </h1> 
             
-    
+
         <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
@@ -264,10 +256,9 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             <section class="presale-section" id="token-price">
                 <h2>Token Price Calculator</h2>
                 <p><strong>Current Token Price:</strong> 1 $lilstu = <span id="token-price-usd">Loading...</span> USD</p>
-               <!-- <p><strong>Token Price in USDC:</strong> <span id="token-price-usdc">Loading...</span></p>-->
-                <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span></p>
-                <!--<p><strong>USDC Price:</strong> <span id="usdc-price-usd">Loading...</span></p>-->
-                <p><strong>SOL Price:</strong> <span id="sol-price-usd">Loading...</span></p>
+                <p><strong>Token Price in USDC:</strong> <span id="token-price-usdc">Loading...</span> USDC</p>
+                <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span> SOL</p>
+                <p><strong>USDC Price:</strong> <span id="usdc-price-usd">Loading...</span> USD</p>
 
                 <!-- Calculator Form -->
                 <div class="calculator-container">
@@ -276,12 +267,12 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                         <label for="amount-input">Enter Amount:</label>
                         <input type="number" id="amount-input" placeholder="Amount in SOL" min="0" step="any" required>
                         <select id="currency-select">
-                           <!-- <option value="USDC">USDC</option>-->
+                           <option value="USDC">USDC</option>
                             <option value="SOL">SOL</option>
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
                         <br> 
-                     <!--<button type="button" id="buy-button" class="btn" disabled>Buy</button>-->
+                        <button type="button" id="buy-button" class="btn" disabled>Buy</button>
                     </form>
                     <p id="calculation-result"></p>
                 </div>
@@ -492,12 +483,6 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 Open your wallet and paste the contract address. Send the desired amount in Sol to complete your token purchase.</p>
         </div>
        
-        
-       <!-- <div class="faq-item">
-            <h3>How do I buy $lilstu coin?</h3>
-            <p>Connect your wallet, enter your desired amount in the token price calculator section, hit calculate, then hit buy.</p>
-        </div>-->
-        
         <div class="faq-item">
             <h3>What blockchain is StuartLittleOnSol built on?</h3>
             <p>StuartLittleOnSol is built on the Solana blockchain, leveraging its robust infrastructure and low transaction fees.</p>
@@ -547,164 +532,12 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
 
     <!-- JavaScript for All Functionalities -->
     <script>
-                const dots = document.querySelectorAll('.event-dot');
-    const cards = document.querySelectorAll('.event-card');
-    const svg = document.getElementById('timeline-svg');
-    const path = document.getElementById('timeline-path');
-    const heading = document.querySelector('h1');
-
-    window.addEventListener('load', adjustTimeline);
-    window.addEventListener('resize', adjustTimeline);
-
-    function adjustTimeline() {
-        const dotPositions = [];
-        dots.forEach(dot => {
-            const rect = dot.getBoundingClientRect();
-            const top = rect.top + rect.height / 2 + window.scrollY;
-            const left = rect.left + rect.width / 2;
-            dotPositions.push({x: left, y: top});
-        });
-
-        let d = "";
-        if (dotPositions.length > 0) {
-            const start = dotPositions[0];
-            d = `M ${start.x},${start.y}`;
-            for (let i = 1; i < dotPositions.length; i++) {
-                const p = dotPositions[i];
-                const prev = dotPositions[i-1];
-                // Quadratic curve for smoothness
-                d += ` Q ${prev.x},${p.y} ${p.x},${p.y}`;
-            }
-        }
-
-        path.setAttribute('d', d);
-
-        if (dotPositions.length > 0) {
-            const minY = Math.min(...dotPositions.map(p => p.y));
-            const maxY = Math.max(...dotPositions.map(p => p.y));
-            const minX = Math.min(...dotPositions.map(p => p.x));
-            const maxX = Math.max(...dotPositions.map(p => p.x));
-
-            svg.setAttribute('height', maxY - minY + 100);
-            svg.setAttribute('width', maxX - minX + 100);
-            svg.style.position = 'absolute';
-            svg.style.top = (minY - 50) + 'px';
-            svg.style.left = (minX - 50) + 'px';
-        }
-    }
-
-    // Highlight logic when dot is clicked
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            const targetId = dot.getAttribute('data-target');
-            highlightCard(targetId);
-        });
-    });
-
-    // Highlight logic when card is clicked
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const targetId = card.id;
-            highlightCard(targetId);
-        });
-    });
-
-    function highlightCard(id) {
-        const targetCard = document.getElementById(id);
-        cards.forEach(c => {
-            c.classList.remove('highlight');
-            void c.offsetWidth; 
-        });
-        targetCard.classList.add('highlight');
-        targetCard.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }
-
-    // Interactive underline feature: move gradient angle based on mouse X
-    heading.addEventListener('mousemove', (e) => {
-        const rect = heading.getBoundingClientRect();
-        const xPos = e.clientX - rect.left;
-        const percent = xPos / rect.width;
-        const angle = Math.floor(percent * 180); 
-        heading.style.setProperty('--underline-angle', angle + 'deg');
-        heading.style.setProperty('--underline-color1', '#00f5c9');
-        heading.style.setProperty('--underline-color2', '#00c9f5');
-        heading.style.setProperty('--underline-gradient', `linear-gradient(${angle}deg, var(--underline-color1), var(--underline-color2))`);
-        heading.style.setProperty('--underline-transform', `translateX(-50%)`);
-
-        heading.style.cssText = `
-            ${heading.style.cssText}
-            --underline-gradient: linear-gradient(${angle}deg, #00f5c9, #00c9f5);
-        `;
-        heading.querySelector('::after')?.style?.setProperty('background', `linear-gradient(${angle}deg, #00f5c9, #00c9f5)`);
-    });
-
-    const style = document.createElement('style');
-    style.innerHTML = `
-        h1::after {
-            background: var(--underline-gradient, linear-gradient(to right, #00f5c9, #00c9f5));
-        }
-    `;
-    document.head.appendChild(style);
-        
-        function copyToClipboard() {
-            const contractAddress = document.getElementById('contractAddress').innerText;
-
-            // Check if the Clipboard API is available
-            if (navigator.clipboard && window.isSecureContext) {
-                // Use the modern Clipboard API
-                navigator.clipboard.writeText(contractAddress).then(() => {
-                    showCopySuccess();
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                    fallbackCopyText(contractAddress);
-                });
-            } else {
-                // Fallback to the older method
-                fallbackCopyText(contractAddress);
-            }
-        }
-
-        function fallbackCopyText(text) {
-            // Create a temporary textarea element
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            // Make sure the textarea is not visible
-            textarea.style.position = 'fixed';
-            textarea.style.top = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showCopySuccess();
-                } else {
-                    console.error('Fallback: Copy command was unsuccessful');
-                }
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-
-            // Remove the temporary textarea
-            document.body.removeChild(textarea);
-        }
-
-        function showCopySuccess() {
-            const copySuccess = document.getElementById('copySuccess');
-            copySuccess.style.display = 'block';
-            // Hide after 2 seconds
-            setTimeout(() => {
-                copySuccess.style.display = 'none';
-            }, 2000);
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
             // =============================
             //      GLOBAL VARIABLES
             // =============================
             let solPriceInUsd = null;
-          //  let usdcPriceInUsd = null;
+            let usdcPriceInUsd = null;
             const tokenPriceInUsd = 0.0001; // Fixed token price in USD
             let connectedWallet = null; // Initialize as null
 
@@ -732,14 +565,13 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             const chartContainer = document.getElementById('price-chart-container');
             const navLinks = document.querySelector('.nav-links');
             const connectWalletButton = document.getElementById('connect-wallet');
-            const disconnectWalletButton = document.getElementById('disconnect-wallet'); // New
+            const disconnectWalletButton = document.getElementById('disconnect-wallet');
             const walletAddressSpan = document.getElementById('wallet-address');
             const buyButton = document.getElementById('buy-button');
             const TARGET_ADDRESS = 'HU1CB5vbghpEAA3xhbiWzJsqgoVaTPDQXPD1xDNB6FRM';
-           const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
+            const USDC_MINT_ADDRESS = 'Es9vMFrzaCERDysjGogfjUq7VYQVv1cVg1oWBuHh35sL'; // Mainnet USDC Mint Address
 
- 
-           // =============================
+            // =============================
             //      PRESALE POPUP CODE
             // =============================
             let presaleShown = false; // Flag to ensure popup is shown only once
@@ -801,6 +633,9 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 menuToggle.setAttribute('aria-expanded', !isExpanded);
                 navLinks.classList.toggle('active');
                 navLinks.setAttribute('aria-hidden', isExpanded);
+
+                // Toggle the hamburger icon
+                menuToggle.classList.toggle('open');
             });
 
             // Function to maximize the popup from minimized state
@@ -861,7 +696,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             const canvas = document.getElementById('interactive-background');
             const ctx = canvas.getContext('2d');
             let particlesArray = [];
-            const numberOfParticles = 200; // Increased number for denser background
+            const numberOfParticles = 100; // Increased number for denser background
             const mouse = { x: null, y: null, radius: 150 }; // Increased radius for better interaction
 
             // Handle Canvas Resize
@@ -871,6 +706,20 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             };
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
+            // =============================
+    //      RESPONSIVE SETTINGS
+    // =============================
+
+    // Define color palette for particles
+    const colorPalette = [
+        'rgba(255, 215, 0, 0.8)',    // Gold
+        'rgba(0, 255, 255, 0.8)',    // Cyan
+        'rgba(255, 0, 255, 0.8)',    // Magenta
+        'rgba(0, 255, 0, 0.8)',      // Lime
+        'rgba(255, 165, 0, 0.8)',    // Orange
+        'rgba(128, 0, 128, 0.8)'     // Purple
+    ];
+
 
             // Handle Mouse Movement
             window.addEventListener('mousemove', (e) => {
@@ -915,27 +764,32 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             //         PARTICLE CLASS
             // =============================
 
-            class Particle {
-                constructor(x, y, dx, dy, size, color, opacity) {
-                    this.x = x;
-                    this.y = y;
-                    this.dx = dx;
-                    this.dy = dy;
-                    this.size = size;
-                    this.color = color;
-                    this.opacity = opacity;
-                }
+           // =============================
+    //         PARTICLE CLASS
+    // =============================
 
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold color with variable opacity
-                    ctx.fill();
-                }
+    class Particle {
+        constructor(x, y, dx, dy, size, color, opacity) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.size = size;
+            this.color = color;
+            this.opacity = opacity;
+            this.originalColor = color; // Store original color
+        }
 
-                update() {
-                    this.x += this.dx;
-                    this.y += this.dy;
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color; // Use particle's color
+            ctx.fill();
+        }
+
+        update() {
+            this.x += this.dx;
+            this.y += this.dy;
 
                     // Bounce off edges
                     if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
@@ -952,9 +806,14 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                             const moveY = Math.sin(angle) * 5;
                             this.x -= moveX;
                             this.y -= moveY;
-                        }
+                            // Change color on interaction
+                    this.color = 'orange'; // White color when interacting
+                
+                        }else {
+                    // Revert to original color if not interacting
+                    this.color = this.originalColor;
                     }
-
+                }
                     this.draw();
                 }
             }
@@ -977,7 +836,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             };
 
             // =============================
-            //     CONNECT PARTICLES
+            //    CONNECT PARTICLES
             // =============================
 
             const connectParticles = () => {
@@ -1053,72 +912,73 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
 
 
             const tokenomicsPieChart = new Chart(ctxPie, {
-    type: 'doughnut',
-    data: {
-        labels: [
-            'Public Sale', 
-            'Dev & Management', 
-            'Presale', 
-            'Marketing & Promotions', 
-            'Airdrop (Contest)',
-            'Liquidity Pool Burn'
-        ],
-        datasets: [{
-            label: 'Token Distribution',
-            data: [35, 18, 10, 12, 5, 20], // Percentages
-            backgroundColor: [
-                'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
-                'rgba(30, 144, 255, 0.9)',  // Dev and Management - Dodger Blue
-                'rgba(220, 20, 60, 0.9)',   // Presale - Crimson
-                'rgba(0, 128, 128, 0.9)',   // Marketing and Promotions - Teal
-                'rgba(255, 165, 0, 0.9)',   // Airdrop (Contest) - Orange
-                'rgba(75, 0, 130, 0.9)'     // Liquidity Pool Burn - Indigo
-            ],
-            borderColor: [
-                'rgba(255, 215, 0, 1)',     // Gold
-                'rgba(30, 144, 255, 1)',    // Dodger Blue
-                'rgba(220, 20, 60, 1)',     // Crimson
-                'rgba(0, 128, 128, 1)',     // Teal
-                'rgba(255, 165, 0, 1)',     // Orange
-                'rgba(75, 0, 130, 1)'       // Indigo
-            ],
-            borderWidth: 2,
-            hoverOffset: 10
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        const label = context.label || '';
-                        const value = context.parsed || 0;
-                        return `${label}: ${value}%`;
-                    }
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'Public Sale', 
+                        'Dev & Management', 
+                        'Presale', 
+                        'Marketing & Promotions', 
+                        'Airdrop (Contest)',
+                        'Liquidity Pool Burn'
+                    ],
+                    datasets: [{
+                        label: 'Token Distribution',
+                        data: [35, 18, 10, 12, 5, 20], // Percentages
+                        backgroundColor: [
+                            'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
+                            'rgba(30, 144, 255, 0.9)',  // Dev and Management - Dodger Blue
+                            'rgba(220, 20, 60, 0.9)',   // Presale - Crimson
+                            'rgba(0, 128, 128, 0.9)',   // Marketing and Promotions - Teal
+                            'rgba(255, 165, 0, 0.9)',   // Airdrop (Contest) - Orange
+                            'rgba(75, 0, 130, 0.9)'     // Liquidity Pool Burn - Indigo
+                        ],
+                        borderColor: [
+                            'rgba(255, 215, 0, 1)',     // Gold
+                            'rgba(30, 144, 255, 1)',    // Dodger Blue
+                            'rgba(220, 20, 60, 1)',     // Crimson
+                            'rgba(0, 128, 128, 1)',     // Teal
+                            'rgba(255, 165, 0, 1)',     // Orange
+                            'rgba(75, 0, 130, 1)'       // Indigo
+                        ],
+                        borderWidth: 2,
+                        hoverOffset: 10
+                    }]
                 },
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                titleColor: '#FFD700',
-                bodyColor: '#fff',
-                borderColor: '#FFD700',
-                borderWidth: 1,
-                cornerRadius: 10,
-            },
-            legend: {
-                display: true // Show default legend
-            },
-            title: {
-                display: false
-            },
-            animation: {
-                animateRotate: true,
-                animateScale: true
-            }
-        },
-        cutout: '50%', // Creates the doughnut effect
-        maintainAspectRatio: false
-    }
-});
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    return `${label}: ${value}%`;
+                                }
+                            },
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#FFD700',
+                            bodyColor: '#fff',
+                            borderColor: '#FFD700',
+                            borderWidth: 1,
+                            cornerRadius: 10,
+                        },
+                        legend: {
+                            display: true // Show default legend
+                        },
+                        title: {
+                            display: false
+                        },
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        }
+                    },
+                    cutout: '50%', // Creates the doughnut effect
+                    maintainAspectRatio: false
+                }
+            });
+
             // =============================
             //    TOKEN CALCULATOR CODE
             // =============================
@@ -1308,24 +1168,8 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             window.addEventListener('scroll', debounce(scrollAnimations));
             scrollAnimations(); // Initial call
 
-            // Debounce function to limit how often scrollAnimations is called
-            function debounce(func, wait = 10, immediate = true) {
-                let timeout;
-                return function () {
-                    const context = this, args = arguments;
-                    const later = function () {
-                        timeout = null;
-                        if (!immediate) func.apply(context, args);
-                    };
-                    const callNow = immediate && !timeout;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                    if (callNow) func.apply(context, args);
-                };
-            }
-
             // =============================
-            //     PRESALE POPUP RESIZE
+            //    PRESALE POPUP RESIZE
             // =============================
             const adjustPopupSize = () => {
                 const width = window.innerWidth;
@@ -1464,14 +1308,14 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             // Event listener for Connect Wallet button
             connectWalletButton.addEventListener('click', connectWallet);
 
-             // =============================
+            // =============================
             //         BUY BUTTON CODE
             // =============================
 
             /**
              * Handles the Buy action by sending SOL or USDC to the target address.
              */
-           /**  const buyTokens = async () => {
+            const buyTokens = async () => {
                 if (!connectedWallet) {
                     alert('Please connect your wallet first.');
                     return;
@@ -1498,7 +1342,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                     }
 
                     // Display confirmation message with Solscan link
-                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`, signature);
+                    showConfirmationMessage(`Successfully sent ${amount} ${currency} to ${TARGET_ADDRESS}. <a href="https://solscan.io/tx/${signature}?cluster=mainnet" target="_blank">View on Solscan</a>`);
                     // Reset the form
                     document.getElementById('token-calculator').reset();
                     calculationResult.innerText = '';
@@ -1523,82 +1367,82 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
              * Sends SOL from the user's wallet to the target address.
              * @param {number} amount 
              * @returns {string} Transaction signature
-            
-             const sendSOL = async (amount) => {
-    const provider = window.solana;
-    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             */
+            const sendSOL = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-    // Ensure lamports are integers
-    const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
-    const roundedLamports = Math.round(lamports);
+                // Ensure lamports are integers
+                const lamports = solanaWeb3.LAMPORTS_PER_SOL * amount;
+                const roundedLamports = Math.round(lamports);
 
-    // Initialize connection
-   // Replace with your custom RPC URL
-const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a';
+                // Initialize connection
+                const CUSTOM_RPC_URL = 'https://mainnet.helius-rpc.com/?api-key=427fa942-d36b-460c-b857-4653ef42fc1a'; // Replace with your custom RPC URL
 
+                // Initialize connection with custom RPC
+                const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
 
-// Initialize connection with custom RPC
-const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
+                // Fetch recent blockhash
+                const { blockhash } = await connection.getLatestBlockhash();
 
-    // Fetch recent blockhash
-    const { blockhash } = await connection.getLatestBlockhash();
+                const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+                    solanaWeb3.SystemProgram.transfer({
+                        fromPubkey,
+                        toPubkey,
+                        lamports: roundedLamports,
+                    })
+                );
 
-    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
-        solanaWeb3.SystemProgram.transfer({
-            fromPubkey,
-            toPubkey,
-            lamports: roundedLamports,
-        })
-    );
-                  // Sign and send transaction
-    const signature = await provider.signAndSendTransaction(transaction);
-    await connection.confirmTransaction(signature, 'confirmed');
+                // Sign and send transaction
+                const signature = await provider.signAndSendTransaction(transaction);
+                await connection.confirmTransaction(signature, 'confirmed');
 
-    return signature; // Return the transaction signature
-};
+                return signature; // Return the transaction signature
+            };
+
             /**
              * Sends USDC (SPL Token) from the user's wallet to the target address.
              * @param {number} amount 
              * @returns {string} Transaction signature
-             
-             const sendUSDC = async (amount) => {
-    const provider = window.solana;
-    const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
-    const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
+             */
+                      // Complete the sendUSDC function
+                      const sendUSDC = async (amount) => {
+                const provider = window.solana;
+                const fromPubkey = new solanaWeb3.PublicKey(connectedWallet);
+                const toPubkey = new solanaWeb3.PublicKey(TARGET_ADDRESS);
 
-    // Get the token program ID
-    const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+                // Get the token program ID
+                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
-    // Initialize connection
-    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+                // Initialize connection
+                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
 
-    // Find the associated token accounts
-    const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
-    const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
+                // Find the associated token accounts
+                const fromTokenAccount = await getOrCreateAssociatedTokenAccount(fromPubkey, USDC_MINT_ADDRESS, fromPubkey, connection);
+                const toTokenAccount = await getOrCreateAssociatedTokenAccount(toPubkey, USDC_MINT_ADDRESS, toPubkey, connection);
 
-    // Fetch recent blockhash
-    const { blockhash } = await connection.getLatestBlockhash();
+                // Fetch recent blockhash
+                const { blockhash } = await connection.getLatestBlockhash();
 
-    // Create transfer instruction using @solana/spl-token
-    const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
-        splToken.createTransferInstruction(
-            fromTokenAccount,
-            toTokenAccount,
-            fromPubkey,
-            amount * (10 ** 6), // USDC has 6 decimals
-            [],
-            TOKEN_PROGRAM_ID
-        )
-    );
+                // Create transfer instruction using @solana/spl-token
+                const transaction = new solanaWeb3.Transaction({ recentBlockhash: blockhash, feePayer: fromPubkey }).add(
+                    splToken.createTransferInstruction(
+                        fromTokenAccount,
+                        toTokenAccount,
+                        fromPubkey,
+                        amount * (10 ** 6), // USDC has 6 decimals
+                        [],
+                        TOKEN_PROGRAM_ID
+                    )
+                );
 
-    // Sign and send transaction
-    const signature = await provider.signAndSendTransaction(transaction);
-    await connection.confirmTransaction(signature, 'confirmed');
+                // Sign and send transaction
+                const signature = await provider.signAndSendTransaction(transaction);
+                await connection.confirmTransaction(signature, 'confirmed');
 
-    return signature; // Return the transaction signature
-};
-
+                return signature; // Return the transaction signature
+            };
 
             /**
              * Gets or creates the associated token account for a given owner and mint.
@@ -1607,7 +1451,7 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
              * @param {PublicKey} payer 
              * @param {Connection} connection
              * @returns {PublicKey}
-             
+             */
             const getOrCreateAssociatedTokenAccount = async (owner, mint, payer, connection) => {
                 const associatedTokenAddress = await splToken.getAssociatedTokenAddress(
                     splToken.ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -1635,7 +1479,6 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
                 return associatedTokenAddress;
             };
 
-
             // =============================
             //    TRANSACTION CONFIRMATION MESSAGE
             // =============================
@@ -1644,16 +1487,16 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
              * Displays a confirmation message to the user.
              * @param {string} message 
              */
-             const showConfirmationMessage = (message) => {
+            const showConfirmationMessage = (message) => {
                 const confirmationContainer = document.getElementById('transaction-confirmation');
                 const confirmationMessage = document.getElementById('confirmation-message');
-                confirmationMessage.innerText = message;
+                confirmationMessage.innerHTML = message;
                 confirmationContainer.style.display = 'block';
 
                 // Hide the message after 5 seconds
                 setTimeout(() => {
                     confirmationContainer.style.display = 'none';
-                },   1000);
+                }, 5000);
             };
 
             // =============================
@@ -1681,80 +1524,105 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
             };
 
             checkIfWalletIsConnected();
-           
+
             // =============================
-        //      DEBOUNCE FUNCTION
+            //      DEBOUNCE FUNCTION
+            // =============================
+            /**
+             * Debounce function to limit how often a function can fire.
+             * @param {Function} func - The function to debounce.
+             * @param {number} wait - The time to wait in milliseconds.
+             * @returns {Function}
+             */
+            function debounce(func, wait = 200) {
+                let timeout;
+                return function (...args) {
+                    const context = this;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), wait);
+                };
+            }
+
+            // =============================
+            //      INTERACTIVE HEADING
+            // =============================
+            const heading = document.querySelector('h1');
+
+            heading.addEventListener('mousemove', (e) => {
+                const rect = heading.getBoundingClientRect();
+                const xPos = e.clientX - rect.left;
+                const percent = xPos / rect.width;
+                const angle = Math.floor(percent * 180); 
+                heading.style.setProperty('--underline-gradient', `linear-gradient(${angle}deg, #00f5c9, #00c9f5)`);
+            });
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+                h1::after {
+                    background: var(--underline-gradient, linear-gradient(to right, #00f5c9, #00c9f5));
+                }
+            `;
+            document.head.appendChild(style);
+
+        }); // End of DOMContentLoaded listener
+
         // =============================
-        /**
-         * Debounce function to limit how often a function can fire.
-         * @param {Function} func - The function to debounce.
-         * @param {number} wait - The time to wait in milliseconds.
-         * @returns {Function}
-         */
-        function debounce(func, wait = 200) {
-            let timeout;
-            return function (...args) {
-                const context = this;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), wait);
-            };
-        }
-  
+        //      COPY TO CLIPBOARD
         // =============================
-        //      HANDLE DISPLAY FUNCTION
-        // =============================
-        /**
-         * Function to handle the display based on window width
-         */
-        function handleDisplay() {
-            if (window.innerWidth > 1440) { // Define breakpoint as 768px
-                // For larger screens, ensure nav links are visible and hamburger is hidden
-                navLinks.classList.add('active'); // Ensure menu is visible
-                navLinks.classList.remove('closing'); // Remove any closing animation classes
-                menuToggle.classList.remove('open'); // Reset hamburger icon
-                navLinks.style.display = 'flex';
-                menuToggle.style.display = 'none';
-                document.body.classList.remove('no-scroll');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                navLinks.setAttribute('aria-hidden', 'false');
+        function copyToClipboard() {
+            const contractAddress = document.getElementById('contractAddress').innerText;
+
+            // Check if the Clipboard API is available
+            if (navigator.clipboard && window.isSecureContext) {
+                // Use the modern Clipboard API
+                navigator.clipboard.writeText(contractAddress).then(() => {
+                    showCopySuccess();
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    fallbackCopyText(contractAddress);
+                });
             } else {
-                // For smaller screens, hide nav links and show hamburger
-                navLinks.classList.remove('active'); // Hide menu
-                navLinks.classList.remove('closing'); // Remove any closing animation classes
-                menuToggle.classList.remove('open'); // Reset hamburger icon
-                navLinks.style.display = 'none';
-                menuToggle.style.display = 'block';
-                document.body.classList.remove('no-scroll');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                navLinks.setAttribute('aria-hidden', 'true');
+                // Fallback to the older method
+                fallbackCopyText(contractAddress);
             }
         }
 
-      
-        // Function to toggle the navigation menu
-    function toggleMenu() {
-        menuToggle.classList.toggle('open'); // Rotate the hamburger icon
-        navLinks.classList.toggle('open'); // Show or hide the navigation links
-        // Optionally, toggle the body overflow to prevent background scrolling when menu is open
-        document.body.classList.toggle('no-scroll');
-    }
-  
-    // Add click event listener to the menu toggle button
-    menuToggle.addEventListener('click', toggleMenu);
+        function fallbackCopyText(text) {
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            // Make sure the textarea is not visible
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
 
-    document.addEventListener('DOMContentLoaded', () => {
-        menuToggle = document.querySelector('.menu-toggle');
-        navLinks = document.querySelector('.nav-links');
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    console.error('Fallback: Copy command was unsuccessful');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
 
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('open');
-            navLinks.classList.toggle('open');
-        });
-     
-    });
-    
-   
-        });
+            // Remove the temporary textarea
+            document.body.removeChild(textarea);
+        }
+
+        function showCopySuccess() {
+            const copySuccess = document.getElementById('copySuccess');
+            copySuccess.style.display = 'block';
+            // Hide after 2 seconds
+            setTimeout(() => {
+                copySuccess.style.display = 'none';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
+
+  
