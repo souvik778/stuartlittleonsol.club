@@ -219,23 +219,8 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
-       
             </section>
-            <section class="video-section animate-on-scroll" id="video">
-                <div class="video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/RB5lRbm0qjU" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen 
-                        loading="lazy"
-                        class="responsive-iframe">
-                    </iframe>
-                </div>
-            </section>
-            <br>
-            
+
            <!-- Presale Information Section -->
     <section class="presale-section" id="presale">
         <h2>Presale Information</h2>
@@ -1770,60 +1755,6 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
     
    
         });
-        
-//for the top imag 
-    const heroSection = document.querySelector('.hero-section');
-    const heroImage = document.querySelector('.hero-image');
-
-    // Function to handle movement
-    const handleMove = (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const x = e.clientX - rect.left; // X position within the hero section
-        const y = e.clientY - rect.top;  // Y position within the hero section
-
-        // Calculate percentage position
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-
-        // Update CSS variables for dynamic glow
-        heroImage.style.setProperty('--dynamic-glow', `
-            0 0 10px var(--glow-color),
-            0 0 20px var(--glow-color),
-            0 0 30px var(--glow-color),
-            ${xPercent - 50}px ${yPercent - 50}px 40px rgba(255, 255, 255, 0.5)
-        `);
-    };
-
-    // Throttle the mousemove event for performance
-    let throttleTimeout;
-    const throttle = (callback, delay) => {
-        if (throttleTimeout) return;
-        throttleTimeout = setTimeout(() => {
-            callback();
-            throttleTimeout = null;
-        }, delay);
-    };
-
-    const onMouseMove = (e) => {
-        throttle(() => handleMove(e), 20);
-    };
-
-    // Add event listeners for mouse and touch
-    heroSection.addEventListener('mousemove', onMouseMove);
-    heroSection.addEventListener('touchmove', (e) => {
-        const touch = e.touches[0];
-        handleMove(touch);
-    });
-
-    // Reset glow when cursor leaves
-    heroSection.addEventListener('mouseleave', () => {
-        heroImage.style.setProperty('--dynamic-glow', `
-            0 0 10px var(--glow-color),
-            0 0 20px var(--glow-color),
-            0 0 30px var(--glow-color)
-        `);
-    });
-        
     </script>
 </body>
 </html>
