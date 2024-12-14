@@ -6,6 +6,7 @@
     padding: 0;
 }
 
+
 /* Presale live animation */
 .presale-live {
     display: inline-block;
@@ -1861,7 +1862,7 @@ height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeIn 0.25s ease forwards;
+    animation: fadeIn ease forwards;
 }
 
 .contact-section h2 {
@@ -1877,7 +1878,7 @@ height: auto;
 #contact-form {
     display: flex;
     flex-direction: column;
-    animation: fadeInUp 2s ease forwards;
+    animation: fadeInUp ease forwards;
     gap: 15px;
 }
 
@@ -2505,3 +2506,169 @@ input:focus, select:focus {
 .wallet-address {
     animation: fadeIn 2s ease-in-out;
 } 
+
+/* Default (Large Screens) - Fixed, Colorful, Floating */
+.thought-cloud-container {
+    position: fixed;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+    z-index: 3000;
+    pointer-events: none;
+}
+
+.thought-cloud {
+    position: relative;
+    width: 250px;
+    padding: 30px;
+    background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    pointer-events: auto;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: gentleFloat 3s ease-in-out infinite alternate;
+}
+
+/* Gentle floating animation */
+@keyframes gentleFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+/* Cloud tail */
+.thought-cloud::before,
+.thought-cloud::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
+    z-index: -1;
+}
+
+.thought-cloud::before {
+    width: 40px;
+    height: 40px;
+    bottom: -10px;
+    left: 50px;
+    border-radius: 50%;
+}
+
+.thought-cloud::after {
+    width: 20px;
+    height: 20px;
+    bottom: -25px;
+    left: 65px;
+    border-radius: 50%;
+}
+
+/* Hover effect */
+.thought-cloud:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+.main-quote {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.rotating-quote {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #333;
+}
+
+.change-quote-btn {
+    background: #fff;
+    color: #000;
+    border: 2px solid #FF69B4;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, transform 0.2s, color 0.3s;
+}
+
+.change-quote-btn:hover {
+    background-color: #FF69B4;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.change-quote-btn:active {
+    transform: scale(0.95);
+}
+
+/* Responsive Adjustments for even smaller screens */
+@media (max-width: 768px) {
+    .thought-cloud-container {
+        right: 20px;
+        width: 220px;
+    }
+
+    .thought-cloud {
+        width: 220px;
+        font-size: 0.9rem;
+        padding: 20px;
+    }
+
+    .thought-cloud::before {
+        width: 30px;
+        height: 30px;
+        left: 40px;
+        bottom: -8px;
+    }
+
+    .thought-cloud::after {
+        width: 15px;
+        height: 15px;
+        left: 50px;
+        bottom: -20px;
+    }
+}
+
+/* When the hamburger icon activates, switch to block-level style */
+/* Adjust the breakpoint to match your hamburger menu appearance */
+@media (max-width: 1780px) {
+    /* Instead of fixed, make it a normal block element above tokenomics */
+    .thought-cloud-container {
+        position: static;
+        transform: none;
+        right: auto;
+        top: auto;
+        margin:auto; 
+        display: flex;
+        justify-content: center;
+        pointer-events: auto; /* Normal interaction */
+    }
+
+    .thought-cloud {
+        animation: none; /* Remove floating animation for simplicity */
+        transform: none; /* No translate needed */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    /* You can also modify colors or remove tail if desired */
+    .thought-cloud::before,
+    .thought-cloud::after {
+        display: none; /* Remove tail for simpler look if you want */
+    }
+
+    .thought-cloud:hover {
+        transform: scale(1.02);
+    }
+
+    .change-quote-btn:hover {
+        transform: scale(1.05);
+    }
+}
