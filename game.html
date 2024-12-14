@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Angry Birds Clone</title>
+    <style>
+        /* Reset margin and padding */
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #87ceeb; /* Sky blue background */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Overlay for UI elements */
+        #overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        /* Button styling */
+        #resetButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #resetButton:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Overlay for score and controls -->
+    <div id="overlay">
+        <span id="score">Score: 0</span>
+        <button id="resetButton">Reset Level</button>
+    </div>
+
+    <!-- Canvas for Babylon.js -->
+    <canvas id="renderCanvas"></canvas>
+
+    <!-- Babylon.js and Cannon.js via CDN -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/cannon.js"></script>
+
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById("renderCanvas");
+
+        // Generate the Babylon.js 3D engine
+        const engine = new BABYLON.Engine(canvas, true);
+
+        // Variables for game state
+        let currentLevel = 0;
+        let score = 0;
+        const levels = [
+            {
+                targets: [
+                    { name: "block1", position: new BABYLON.Vector3(10, 1, 0) },
+                    { name: "block2", position: new BABYLON.Vector3(12, 1, 0) },
+                    { name: "block3", position: new BABYLON.Vector3(11, 3, 0) }
+                ]
+            },
+            {
+                targets: [
+                    { name: "block1", position: new BABYLON.Vector3(15, 1, 0) },
+                    { name: "block2", position: new BABYLON.Vector3(17, 1, 0) },
+                    { name: "block3", position: new BABYLON.Vector3(16, 3, 0) },
+                    { name: "block4", position: new BABYLON.Vector3(16, 5, 0) }
+                ]
+            },
+            // Add more levels as needed
+        ];
+
+        // Reference to UI elements
+        const scoreElement = document.getElementById("score");
+        const resetButton = document.getElementById("resetButton");
+
+        // Create the scene
+        const createScene = function () {
+            const scene = new BABYLON.Scene(engine);
+
+            // Enable physics
+            const gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+            const physicsPlugin = new BABYLON.CannonJSPlugin();
+            scene.enablePhysics(gravityVector, physicsPlugin);
+
+            // Create a camera that focuses on the bird
+            const camera = new BABYLON.ArcRotateCamera("Camera", 
+                BABYLON.Tools.ToRadians(45), BABYLON.Tools.ToRadians(45), 
+                30, new BABYLON.Vector3(-10, 1, 0), scene);
+            camera.attachControl(canvas, true);
+
+            // Create lights
+            const hemisphericLight = new BABYLON.HemisphericLight("hemiLight", 
+                new BABYLON.Vector3(0, 1, 0), scene);
+            hemisphericLight.intensity = 0.7;
+
+            const directionalLight = new BABYLON.DirectionalLight("dirLight", 
+                new BABYLON.Vector3(-1, -2, -1), scene);
+            directionalLight.position = new BABYLON.Vector3(20, 40, 20);
+            directionalLight.intensity = 0.5;
+
+            // Create ground
+            const ground = BABYLON.MeshBuilder.CreateGround("ground", 
+                {width: 50, height: 50}, scene);
+            ground.position = new BABYLON.Vector3(0, 0, 0);
+            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, 
+                BABYLON.PhysicsImpostor.BoxImpostor, 
+                { mass: 0, restitution: 0.9, friction: 0.5 }, scene);
+
+            // Create slingshot base (static)
+            const slingshotBase = BABYLON.MeshBuilder.CreateBox("slingshotBase", 
+                {height: 2, width: 1, depth: 1}, scene);
+            slingshotBase.position = new BABYLON.Vector3(-10, 1, 0);
+            slingshotBase.physicsImpostor = new BABYLON.PhysicsImpostor(slingshotBase, 
+                BABYLON.PhysicsImpostor.BoxImpostor, 
+                { mass: 0, restitution: 0.9 }, scene);
+
+            // Create slingshot band (cylinder)
+            const slingshotBand = BABYLON.MeshBuilder.CreateCylinder("band", 
+                { diameter: 0.05, height: 5 }, scene);
+            slingshotBand.rotation.z = Math.PI / 4;
+            slingshotBand.position = new BABYLON.Vector3(-10, 1, 0);
+
+            // Create projectile (bird) with a distinct color
+            let bird = BABYLON.MeshBuilder.CreateSphere("bird", 
+                {diameter: 1}, scene);
+            bird.position = new BABYLON.Vector3(-10, 1, 0);
+            bird.physicsImpostor = new BABYLON.PhysicsImpostor(bird, 
+                BABYLON.PhysicsImpostor.SphereImpostor, 
+                { mass: 1, restitution: 0.9, friction: 0.5 }, scene);
+
+            // Assign a material to the bird for visibility
+            const birdMaterial = new BABYLON.StandardMaterial("birdMat", scene);
+            birdMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red
+            bird.material = birdMaterial;
+
+            // Variables for dragging
+            let isDragging = false;
+            let mouseDownPoint = new BABYLON.Vector3.Zero();
+
+            // Event listeners for mouse interactions
+            scene.onPointerObservable.add((pointerInfo) => {
+                switch (pointerInfo.type) {
+                    case BABYLON.PointerEventTypes.POINTERDOWN:
+                        if (BABYLON.Vector3.Distance(pointerInfo.pickInfo.pickedPoint, bird.position) < 1.5) {
+                            isDragging = true;
+                            mouseDownPoint = pointerInfo.pickInfo.pickedPoint.clone();
+                        }
+                        break;
+                    case BABYLON.PointerEventTypes.POINTERUP:
+                        if (isDragging) {
+                            isDragging = false;
+                            const releasePoint = pointerInfo.pickInfo.pickedPoint.clone();
+                            const forceDirection = BABYLON.Vector3.Normalize(mouseDownPoint.subtract(releasePoint));
+                            const forceMagnitude = BABYLON.Vector3.Distance(mouseDownPoint, releasePoint) * 100;
+                            bird.physicsImpostor.applyForce(forceDirection.scale(forceMagnitude), bird.getAbsolutePosition());
+                        }
+                        break;
+                    case BABYLON.PointerEventTypes.POINTERMOVE:
+                        if (isDragging) {
+                            const movePoint = pointerInfo.pickInfo.pickedPoint.clone();
+                            bird.position = movePoint;
+                        }
+                        break;
+                }
+            });
+
+            // Array to hold target blocks
+            let targets = [];
+
+            // Function to create blocks based on level
+            const setupLevel = (levelIndex) => {
+                if (levelIndex >= levels.length) {
+                    alert("🎉 Congratulations! You've completed all levels! 🎉");
+                    return;
+                }
+
+                const level = levels[levelIndex];
+                level.targets.forEach(target => {
+                    createBlock(target.name, target.position);
+                });
+            };
+
+            // Function to create a block with distinct color
+            const createBlock = (name, position) => {
+                const block = BABYLON.MeshBuilder.CreateBox(name, 
+                    {width: 2, height: 2, depth: 2}, scene);
+                block.position = position;
+                block.physicsImpostor = new BABYLON.PhysicsImpostor(block, 
+                    BABYLON.PhysicsImpostor.BoxImpostor, 
+                    { mass: 2, restitution: 0.4, friction: 0.5 }, scene);
+                targets.push(block);
+
+                // Assign a material to the block for visibility
+                const blockMaterial = new BABYLON.StandardMaterial(name + "Mat", scene);
+                blockMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0); // Green
+                block.material = blockMaterial;
+            };
+
+            // Setup initial level
+            setupLevel(currentLevel);
+
+            // Collision event to detect when bird hits a block
+            scene.registerBeforeRender(function () {
+                targets.forEach((block, index) => {
+                    if (block.physicsImpostor.isDisposed()) return;
+
+                    const distance = BABYLON.Vector3.Distance(bird.position, block.position);
+                    if (distance < 1.5) {
+                        // Apply explosion force or similar effect
+                        block.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+                        block.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+                        block.physicsImpostor.applyImpulse(new BABYLON.Vector3(5, 5, 0), block.position);
+
+                        // Remove block after impact
+                        setTimeout(() => {
+                            block.physicsImpostor.dispose();
+                            block.dispose();
+                            targets.splice(index, 1);
+
+                            // Update score
+                            score += 10;
+                            scoreElement.textContent = `Score: ${score}`;
+
+                            // Check if level is complete
+                            if (targets.length === 0) {
+                                currentLevel++;
+                                setupLevel(currentLevel);
+                                resetBird();
+                                alert(`🎯 Level ${currentLevel} Complete! 🎯`);
+                            }
+                        }, 1000);
+                    }
+                });
+            });
+
+            // Function to reset bird position
+            const resetBird = () => {
+                bird.position = new BABYLON.Vector3(-10, 1, 0);
+                bird.physicsImpostor.setLinearVelocity(BABYLON.Vector3.Zero());
+                bird.physicsImpostor.setAngularVelocity(BABYLON.Vector3.Zero());
+            };
+
+            // Reset button functionality
+            resetButton.addEventListener('click', () => {
+                // Reset current level
+                targets.forEach(target => {
+                    target.physicsImpostor.dispose();
+                    target.dispose();
+                });
+                targets = [];
+                setupLevel(currentLevel);
+                resetBird();
+                // Reset score or keep it as per game design
+                score = 0;
+                scoreElement.textContent = `Score: ${score}`;
+            });
+
+            return scene;
+        };
+
+        // Create the scene
+        const scene = createScene();
+
+        // Run the render loop
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+
+        // Resize the engine on window resize
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+    </script>
+</body>
+</html>
