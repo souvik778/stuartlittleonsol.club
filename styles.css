@@ -2527,21 +2527,29 @@ body {
 /* Thought Cloud */
 .thought-cloud {
     position: relative;
-    width: 400px; /* Increased width for better visibility */
+    width: 350px; /* Increased width for better visibility */
     min-height: 250px; /* Ensures sufficient height */
-    padding: 40px 30px; /* Increased padding for spacious content area */
+    padding: 30px 25px; /* Increased padding for spacious content area */
     color: #333;
-    font-size: 1.1rem; /* Slightly larger font for readability */
+    font-size: 1rem; /* Standard font size */
     font-weight: bold;
-    text-align: justify; /* Justify text for a clean look */
-    line-height: 1.6;
+    text-align: justify; /* Justifies text for a clean look */
+    line-height: 1.5;
     pointer-events: auto; /* Enables interaction within the cloud */
-    overflow: visible; /* Allows fluffs to be visible */
+    overflow: hidden; /* Ensures content stays within the cloud */
     transition: transform 0.3s, box-shadow 0.3s;
-    animation: gentleFloat 10s ease-in-out infinite alternate; /* Slower float */
+    animation: gentleFloat 6s ease-in-out infinite alternate; /* Smooth floating animation */
+    
+    /* Gradient Background */
     background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
-    border-radius: 60% 60% 70% 70%; /* More rounded shape */
-    box-shadow: 0 16px 35px rgba(0,0,0,0.3); /* Larger shadow for depth */
+    
+    /* Rounded Rectangular Shape */
+    border-radius: 20px;
+    
+    /* Depth with Box Shadow */
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    
+    /* Flexbox for Centering Content */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2550,95 +2558,34 @@ body {
 
 /* Hover Effect */
 .thought-cloud:hover {
-    transform: scale(1.07);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4); /* Enhanced shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3); /* Enhanced shadow on hover */
 }
 
-/* Cloud Fluffs */
-.cloud-fluff {
-    position: absolute;
-    background: linear-gradient(135deg, #FFEFD5 0%, #FFD700 40%, #FF69B4 100%);
-    border-radius: 50%;
-    opacity: 0.85; /* Slightly reduced opacity */
-    animation: fluffFloat 8s ease-in-out infinite alternate; /* Slower fluff float */
-    pointer-events: none; /* Prevent fluffs from capturing mouse events */
-}
-
-/* Specific Fluff Positions and Sizes */
-.fluff1 {
-    width: 140px;
-    height: 140px;
-    top: -50px;
-    left: 60px;
-    animation-delay: 0s;
-}
-
-.fluff2 {
-    width: 160px;
-    height: 160px;
-    top: -60px;
-    left: 220px;
-    animation-delay: 1s;
-}
-
-.fluff3 {
-    width: 120px;
-    height: 120px;
-    bottom: -50px;
-    left: 80px;
-    animation-delay: 2s;
-}
-
-.fluff4 {
-    width: 90px;
-    height: 90px;
-    bottom: -20px;
-    left: 300px;
-    animation-delay: 3s;
-}
-
-.fluff5 {
-    width: 110px;
-    height: 110px;
-    top: 110px;
-    left: 180px;
-    animation-delay: 4s;
-}
-
-.fluff6 {
-    width: 80px;
-    height: 80px;
-    top: 80px;
-    left: 360px;
-    animation-delay: 5s;
-}
-
-/* Fluff Floating Animation: Combined Vertical and Horizontal Movement */
-@keyframes fluffFloat {
+/* Floating Animation */
+@keyframes gentleFloat {
     0% { transform: translateY(0px) translateX(0px); }
-    25% { transform: translateY(-10px) translateX(10px); }
-    50% { transform: translateY(0px) translateX(20px); }
-    75% { transform: translateY(10px) translateX(10px); }
+    50% { transform: translateY(-10px) translateX(10px); }
     100% { transform: translateY(0px) translateX(0px); }
 }
 
 /* Main Quote Styling */
 .main-quote {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: bold;
     color: #333;
-    width: 80%; /* Ensures text wraps nicely within the cloud */
+    width: 100%; /* Full width within the cloud */
     text-align: justify; /* Justifies text for a cleaner look */
 }
 
 /* Rotating Quote Styling */
 .rotating-quote {
     margin-bottom: 25px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-style: italic;
     color: #555;
     font-weight: normal;
-    width: 80%;
+    width: 100%;
     text-align: justify;
 }
 
@@ -2648,15 +2595,14 @@ body {
     color: #fff;
     border: none; /* Removed border for a cleaner look */
     border-radius: 25px;
-    padding: 14px 30px; /* Increased padding for better visibility */
-    font-size: 1rem; /* Increased font size */
+    padding: 12px 25px; /* Increased padding for better visibility */
+    font-size: 1rem; /* Standard font size */
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-    
-    /* Text Transformation */
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-top: 10px; /* Spacing above the button */
 }
 
 /* Button Hover Effects */
@@ -2672,8 +2618,8 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Responsive Adjustments for Smaller Screens */
-@media (max-width: 1280px) {
+/* Responsive Adjustments for Hamburger and Smaller Screens */
+@media (max-width: 1780px) {
     .thought-cloud-container {
         position: static;
         transform: none;
@@ -2690,18 +2636,10 @@ body {
         transform: none;
         box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         width: 90%;
-        max-width: 500px; /* Adjusted to accommodate increased size */
+        max-width: 500px;
         margin: 0 auto;
         padding: 30px 20px;
-        border-radius: 60% 60% 70% 70%;
-    }
-
-    /* Simplify Cloud Fluffs */
-    .fluff3,
-    .fluff4,
-    .fluff5,
-    .fluff6 {
-        display: none; /* Hide extra fluffs for a cleaner look */
+        border-radius: 20px;
     }
 
     .thought-cloud:hover {
@@ -2723,37 +2661,9 @@ body {
     .thought-cloud {
         width: 220px;
         min-height: 200px; /* Adjusted height */
-        font-size: 1rem;
+        font-size: 0.95rem;
         padding: 20px;
-    }
-
-    /* Adjust Cloud Fluffs */
-    .fluff1 {
-        width: 100px;
-        height: 100px;
-        top: -30px;
-        left: 40px;
-    }
-
-    .fluff2 {
-        width: 120px;
-        height: 120px;
-        top: -40px;
-        left: 130px;
-    }
-
-    .fluff3 {
-        width: 80px;
-        height: 80px;
-        bottom: -30px;
-        left: 50px;
-    }
-
-    .fluff4 {
-        width: 70px;
-        height: 70px;
-        bottom: -10px;
-        left: 180px;
+        border-radius: 20px;
     }
 
     /* Ensure Button Fits Well */
