@@ -199,13 +199,16 @@
     <!-- Main Container -->
     <div class="main-container">
         <br>
-        <h1 style="text-align: center;">
-            <span class="presale-live animate__animated animate__flash animate__infinite">Presale is Live!</span>
+        <h1 class="headline">
+            <span class="presale-live">Presale is Live!</span>
             <button class="scroll-down-btn" onclick="document.querySelector('#presale').scrollIntoView({ behavior: 'smooth' });" aria-label="Scroll Down">
-                 Scroll Down
+                Scroll Down
             </button>
-        </h1> 
+        </h1>
+    </div>
+    
             
+
 
         <main class="content">
             <!-- Hero Section with Stuart Image -->
@@ -627,68 +630,79 @@
                 });
             };
 
-            // Toggle mobile menu visibility
-            menuToggle.addEventListener('click', () => {
-                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                menuToggle.setAttribute('aria-expanded', !isExpanded);
-                navLinks.classList.toggle('active');
-                navLinks.setAttribute('aria-hidden', isExpanded);
+           // Toggle mobile menu visibility
+menuToggle.addEventListener('click', () => {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', !isExpanded);
+    navLinks.classList.toggle('active');
+    navLinks.setAttribute('aria-hidden', isExpanded);
 
-                // Toggle the hamburger icon
-                menuToggle.classList.toggle('open');
-            });
+    // Toggle the hamburger icon
+    menuToggle.classList.toggle('open');
+});
 
-            // Function to maximize the popup from minimized state
-            const maximizePresale = () => {
-                presalePopup.style.display = 'flex';
-                presalePopup.classList.add('maximize');
+// Close the mobile menu when a menu item is clicked
+const menuItems = document.querySelectorAll('.nav-links a'); // Select all menu links
+menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navLinks.classList.remove('active'); // Hide the menu
+        menuToggle.setAttribute('aria-expanded', 'false'); // Update ARIA state
+        menuToggle.classList.remove('open'); // Reset the hamburger icon
+    });
+});
 
-                presalePopup.addEventListener('animationend', function handler() {
-                    presalePopup.classList.remove('maximize');
-                    presalePopup.classList.add('active');
-                    presalePopup.removeEventListener('animationend', handler);
-                });
+// Function to maximize the popup from minimized state
+const maximizePresale = () => {
+    presalePopup.style.display = 'flex';
+    presalePopup.classList.add('maximize');
 
-                presaleMinimized.style.display = 'none';
-            };
+    presalePopup.addEventListener('animationend', function handler() {
+        presalePopup.classList.remove('maximize');
+        presalePopup.classList.add('active');
+        presalePopup.removeEventListener('animationend', handler);
+    });
 
-            // Close button event
-            presaleCloseBtn.addEventListener("click", hidePresale);
-            // Minimized button click event
-            presaleMinimizedBtn.addEventListener('click', maximizePresale);
+    presaleMinimized.style.display = 'none';
+};
 
-            // Close popup when clicking outside of it (optional)
-            window.addEventListener("click", (e) => {
-                if (
-                    presalePopup.classList.contains('active') && // Ensure popup is active
-                    !presalePopup.contains(e.target) && // Click not inside popup
-                    !presaleMinimized.contains(e.target) && // Click not on minimized button
-                    e.target !== presaleMinimizedBtn // Click not on the minimized button itself
-                ) {
-                    hidePresale();
-                }
-            });
+// Close button event
+presaleCloseBtn.addEventListener("click", hidePresale);
+// Minimized button click event
+presaleMinimizedBtn.addEventListener('click', maximizePresale);
 
-            // Intersection Observer to detect when Presale section is in view
-            const observerOptions = {
-                root: null, // viewport
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the Presale section is visible
-            };
+// Close popup when clicking outside of it (optional)
+window.addEventListener("click", (e) => {
+    if (
+        presalePopup.classList.contains('active') && // Ensure popup is active
+        !presalePopup.contains(e.target) && // Click not inside popup
+        !presaleMinimized.contains(e.target) && // Click not on minimized button
+        e.target !== presaleMinimizedBtn // Click not on the minimized button itself
+    ) {
+        hidePresale();
+    }
+});
 
-            const observerCallback = (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        showPresale();
-                    }
-                });
-            };
+// Intersection Observer to detect when Presale section is in view
+const observerOptions = {
+    root: null, // viewport
+    rootMargin: '0px',
+    threshold: 0.1 // Trigger when 10% of the Presale section is visible
+};
 
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-            const presaleSection = document.getElementById("presale");
-            if (presaleSection) {
-                observer.observe(presaleSection);
-            }
+const observerCallback = (entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            showPresale();
+        }
+    });
+};
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+const presaleSection = document.getElementById("presale");
+if (presaleSection) {
+    observer.observe(presaleSection);
+}
+
 
             // =============================
             //    INTERACTIVE BACKGROUND
@@ -807,7 +821,7 @@
                             this.x -= moveX;
                             this.y -= moveY;
                             // Change color on interaction
-                    this.color = 'orange'; // White color when interacting
+                    this.color = ' #00f5c9'; // White color when interacting
                 
                         }else {
                     // Revert to original color if not interacting
@@ -1621,6 +1635,10 @@
                 copySuccess.style.display = 'none';
             }, 2000);
         }
+
+  
+   
+
     </script>
 </body>
 </html>
