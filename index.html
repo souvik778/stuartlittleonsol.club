@@ -219,6 +219,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
+       
             </section>
             <section class="video-section animate-on-scroll" id="video">
                 <div class="video-container">
@@ -869,177 +870,7 @@ console.log('Buffer.from works:', typeof Buffer.from === 'function')
                 observer.observe(presaleSection);
             }
 
-            // =============================
-            //    INTERACTIVE BACKGROUND
-            // =============================
-            const canvas = document.getElementById('interactive-background');
-            const ctx = canvas.getContext('2d');
-            let particlesArray = [];
-            const numberOfParticles = 200; // Increased number for denser background
-            const mouse = { x: null, y: null, radius: 150 }; // Increased radius for better interaction
-
-            // Handle Canvas Resize
-            const resizeCanvas = () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            // Handle Mouse Movement
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.x;
-                mouse.y = e.y;
-            });
-  
-            // =============================
-            //        TOUCH INTERACTION
-            // =============================
-
-            // Handle Touch Start
-            window.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) {
-                    const touch = e.touches[0];
-                    mouse.x = touch.clientX;
-                    mouse.y = touch.clientY;
-                }
-            }, false);
-
-            // Handle Touch Move
-            window.addEventListener('touchmove', (e) => {
-                if (e.touches.length > 0) {
-                    const touch = e.touches[0];
-                    mouse.x = touch.clientX;
-                    mouse.y = touch.clientY;
-                }
-            }, false);
-
-            // Handle Touch End and Touch Cancel
-            window.addEventListener('touchend', () => {
-                mouse.x = null;
-                mouse.y = null;
-            }, false);
-
-            window.addEventListener('touchcancel', () => {
-                mouse.x = null;
-                mouse.y = null;
-            }, false);
-
-            // =============================
-            //         PARTICLE CLASS
-            // =============================
-
-            class Particle {
-                constructor(x, y, dx, dy, size, color, opacity) {
-                    this.x = x;
-                    this.y = y;
-                    this.dx = dx;
-                    this.dy = dy;
-                    this.size = size;
-                    this.color = color;
-                    this.opacity = opacity;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // Gold color with variable opacity
-                    ctx.fill();
-                }
-
-                update() {
-                    this.x += this.dx;
-                    this.y += this.dy;
-
-                    // Bounce off edges
-                    if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
-                    if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
-
-                    // Move away from mouse or touch
-                    if (mouse.x !== null && mouse.y !== null) { // Ensure mouse coordinates are valid
-                        const dxMouse = mouse.x - this.x;
-                        const dyMouse = mouse.y - this.y;
-                        const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-                        if (distance < mouse.radius + this.size) {
-                            const angle = Math.atan2(dyMouse, dxMouse);
-                            const moveX = Math.cos(angle) * 5;
-                            const moveY = Math.sin(angle) * 5;
-                            this.x -= moveX;
-                            this.y -= moveY;
-                        }
-                    }
-
-                    this.draw();
-                }
-            }
-
-            // =============================
-            //      INITIALIZE PARTICLES
-            // =============================
-
-            const initParticles = () => {
-                particlesArray = [];
-                for (let i = 0; i < numberOfParticles; i++) {
-                    const size = Math.random() * 3 + 1;
-                    const x = Math.random() * (canvas.width - size * 2) + size;
-                    const y = Math.random() * (canvas.height - size * 2) + size;
-                    const dx = (Math.random() * 1) - 0.5;
-                    const dy = (Math.random() * 1) - 0.5;
-                    const opacity = Math.random() * 0.5 + 0.3; // Variable opacity for depth
-                    particlesArray.push(new Particle(x, y, dx, dy, size, 'gold', opacity));
-                }
-            };
-
-            // =============================
-            //     CONNECT PARTICLES
-            // =============================
-
-            const connectParticles = () => {
-                for (let a = 0; a < particlesArray.length; a++) {
-                    for (let b = a + 1; b < particlesArray.length; b++) {
-                        const dx = particlesArray[a].x - particlesArray[b].x;
-                        const dy = particlesArray[a].y - particlesArray[b].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        if (distance < 120) { // Increased distance for more connections
-                            const opacity = 1 - distance / 120;
-                            ctx.strokeStyle = `rgba(255,215,0,${opacity})`;
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-            };
-
-            // =============================
-            //       ANIMATE PARTICLES
-            // =============================
-
-            const animateParticles = () => {
-                requestAnimationFrame(animateParticles);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particlesArray.forEach(particle => particle.update());
-                connectParticles();
-            };
-
-            // =============================
-            //       INITIALIZATION
-            // =============================
-
-            initParticles();
-            animateParticles();
-
-            // =============================
-            //    FAQ TOGGLE FUNCTIONALITY
-            // =============================
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                });
-            });
+            
 
             // =============================
             //  KING IMAGE INTERACTIVITY
@@ -1769,6 +1600,333 @@ const connection = new solanaWeb3.Connection(CUSTOM_RPC_URL, 'confirmed');
     
    
         });
+        
+/* script.js */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const heroSection = document.querySelector('.hero-section');
+    const heroImage = document.querySelector('.hero-image');
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    // Linear interpolation function for smooth transitions
+    const lerp = (start, end, amt) => {
+        return (1 - amt) * start + amt * end;
+    };
+
+    // Animation loop using requestAnimationFrame for smooth updates
+    const animate = () => {
+        // Smoothly interpolate target positions
+        mouseX = lerp(mouseX, targetX, 0.1);
+        mouseY = lerp(mouseY, targetY, 0.1);
+
+        // Calculate percentage positions
+        const rect = heroSection.getBoundingClientRect();
+        const xPercent = (mouseX / rect.width) * 100;
+        const yPercent = (mouseY / rect.height) * 100;
+
+        // Update dynamic glow with multiple layers
+        heroImage.style.setProperty('--dynamic-glow', `
+            ${xPercent - 50}px ${yPercent - 50}px 40px rgba(255, 255, 255, 0.3),
+            ${50 - xPercent}px ${50 - yPercent}px 30px rgba(0, 191, 255, 0.2),
+            ${xPercent / 2 - 25}px ${yPercent / 2 - 25}px 20px rgba(255, 105, 180, 0.2)
+        `);
+
+        // Parallax effect: subtle image movement based on cursor position
+        const parallaxX = (mouseX / rect.width - 0.5) * 10; // Adjust multiplier for effect
+        const parallaxY = (mouseY / rect.height - 0.5) * 10;
+        heroImage.style.transform = `translate(${parallaxX}px, ${parallaxY}px)`;
+
+        requestAnimationFrame(animate);
+    };
+
+    animate(); // Start the animation loop
+
+    // Function to handle movement
+    const handleMove = (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        let x, y;
+
+        if (e.type.startsWith('touch')) {
+            // Touch events
+            const touch = e.touches[0];
+            x = touch.clientX - rect.left;
+            y = touch.clientY - rect.top;
+        } else {
+            // Mouse events
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+        }
+
+        // Clamp values to hero section bounds
+        x = Math.max(0, Math.min(x, rect.width));
+        y = Math.max(0, Math.min(y, rect.height));
+
+        targetX = x;
+        targetY = y;
+    };
+
+    // Add event listeners for mouse and touch
+    heroSection.addEventListener('mousemove', handleMove);
+    heroSection.addEventListener('touchmove', handleMove, { passive: true });
+
+    // Reset glow when cursor leaves
+    heroSection.addEventListener('mouseleave', () => {
+        targetX = heroSection.offsetWidth / 2;
+        targetY = heroSection.offsetHeight / 2;
+    });
+
+    // Initialize target to center
+    targetX = heroSection.offsetWidth / 2;
+    targetY = heroSection.offsetHeight / 2;
+
+    // Handle window resize to recenter target
+    window.addEventListener('resize', () => {
+        targetX = heroSection.offsetWidth / 2;
+        targetY = heroSection.offsetHeight / 2;
+    });
+});
+/* script.js */
+
+// =============================
+//    INTERACTIVE BACKGROUND
+// =============================
+const canvas = document.getElementById('interactive-background');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+
+// Determine device type for performance optimization
+const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+const numberOfParticles = isMobile ? 100 : 200; // Reduced particles for mobile
+const mouse = { x: null, y: null, radius: isMobile ? 100 : 150 }; // Adjusted radius for mobile
+
+// Function to generate a random color within a specified range
+function randomColor() {
+  const min = 180; // Adjust for desired color range
+  const max = 255;
+  return {
+    r: Math.floor(Math.random() * (max - min + 1)) + min,
+    g: Math.floor(Math.random() * (max - min + 1)) + min,
+    b: Math.floor(Math.random() * (max - min + 1)) + min,
+  };
+}
+
+const speedMultiplier = 0.5; // Adjust for desired speed
+const directionChangeProbability = 0.05; // Probability to change direction each frame
+
+// Handle Canvas Resize with Throttling
+let resizeTimeout;
+const resizeCanvas = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles(); // Reinitialize particles on resize
+    }, 200);
+};
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Handle Mouse and Touch Movement
+const handleInteraction = (x, y) => {
+    mouse.x = x;
+    mouse.y = y;
+};
+
+// Handle Mouse Movement
+window.addEventListener('mousemove', (e) => {
+    handleInteraction(e.clientX, e.clientY);
+});
+
+// =============================
+//        TOUCH INTERACTION
+// =============================
+
+// Handle Touch Start and Move
+window.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        handleInteraction(touch.clientX, touch.clientY);
+    }
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        handleInteraction(touch.clientX, touch.clientY);
+    }
+}, { passive: true });
+
+// Handle Touch End and Touch Cancel
+window.addEventListener('touchend', () => {
+    mouse.x = null;
+    mouse.y = null;
+}, { passive: true });
+
+window.addEventListener('touchcancel', () => {
+    mouse.x = null;
+    mouse.y = null;
+}, { passive: true });
+
+// =============================
+//         PARTICLE CLASS
+// =============================
+
+class Particle {
+    constructor(x, y, dx, dy, size, color, opacity) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.size = size;
+        this.color = color;
+        this.opacity = opacity;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
+        ctx.fill();
+    }
+
+    update() {
+        // Randomly change direction based on probability
+        if (Math.random() < directionChangeProbability) {
+            this.dx += (Math.random() - 0.5) * speedMultiplier;
+            this.dy += (Math.random() - 0.5) * speedMultiplier;
+        }
+
+        this.x += this.dx;
+        this.y += this.dy;
+
+        // Bounce off edges
+        if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx *= -1;
+        if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy *= -1;
+
+        // Move away from mouse or touch
+        if (mouse.x !== null && mouse.y !== null) { // Ensure mouse coordinates are valid
+            const dxMouse = mouse.x - this.x;
+            const dyMouse = mouse.y - this.y;
+            const distance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+            if (distance < mouse.radius + this.size) {
+                const angle = Math.atan2(dyMouse, dxMouse);
+                const force = (mouse.radius + this.size - distance) / mouse.radius;
+                const forceX = Math.cos(angle) * force * 2;
+                const forceY = Math.sin(angle) * force * 2;
+
+                this.dx -= forceX;
+                this.dy -= forceY;
+            }
+        }
+
+        // Gradually reduce speed for smoother movement
+        this.dx *= 0.98;
+        this.dy *= 0.98;
+
+        this.draw();
+    }
+}
+
+// =============================
+//      INITIALIZE PARTICLES
+// =============================
+
+const initParticles = () => {
+    particlesArray = [];
+    for (let i = 0; i < numberOfParticles; i++) {
+        const size = Math.random() * 3 + 1;
+        const x = Math.random() * (canvas.width - size * 2) + size;
+        const y = Math.random() * (canvas.height - size * 2) + size;
+        const dx = (Math.random() * 1) - 0.5;
+        const dy = (Math.random() * 1) - 0.5;
+        const opacity = Math.random() * 0.5 + 0.3; // Variable opacity for depth
+        const color = randomColor(); // Assign a random color
+        particlesArray.push(new Particle(x, y, dx, dy, size, color, opacity));
+    }
+};
+
+// =============================
+//     CONNECT PARTICLES
+// =============================
+
+const connectParticles = () => {
+    for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a + 1; b < particlesArray.length; b++) {
+            const dx = particlesArray[a].x - particlesArray[b].x;
+            const dy = particlesArray[a].y - particlesArray[b].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 120) { // Increased distance for more connections
+                const opacity = 1 - distance / 120;
+                ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`; // Gold color with variable opacity
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+};
+
+// =============================
+//       ANIMATE PARTICLES
+// =============================
+
+const animateParticles = () => {
+    requestAnimationFrame(animateParticles);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particlesArray.forEach(particle => particle.update());
+    connectParticles();
+};
+
+// =============================
+//       INITIALIZATION
+// =============================
+
+initParticles();
+animateParticles();
+
+// =============================
+//    FAQ TOGGLE FUNCTIONALITY
+// =============================
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('active');
+
+        // Update ARIA attributes for accessibility
+        const isActive = item.classList.contains('active');
+        const answer = item.querySelector('.answer');
+        item.setAttribute('aria-expanded', isActive);
+        answer.setAttribute('aria-hidden', !isActive);
+    });
+
+    // Enable keyboard accessibility
+    item.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            item.click();
+        }
+    });
+});
+draw() 
+    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+    gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`);
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    const size = Math.random() * 3 + 1; // Particle sizes between 1 and 4
+const opacity = Math.random() * 0.5 + 0.3; // Opacity between 0.3 and 0.8
+
+
+
+
+
     </script>
 </body>
 </html>
