@@ -2669,3 +2669,292 @@ input:focus, select:focus {
         font-size: 0.9rem;
     }
 }
+
+ /* Loader Overlay */
+ .loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0d0d0d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s;
+    overflow: hidden;
+  }
+
+  .loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Background Particle Animation */
+  .particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particles::before, .particles::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveParticles 60s linear infinite;
+  }
+
+  .particles::after {
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    animation-duration: 120s;
+  }
+
+  @keyframes moveParticles {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 100px); }
+  }
+
+  /* Blockchain Animation */
+  .blockchain {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 30px;
+    z-index: 1;
+  }
+
+  .blockchain::before, .blockchain::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #00ffcc;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 4s linear infinite;
+  }
+
+  .blockchain::after {
+    width: 90px;
+    height: 90px;
+    border-color: #ff0066;
+    animation-direction: reverse;
+  }
+
+  /* Nodes */
+  .node {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #00ffcc;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ffcc;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .blockchain .node:nth-child(1) { top: 0%; left: 50%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(2) { top: 25%; left: 75%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(3) { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(4) { top: 75%; left: 75%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(5) { top: 100%; left: 50%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(6) { top: 75%; left: 25%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(7) { top: 50%; left: 0%; transform: translate(-50%, -50%); }
+  .blockchain .node:nth-child(8) { top: 25%; left: 25%; transform: translate(-50%, -50%); }
+
+  /* Loading Text */
+  .loading-text {
+    font-size: 1.8rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: blink 1.5s infinite;
+    z-index: 1;
+  }
+
+  /* Fade-In Main Content */
+  .main-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    background: #0d0d0d;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-content.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Animations */
+  @keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) translateY(0); }
+    50% { opacity: 1; transform: translate(-50%, -50%) translateY(-10px); }
+  }
+
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.5; }
+  }
+
+  /* Sparkle Effect (Optional) */
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 6px #ffffff;
+    animation: sparkle 2s infinite;
+    z-index: 1;
+  }
+
+  .sparkle:nth-child(9) { /* Adjusted for correct positioning in the HTML */
+    top: 20%;
+    left: 30%;
+    animation-delay: 0s;
+  }
+  .sparkle:nth-child(10) {
+    top: 40%;
+    left: 70%;
+    animation-delay: 0.5s;
+  }
+  .sparkle:nth-child(11) {
+    top: 60%;
+    left: 20%;
+    animation-delay: 1s;
+  }
+  .sparkle:nth-child(12) {
+    top: 80%;
+    left: 60%;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .blockchain {
+      width: 120px;
+      height: 120px;
+    }
+
+    .loading-text {
+      font-size: 1.4rem;
+    }
+  }
+
+  /* Background Particle Animation */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .particles::before, .particles::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveParticles 60s linear infinite;
+  }
+  
+  .particles::after {
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    animation-duration: 120s;
+  }
+  
+  @keyframes moveParticles {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 100px); }
+  }
+  
+
+/* Video Styling */
+.presale-video {
+    margin-top: 30px;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.presale-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 15px;
+}
+
+/* Hover Effects for Video */
+.presale-video:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .presale-section {
+        padding: 20px 10px;
+    }
+
+    .presale-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .presale-section p {
+        font-size: 1rem;
+    }
+
+    .presale-video {
+        max-width: 100%;
+    }
+}
