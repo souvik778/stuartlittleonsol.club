@@ -2946,3 +2946,130 @@ input:focus, select:focus {
         max-width: 100%;
     }
 }
+
+/* Section Styling */
+.why-us-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px; /* Reduced padding */
+    min-height: auto; /* Removed full viewport height */
+    box-sizing: border-box;
+}
+
+/* Transparent Box Styling */
+.transparent-box {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px; /* Reduced padding */
+    max-width: 800px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Typography */
+.transparent-box h1 {
+    font-size: 2rem; /* Reduced font size */
+    margin-bottom: 15px; /* Reduced margin */
+    color: #fff;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.transparent-box p {
+    font-size: 1rem; /* Reduced font size */
+    line-height: 1.5;
+    color: #f0f0f0;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+/* CTA Button */
+.cta-button {
+    display: inline-block;
+    margin-top: 20px; /* Reduced margin */
+    padding: 10px 20px; /* Adjusted padding */
+    background-color: rgba(255, 215, 0, 0.8);
+    color: #000;
+    text-decoration: none;
+    font-size: 0.9rem; /* Reduced font size */
+    border-radius: 20px; /* Adjusted border radius */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover Animation */
+.cta-button:hover {
+    background-color: rgb(224, 101, 101);
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Click Animation */
+.cta-button:active {
+    transform: scale(0.95); /* Button shrinks slightly on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow reduces on click */
+    background-color: rgb(200, 80, 80); /* Darker shade of hover color */
+}
+.clicked {
+    transform: scale(0.9); /* Slightly smaller than the :active state */
+    background-color: rgb(180, 60, 60); /* Even darker color for the click effect */
+}
+
+/* Interactivity: Hover Effects */
+.transparent-box:hover {
+    transform: translateY(-5px); /* Reduced movement */
+    background: rgba(255, 255, 255, 0.25); /* Slightly increased opacity */
+}
+
+.transparent-box:hover h1 {
+    color: #ffd700;
+}
+
+.transparent-box:hover p {
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .transparent-box {
+        padding: 20px;
+    }
+
+    .transparent-box h1 {
+        font-size: 1.8rem;
+    }
+
+    .transparent-box p {
+        font-size: 0.95rem;
+    }
+
+    .cta-button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .transparent-box {
+        padding: 15px;
+    }
+
+    .transparent-box h1 {
+        font-size: 1.5rem;
+    }
+
+    .transparent-box p {
+        font-size: 0.85rem;
+    }
+
+    .cta-button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}
