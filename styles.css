@@ -1933,19 +1933,22 @@ height: auto;
     animation: fadeIn 2s ease forwards;
     position: relative;
     overflow: hidden;
+    perspective: 1000px; /* Add depth for 3D effects */
 }
 
+/* Updated Hero Image with transform-style */
 .hero-image {
     max-width: 90%;
     height: auto;
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 8px 20px rgba(195, 243, 64, 0.531);
     transition: transform 0.4s, box-shadow 0.4s;
     animation: bounceIn 1.5s ease forwards, glow 4s ease-in-out infinite;
     position: relative;
+    transform-style: preserve-3d; /* Enable 3D transformations */
     --glow-x: 0px;
     --glow-y: 0px;
-    --glow-color: #FFD700;
+    --glow-color: #ebe64d94;
     box-shadow:
         0 0 15px var(--glow-color),
         0 0 30px var(--glow-color),
@@ -1962,7 +1965,7 @@ height: auto;
     }
     50% {
         box-shadow:
-            var(--glow-x) var(--glow-y) 20px #FFD700,
+            var(--glow-x) var(--glow-y) 20px #5ed59fc5,
             var(--glow-x) var(--glow-y) 30px #FF69B4,
             var(--glow-x) var(--glow-y) 40px #00BFFF;
     }
@@ -1989,8 +1992,14 @@ height: auto;
 }
 
 .hero-image:hover {
-    transform: scale(1.1);
+    transform: scale(1.15) translateZ(10px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9);
+}
+
+/* Interactive Image Effect */
+.hero-image[data-active="true"] {
+    transform: scale(10) translate(var(--image-offset-x), var(--image-offset-y));
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
 }
 
 /* Additional Animations */
@@ -2512,7 +2521,7 @@ input:focus, select:focus {
 .thought-cloud-container {
     position: fixed;
     top: 50%;
-    left: 60px; /* Increased spacing from the right edge */
+    left: 1%; /* Increased spacing from the right edge */
     transform: translateY(-50%);
     z-index: 3000;
     pointer-events: none; /* Allows interaction only within the cloud */
@@ -2556,12 +2565,14 @@ input:focus, select:focus {
     box-shadow: 0 16px 40px rgba(0,0,0,0.3); /* Enhanced shadow on hover */
 }
 
+
 /* Floating Animation */
 @keyframes gentleFloat {
     0% { transform: translateY(0px) translateX(0px); }
-    25% { transform: translateY(-5px) translateX(5px); }
-    50% { transform: translateY(-10px) translateX(10px); }
-    75% { transform: translateY(-5px) translateX(5px); }
+    20% { transform: translateY(-8px) translateX(12px); }
+    40% { transform: translateY(-16px) translateX(-10px); }
+    60% { transform: translateY(-24px) translateX(8px); }
+    80% { transform: translateY(-16px) translateX(-12px); }
     100% { transform: translateY(0px) translateX(0px); }
 }
 
@@ -2873,41 +2884,7 @@ input:focus, select:focus {
     }
   }
 
-  /* Background Particle Animation */
-.particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
-  
-  .particles::before, .particles::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: moveParticles 60s linear infinite;
-  }
-  
-  .particles::after {
-    background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-    animation-duration: 120s;
-  }
-  
-  @keyframes moveParticles {
-    from { transform: translate(0, 0); }
-    to { transform: translate(100px, 100px); }
-  }
-  
+ 
 
 /* Video Styling */
 .presale-video {
