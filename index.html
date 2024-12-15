@@ -220,7 +220,27 @@
 
     <!-- Interactive Background Canvas -->
     <canvas id="interactive-background"></canvas>
-
+    <div class="tic-tac-toe-container">
+        <h2 class="game-title">Tic Tac Toe</h2>
+        <div class="scoreboard">
+            <p>Player: <span id="playerScore">0</span></p>
+            <p>Computer: <span id="computerScore">0</span></p>
+            <p>Ties: <span id="ties">0</span></p>
+        </div>
+        <div class="game-board" id="gameBoard">
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+        <button class="reset-btn" id="resetButton">Reset Game</button>
+    </div>
+    
     <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1><a href="index.html">StuartLittleOnSol</a></h1>
@@ -333,7 +353,8 @@
                 </div>
             </section>
             <br><br>
-
+        
+            
             <!-- Token Price Calculation Section -->
             <section class="presale-section" id="token-price">
                 <h2>Token Price Calculator</h2>
@@ -1820,6 +1841,121 @@ button.addEventListener('click', () => {
         button.classList.remove('clicked');
     }, 200); // Reset after 200ms
 });
+
+const gameBoard = document.getElementById('gameBoard');
+    const resetButton = document.getElementById('resetButton');
+    const playerScoreEl = document.getElementById('playerScore');
+    const computerScoreEl = document.getElementById('computerScore');
+    const tiesEl = document.getElementById('ties');
+    const cells = Array.from(document.querySelectorAll('[data-cell]'));
+
+    let playerScore = 0;
+    let computerScore = 0;
+    let ties = 0;
+
+    let currentPlayer = 'X';
+    let board = ['', '', '', '', '', '', '', '', ''];
+    const winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    const handleClick = (e) => {
+        const cell = e.target;
+        const index = cells.indexOf(cell);
+
+        if (board[index] !== '') return;
+
+        placeMark(cell, currentPlayer);
+        board[index] = currentPlayer;
+
+        if (checkWin(currentPlayer)) {
+            endGame(`${currentPlayer} wins`);
+            if (currentPlayer === 'X') playerScore++;
+            else computerScore++;
+            updateScores();
+        } else if (board.every((mark) => mark !== '')) {
+            endGame('Tie');
+            ties++;
+            updateScores();
+        } else {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            if (currentPlayer === 'O') {
+                setTimeout(() => computerMove(), 2000); // 2-second delay for computer move
+            }
+        }
+    };
+
+    const placeMark = (cell, mark) => {
+        cell.textContent = mark;
+        cell.classList.add('taken');
+    };
+
+    const computerMove = () => {
+        const emptyIndices = board
+            .map((mark, index) => (mark === '' ? index : null))
+            .filter((index) => index !== null);
+
+        if (emptyIndices.length > 0) {
+            const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            const cell = cells[randomIndex];
+
+            placeMark(cell, 'O');
+            board[randomIndex] = 'O';
+
+            if (checkWin('O')) {
+                endGame('O wins');
+                computerScore++;
+                updateScores();
+            } else if (board.every((mark) => mark !== '')) {
+                endGame('Tie');
+                ties++;
+                updateScores();
+            } else {
+                currentPlayer = 'X';
+            }
+        }
+    };
+
+    const checkWin = (mark) => {
+        return winningCombinations.some((combination) =>
+            combination.every((index) => board[index] === mark)
+        );
+    };
+
+    const endGame = (result) => {
+        alert(result);
+        board = ['', '', '', '', '', '', '', '', ''];
+        cells.forEach((cell) => {
+            cell.textContent = '';
+            cell.classList.remove('taken');
+        });
+        currentPlayer = 'X';
+    };
+
+    const updateScores = () => {
+        playerScoreEl.textContent = playerScore;
+        computerScoreEl.textContent = computerScore;
+        tiesEl.textContent = ties;
+    };
+
+    resetButton.addEventListener('click', () => {
+        board = ['', '', '', '', '', '', '', '', ''];
+        cells.forEach((cell) => {
+            cell.textContent = '';
+            cell.classList.remove('taken');
+        });
+        currentPlayer = 'X';
+    });
+
+    cells.forEach((cell) => cell.addEventListener('click', handleClick));
+
     </script>
 </body>
 </html>
