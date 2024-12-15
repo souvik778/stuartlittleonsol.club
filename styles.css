@@ -2797,15 +2797,34 @@ input:focus, select:focus {
   .blockchain .node:nth-child(7) { top: 50%; left: 0%; transform: translate(-50%, -50%); }
   .blockchain .node:nth-child(8) { top: 25%; left: 25%; transform: translate(-50%, -50%); }
 
-  /* Loading Text */
   .loading-text {
-    font-size: 1.8rem;
-    color: #ffffff;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    animation: blink 1.5s infinite;
-    z-index: 1;
-  }
+    font-size: 1.8rem; /* Text size */
+    color: transparent; /* Text color set to transparent to allow gradient */
+    letter-spacing: 2px; /* Adds spacing between letters */
+    text-transform: uppercase; /* Converts text to uppercase */
+    text-align: center; /* Centers the text */
+    font-weight: bold; /* Makes text bold */
+    font-family: 'Pacifico', cursive; /* Adds a cursive font */
+    font-style: italic; /* Sets the text to italics */
+    margin: 0 auto; /* Centers the element horizontally */
+    padding: 10px; /* Adds inner spacing */
+    background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff7e5f); /* Gradient colors */
+    background-size: 200%; /* Makes the gradient larger than the text */
+    background-clip: text; /* Clips the gradient to the text */
+    -webkit-background-clip: text; /* Ensures compatibility with WebKit browsers */
+    animation: gradient-move 4s infinite; /* Adds the gradient animation */
+}
+
+/* Keyframes for the gradient animation */
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
 
   /* Fade-In Main Content */
   .main-content {
@@ -2849,10 +2868,10 @@ input:focus, select:focus {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: #ffffff;
+    background: #b9bb4e;
     border-radius: 50%;
     opacity: 0.8;
-    box-shadow: 0 0 6px #ffffff;
+    box-shadow: 0 0 6px #ffffff;  box-shadow: 0 0 5px #ed9b9b; 
     animation: sparkle 2s infinite;
     z-index: 1;
   }
