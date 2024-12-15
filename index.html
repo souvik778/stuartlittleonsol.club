@@ -1842,123 +1842,142 @@ button.addEventListener('click', () => {
         button.classList.remove('clicked');
     }, 200); // Reset after 200ms
 });
-
+// DOM Elements
 const gameBoard = document.getElementById('gameBoard');
-    const resetButton = document.getElementById('resetButton');
-    const playerScoreEl = document.getElementById('playerScore');
-    const computerScoreEl = document.getElementById('computerScore');
-    const tiesEl = document.getElementById('ties');
-    const cells = Array.from(document.querySelectorAll('[data-cell]'));
+const resetButton = document.getElementById('resetButton');
+const playerScoreEl = document.getElementById('playerScore');
+const computerScoreEl = document.getElementById('computerScore');
+const tiesEl = document.getElementById('ties');
+const cells = Array.from(document.querySelectorAll('[data-cell]'));
+const menuToggle = document.querySelector('.hamburger-icon');
+const ticTacToeContainer = document.querySelector('.tic-tac-toe-container');
 
-    let playerScore = 0;
-    let computerScore = 0;
-    let ties = 0;
+// Game Variables
+let playerScore = 0;
+let computerScore = 0;
+let ties = 0;
 
-    let currentPlayer = 'X';
-    let board = ['', '', '', '', '', '', '', '', ''];
-    const winningCombinations = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
+let currentPlayer = 'X';
+let board = ['', '', '', '', '', '', '', '', ''];
+const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
 
-    const handleClick = (e) => {
-        const cell = e.target;
-        const index = cells.indexOf(cell);
+// Handle Cell Click
+const handleClick = (e) => {
+    const cell = e.target;
+    const index = cells.indexOf(cell);
 
-        if (board[index] !== '') return;
+    if (board[index] !== '') return;
 
-        placeMark(cell, currentPlayer);
-        board[index] = currentPlayer;
+    placeMark(cell, currentPlayer);
+    board[index] = currentPlayer;
 
-        if (checkWin(currentPlayer)) {
-            endGame(`${currentPlayer} wins`);
-            if (currentPlayer === 'X') playerScore++;
-            else computerScore++;
+    const winningCombo = checkWin(currentPlayer);
+    if (winningCombo) {
+        highlightWinningCells(winningCombo);
+        setTimeout(() => endGame(`${currentPlayer} wins`), 1000); // Allow animation to play
+        if (currentPlayer === 'X') playerScore++;
+        else computerScore++;
+        updateScores();
+    } else if (board.every((mark) => mark !== '')) {
+        setTimeout(() => endGame('Tie'), 500);
+        ties++;
+        updateScores();
+    } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        if (currentPlayer === 'O') {
+            setTimeout(() => computerMove(), 2000); // 2-second delay for computer move
+        }
+    }
+};
+
+// Place Mark
+const placeMark = (cell, mark) => {
+    cell.textContent = mark;
+    cell.classList.add('taken');
+};
+
+// Computer Move
+const computerMove = () => {
+    const emptyIndices = board
+        .map((mark, index) => (mark === '' ? index : null))
+        .filter((index) => index !== null);
+
+    if (emptyIndices.length > 0) {
+        const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+        const cell = cells[randomIndex];
+
+        placeMark(cell, 'O');
+        board[randomIndex] = 'O';
+
+        const winningCombo = checkWin('O');
+        if (winningCombo) {
+            highlightWinningCells(winningCombo);
+            setTimeout(() => endGame('O wins'), 1000);
+            computerScore++;
             updateScores();
         } else if (board.every((mark) => mark !== '')) {
-            endGame('Tie');
+            setTimeout(() => endGame('Tie'), 500);
             ties++;
             updateScores();
         } else {
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            if (currentPlayer === 'O') {
-                setTimeout(() => computerMove(), 2000); // 2-second delay for computer move
-            }
+            currentPlayer = 'X';
         }
-    };
+    }
+};
 
-    const placeMark = (cell, mark) => {
-        cell.textContent = mark;
-        cell.classList.add('taken');
-    };
+// Check Win
+const checkWin = (mark) => {
+    return winningCombinations.find((combination) =>
+        combination.every((index) => board[index] === mark)
+    );
+};
 
-    const computerMove = () => {
-        const emptyIndices = board
-            .map((mark, index) => (mark === '' ? index : null))
-            .filter((index) => index !== null);
-
-        if (emptyIndices.length > 0) {
-            const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-            const cell = cells[randomIndex];
-
-            placeMark(cell, 'O');
-            board[randomIndex] = 'O';
-
-            if (checkWin('O')) {
-                endGame('O wins');
-                computerScore++;
-                updateScores();
-            } else if (board.every((mark) => mark !== '')) {
-                endGame('Tie');
-                ties++;
-                updateScores();
-            } else {
-                currentPlayer = 'X';
-            }
-        }
-    };
-
-    const checkWin = (mark) => {
-        return winningCombinations.some((combination) =>
-            combination.every((index) => board[index] === mark)
-        );
-    };
-
-    const endGame = (result) => {
-        alert(result);
-        board = ['', '', '', '', '', '', '', '', ''];
-        cells.forEach((cell) => {
-            cell.textContent = '';
-            cell.classList.remove('taken');
-        });
-        currentPlayer = 'X';
-    };
-
-    const updateScores = () => {
-        playerScoreEl.textContent = playerScore;
-        computerScoreEl.textContent = computerScore;
-        tiesEl.textContent = ties;
-    };
-
-    resetButton.addEventListener('click', () => {
-        board = ['', '', '', '', '', '', '', '', ''];
-        cells.forEach((cell) => {
-            cell.textContent = '';
-            cell.classList.remove('taken');
-        });
-        currentPlayer = 'X';
+// Highlight Winning Cells
+const highlightWinningCells = (winningCombo) => {
+    winningCombo.forEach((index) => {
+        cells[index].classList.add('winning-cell');
     });
+};
 
-    cells.forEach((cell) => cell.addEventListener('click', handleClick));
-    const menuToggle = document.querySelector('.hamburger-icon');
-const ticTacToeContainer = document.querySelector('.tic-tac-toe-container');
+// End Game
+const endGame = (result) => {
+    alert(result);
+    resetGame();
+};
 
+// Reset Game
+const resetGame = () => {
+    board = ['', '', '', '', '', '', '', '', ''];
+    cells.forEach((cell) => {
+        cell.textContent = '';
+        cell.classList.remove('taken', 'winning-cell');
+    });
+    currentPlayer = 'X';
+};
+
+// Update Scores
+const updateScores = () => {
+    playerScoreEl.textContent = playerScore;
+    computerScoreEl.textContent = computerScore;
+    tiesEl.textContent = ties;
+};
+
+// Reset Button Event Listener
+resetButton.addEventListener('click', resetGame);
+
+// Cell Event Listeners
+cells.forEach((cell) => cell.addEventListener('click', handleClick));
+
+// Hamburger Menu Toggle for Floating Behavior
 menuToggle.addEventListener('click', () => {
     ticTacToeContainer.classList.toggle('no-float');
 });
