@@ -1869,7 +1869,15 @@ const winningCombinations = [
     [0, 4, 8],
     [2, 4, 6]
 ];
-
+const checkWin = (player) => {
+    for (let combo of winningCombinations) {
+        const [a, b, c] = combo;
+        if (board[a] === player && board[b] === player && board[c] === player) {
+            return combo; // Return the winning combination
+        }
+    }
+    return null; // No win found
+};
 // Handle Cell Click
 const handleClick = (e) => {
     const cell = e.target;
@@ -1911,35 +1919,88 @@ const computerMove = () => {
         .map((mark, index) => (mark === '' ? index : null))
         .filter((index) => index !== null);
 
-    if (emptyIndices.length > 0) {
-        const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-        const cell = cells[randomIndex];
+    if (emptyIndices.length === 0) return; // No moves left
 
-        placeMark(cell, 'O');
-        board[randomIndex] = 'O';
-
-        const winningCombo = checkWin('O');
-        if (winningCombo) {
-            highlightWinningCells(winningCombo);
-            setTimeout(() => endGame('O wins'), 1000);
-            computerScore++;
-            updateScores();
-        } else if (board.every((mark) => mark !== '')) {
-            setTimeout(() => endGame('Tie'), 500);
-            ties++;
-            updateScores();
-        } else {
-            currentPlayer = 'X';
+    // 1. Check if computer can win in the next move
+    for (let index of emptyIndices) {
+        board[index] = 'O';
+        if (checkWin('O')) {
+            placeMark(cells[index], 'O');
+            handleMoveResult('O', index);
+            return;
         }
+        board[index] = ''; // Undo move
+    }
+
+    // 2. Check if player can win in their next move and block them
+    for (let index of emptyIndices) {
+        board[index] = 'X';
+        if (checkWin('X')) {
+            board[index] = 'O';
+            placeMark(cells[index], 'O');
+            handleMoveResult(null, index); // No immediate win for 'O'
+            return;
+        }
+        board[index] = ''; // Undo move
+    }
+
+    // 3. Take the center if available
+    const center = 4;
+    if (emptyIndices.includes(center)) {
+        placeMark(cells[center], 'O');
+        board[center] = 'O';
+        handleMoveResult(null, center);
+        return;
+    }
+
+    // 4. Take one of the corners
+    const corners = [0, 2, 6, 8];
+    const availableCorners = corners.filter(index => emptyIndices.includes(index));
+    if (availableCorners.length > 0) {
+        const randomCorner = availableCorners[Math.floor(Math.random() * availableCorners.length)];
+        placeMark(cells[randomCorner], 'O');
+        board[randomCorner] = 'O';
+        handleMoveResult(null, randomCorner);
+        return;
+    }
+
+    // 5. Take any side
+    const sides = [1, 3, 5, 7];
+    const availableSides = sides.filter(index => emptyIndices.includes(index));
+    if (availableSides.length > 0) {
+        const randomSide = availableSides[Math.floor(Math.random() * availableSides.length)];
+        placeMark(cells[randomSide], 'O');
+        board[randomSide] = 'O';
+        handleMoveResult(null, randomSide);
+        return;
     }
 };
 
-// Check Win
-const checkWin = (mark) => {
-    return winningCombinations.find((combination) =>
-        combination.every((index) => board[index] === mark)
-    );
+// Helper function to handle the result after a move
+const handleMoveResult = (winner, index) => {
+    if (winner) {
+        const winningCombo = checkWin(winner);
+        if (winningCombo) {
+            highlightWinningCells(winningCombo);
+            setTimeout(() => endGame(`${winner} wins`), 1000);
+            if (winner === 'O') {
+                computerScore++;
+            } else {
+                playerScore++;
+            }
+            updateScores();
+        }
+    } else if (board.every((mark) => mark !== '')) {
+        setTimeout(() => endGame('Tie'), 500);
+        ties++;
+        updateScores();
+    } else {
+        currentPlayer = 'X';
+    }
 };
+
+
+
 
 // Highlight Winning Cells
 const highlightWinningCells = (winningCombo) => {
