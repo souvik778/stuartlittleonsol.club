@@ -220,26 +220,7 @@
 
     <!-- Interactive Background Canvas -->
     <canvas id="interactive-background"></canvas>
-    <div class="tic-tac-toe-container">
-        <h2 class="game-title">Tic Tac Toe</h2>
-        <div class="scoreboard">
-            <p>Player: <span id="playerScore">0</span></p>
-            <p>Computer: <span id="computerScore">0</span></p>
-            <p>Ties: <span id="ties">0</span></p>
-        </div>
-        <div class="game-board" id="gameBoard">
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-        </div>
-        <button class="reset-btn" id="resetButton">Reset Game</button>
-    </div>
+    
     
     <!-- Top Bar -->
     <header class="topbar" role="banner">
@@ -314,7 +295,27 @@
 </div>
 </section>
 <br><br><br>
-
+<div class="tic-tac-toe-container">
+    <h2 class="game-title">Tic Tac Toe</h2>
+    <div class="scoreboard">
+        <p>Player: <span id="playerScore">0</span></p>
+        <p>Computer: <span id="computerScore">0</span></p>
+        <p>Ties: <span id="ties">0</span></p>
+    </div>
+    <div class="game-board" id="gameBoard">
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+    </div>
+    <button class="reset-btn" id="resetButton">Reset Game</button>
+</div>
+<br> <br>
            <!-- Presale Information Section -->
     <section class="presale-section" id="presale">
         <h2>Presale Information</h2>
@@ -1955,6 +1956,12 @@ const gameBoard = document.getElementById('gameBoard');
     });
 
     cells.forEach((cell) => cell.addEventListener('click', handleClick));
+    const menuToggle = document.querySelector('.hamburger-icon');
+const ticTacToeContainer = document.querySelector('.tic-tac-toe-container');
+
+menuToggle.addEventListener('click', () => {
+    ticTacToeContainer.classList.toggle('no-float');
+});
 
     </script>
 </body>
