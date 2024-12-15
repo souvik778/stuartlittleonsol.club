@@ -286,7 +286,7 @@
            <!-- Presale Information Section -->
     <section class="presale-section" id="presale">
         <h2>Presale Information</h2>
-        <u><p><strong>Presale Softcap:</strong></u> 15 SOL (116 holders- 7 sol remaining)</p>
+        <u><p><strong>Presale Softcap:</strong></u> 15 SOL (119 holders- 7 sol remaining)</p>
         <u><p><strong>Token Live:</u></strong> After presale ends</p>
         <u><p><strong>Anticipated Launch Date:</u></strong> 20 December 2024</p>
 
@@ -463,10 +463,10 @@
                         this coin will be an easy pick in the memecoin market.
                         Who wouldn’t want to invest in the mouse who stole hearts?
                     </div>
-                    <div class="rotating-quote">
+                    <div class="rotating-quote animate__animated animate__fadeInUp">
                         <em>Lil' Coin, Big Dreams, No Cap</em>
                     </div>
-                    <button class="change-quote-btn">Next Quote</button>
+                    <!-- Button removed for automatic rotation -->
                 </div>
             </div>
             <!--road map section-->
@@ -1718,27 +1718,80 @@ if (presaleSection) {
             }, 2000);
         }
 
+      //  <!-- Automatic Quote Rotation Script -->
 
-    const rotatingQuoteEl = document.querySelector('.thought-cloud .rotating-quote');
+        const rotatingQuoteEl = document.querySelector('.thought-cloud .rotating-quote');
 
-    const extraQuotes = [
-        "We Small, But Our Gains Large",
-        "Stuart Little Coin: Because Adulting is Hard",
-        "This Coin May Be Small, But Our Community Is Lowkey Gigantic",
-        "Invest in Us, We're Like Stuart Little, But With Better Financial Prospects",
-        "Our Coin is Like Stuart's Car: Small, Fast, and Totally Lit",
-        "We're Not a Scam, Just Underdogs Trying to Make It Big",
-        "Stuart Little Coin: Where Memes Reign Supreme",
-        "Lil' Coin, Big Dreams, No Cap" // Include the original rotating quote as well
-    ];
+        const extraQuotes = [
+            "We Small, But Our Gains Large",
+            "Stuart Little Coin: Because Adulting is Hard",
+            "This Coin May Be Small, But Our Community Is Lowkey Gigantic",
+            "Invest in Us, We're Like Stuart Little, But With Better Financial Prospects",
+            "Our Coin is Like Stuart's Car: Small, Fast, and Totally Lit",
+            "We're Not a Scam, Just Underdogs Trying to Make It Big",
+            "Stuart Little Coin: Where Memes Reign Supreme",
+            "Lil' Coin, Big Dreams, No Cap" // Original quote included
+        ];
 
-    let currentIndex = 0;
-    const button = document.querySelector('.change-quote-btn');
-    button.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % extraQuotes.length;
-        rotatingQuoteEl.innerHTML = `<em>${extraQuotes[currentIndex]}</em>`;
-    });
+        let currentIndex = 0;
+        const quoteChangeInterval = 5000; // 5 seconds
 
+        function changeQuote() {
+            currentIndex = (currentIndex + 1) % extraQuotes.length;
+            // Add fade-out effect
+            rotatingQuoteEl.classList.remove('animate__fadeInUp');
+            rotatingQuoteEl.classList.add('animate__fadeOutDown');
+
+            // Wait for fade-out to complete before changing the text
+            setTimeout(() => {
+                rotatingQuoteEl.innerHTML = `<em>${extraQuotes[currentIndex]}</em>`;
+                // Remove fade-out and add fade-in effect
+                rotatingQuoteEl.classList.remove('animate__fadeOutDown');
+                rotatingQuoteEl.classList.add('animate__fadeInUp');
+            }, 1000); // Match this duration with the CSS animation duration (1s)
+        }
+
+        // Initialize the first quote change after the interval
+        setInterval(changeQuote, quoteChangeInterval);
+    
+       
+        const heroSection = document.querySelector('.hero-section');
+        const heroImage = document.getElementById('hero-image');
+
+        // Function to handle mouse movement
+        const handleMouseMove = (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            const x = e.clientX - rect.left; // X position within the hero-section
+            const y = e.clientY - rect.top;  // Y position within the hero-section
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Calculate rotation values
+            const rotateX = ((y - centerY) / centerY) * 10; // Max rotation of 10 degrees
+            const rotateY = ((x - centerX) / centerX) * -10;
+
+            // Apply rotation to the image
+            heroImage.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.15)`;
+
+            // Update glow position based on cursor
+            const glowOffsetX = ((x - centerX) / centerX) * 10; // Adjust multiplier for effect
+            const glowOffsetY = ((y - centerY) / centerY) * 10;
+
+            heroImage.style.setProperty('--glow-x', `${glowOffsetX}px`);
+            heroImage.style.setProperty('--glow-y', `${glowOffsetY}px`);
+        };
+
+        // Function to reset transformations
+        const handleMouseLeave = () => {
+            heroImage.style.transform = `scale(1)`;
+            heroImage.style.setProperty('--glow-x', `0px`);
+            heroImage.style.setProperty('--glow-y', `0px`);
+        };
+
+        // Attach event listeners
+        heroSection.addEventListener('mousemove', handleMouseMove);
+        heroSection.addEventListener('mouseleave', handleMouseLeave);
 
     </script>
 </body>
