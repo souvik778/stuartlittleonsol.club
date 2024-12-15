@@ -470,9 +470,8 @@
             <div class="thought-cloud-container">
                 <div class="thought-cloud">
                     <div class="main-quote">
-                        Because just like Stuart was an easy pick for that family in the orphanage,
-                        this coin will be an easy pick in the memecoin market.
-                        Who wouldn’t want to invest in the mouse who stole hearts?
+                        Because just like Stuart found his perfect family, this coin will find its place in your portfolio. Invest in the mouse who captured hearts and now leads the market!
+
                     </div>
                     <div class="rotating-quote animate__animated animate__fadeInUp">
                         <em>Lil' Coin, Big Dreams, No Cap</em>
@@ -1732,20 +1731,29 @@ if (presaleSection) {
       //  <!-- Automatic Quote Rotation Script -->
 
         const rotatingQuoteEl = document.querySelector('.thought-cloud .rotating-quote');
-
+        
         const extraQuotes = [
-            "We Small, But Our Gains Large",
-            "Stuart Little Coin: Because Adulting is Hard",
-            "This Coin May Be Small, But Our Community Is Lowkey Gigantic",
-            "Invest in Us, We're Like Stuart Little, But With Better Financial Prospects",
-            "Our Coin is Like Stuart's Car: Small, Fast, and Totally Lit",
-            "We're Not a Scam, Just Underdogs Trying to Make It Big",
-            "Stuart Little Coin: Where Memes Reign Supreme",
-            "Lil' Coin, Big Dreams, No Cap" // Original quote included
-        ];
+    "As Stuart found his home, this coin will find its place in your wallet.",
+    "Small coin, big impact – just like Stuart Little.",
+    "Who says a mouse can’t move markets? Stuart proved it, so will this coin!",
+    "Stuart stole hearts; this coin will steal the market.",
+    "In a world of giants, the little ones make the biggest impact.",
+    "A coin with charm and courage – Stuart Little would approve.",
+    "Not about size; it’s about heart. That’s Stuart Little Coin.",
+    "Stuart picked his family, and this coin is your perfect pick.",
+    "In memecoins, Stuart Little Coin is the ultimate underdog.",
+    "The mouse that won hearts inspires a coin to win the market.",
+    "Stuart taught us: the best picks aren’t the biggest, but the smartest.",
+    "From the orphanage to your wallet – the hero coin you need.",
+    "Stuart stood out, and so does this coin in the market.",
+    "Small start, great potential – Stuart Little Coin has it all.",
+    "Stuart found the best family; this coin finds the best investors."
+];
+
+
 
         let currentIndex = 0;
-        const quoteChangeInterval = 5000; // 5 seconds
+        const quoteChangeInterval = 10000; // 10 seconds
 
         function changeQuote() {
             currentIndex = (currentIndex + 1) % extraQuotes.length;
