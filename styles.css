@@ -1862,7 +1862,7 @@ height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeIn ease forwards;
+    animation: fadeIn 0.5s ease-in-out forwards; /* Shortened duration to 1s */
 }
 
 .contact-section h2 {
@@ -1871,6 +1871,17 @@ height: auto;
     font-size: 2.5rem;
     text-shadow: 0 0 15px #FFD700;
 }
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0.2;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 
 
 
