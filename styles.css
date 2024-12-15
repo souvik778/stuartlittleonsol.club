@@ -3092,3 +3092,131 @@ input:focus, select:focus {
         font-size: 0.8rem;
     }
 }
+/* Tic Tac Toe Container */
+.tic-tac-toe-container {
+    position: fixed;
+    top: 20%;
+    right: 1%; /* Right-aligned like the thought cloud */
+    transform: translateY(-50%);
+    z-index: 3000;
+    pointer-events: auto;
+    width: 350px; /* Same width as the thought cloud */
+    min-height: 500px; /* Adjusted height for game and scoreboard */
+    padding: 25px 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #e0f7fa, #80deea, #26c6da);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    animation: gentleFloat 6s ease-in-out infinite alternate;
+}
+
+/* Game Title */
+.game-title {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Scoreboard */
+.scoreboard {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Game Board */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.cell:hover {
+    transform: scale(1.1);
+    background-color: #e0e0e0;
+}
+
+.cell.taken {
+    pointer-events: none;
+    color: #333;
+}
+
+/* Reset Button */
+.reset-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #ff4081, #ff80ab);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, transform 0.2s;
+}
+
+.reset-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff80ab, #ff4081);
+}
+
+.reset-btn:active {
+    transform: scale(0.95);
+}
+
+/* Floating Animation */
+@keyframes gentleFloat {
+    0% { transform: translateY(0px) translateX(0px); }
+    20% { transform: translateY(-8px) translateX(12px); }
+    40% { transform: translateY(-16px) translateX(-10px); }
+    60% { transform: translateY(-24px) translateX(8px); }
+    80% { transform: translateY(-16px) translateX(-12px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .tic-tac-toe-container {
+        width: 280px;
+        min-height: 450px;
+        padding: 20px;
+    }
+
+    .game-board {
+        grid-template-columns: repeat(3, 80px);
+        grid-gap: 5px;
+    }
+
+    .cell {
+        width: 80px;
+        height: 80px;
+        font-size: 1.8rem;
+    }
+
+    .reset-btn {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
