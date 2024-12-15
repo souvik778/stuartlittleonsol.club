@@ -260,10 +260,23 @@
             </button>
         </h1>
     </div>
+<!-- Stuart Little Coin Section -->
+<section class="why-us-section" id="why_us">
+    <div class="transparent-box">
+        <h1>Why Stuart Little Coin?</h1>
+        <p>
+            Because just like Stuart was an easy pick for that family in the orphanage, 
+            this coin will be an easy pick in the memecoin market. Who wouldn’t want to 
+            invest in the mouse who stole hearts?
+        </p>
+      <center> <a href="#invest" class="cta-button"> Trade $lilstu( Available When Launched )</a></center>
+    </div>
+</section>
 
         <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
+                
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
  <section class="presale-section" id="video">
@@ -1790,7 +1803,14 @@ if (presaleSection) {
         // Attach event listeners
         heroSection.addEventListener('mousemove', handleMouseMove);
         heroSection.addEventListener('mouseleave', handleMouseLeave);
+        const button = document.querySelector('.cta-button');
 
+button.addEventListener('click', () => {
+    button.classList.add('clicked');
+    setTimeout(() => {
+        button.classList.remove('clicked');
+    }, 200); // Reset after 200ms
+});
     </script>
 </body>
 </html>
