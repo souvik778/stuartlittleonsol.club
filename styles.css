@@ -3220,3 +3220,63 @@ input:focus, select:focus {
         font-size: 0.9rem;
     }
 }
+
+/* Responsive Adjustments for Larger Screens */
+@media (max-width: 1780px) {
+    .tic-tac-toe-container {
+        position: static;
+        transform: none;
+        top: auto;
+        right: auto;
+        margin: auto;
+        animation: none; /* Remove floating animation */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        width: 90%;
+        max-width: 500px;
+        padding: 30px 20px;
+    }
+
+    .tic-tac-toe-container:hover {
+        transform: none; /* Disable hover scale */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .game-board {
+        grid-template-columns: repeat(3, 90px); /* Adjust cell sizes */
+    }
+
+    .cell {
+        width: 90px;
+        height: 90px;
+        font-size: 1.8rem;
+    }
+}
+
+/* Responsive Adjustments for Hamburger Screens (Tablets/Mobile) */
+@media (max-width: 768px) {
+    .tic-tac-toe-container {
+        position: static;
+        transform: none;
+        margin: auto;
+        width: 220px;
+        padding: 20px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .game-board {
+        grid-template-columns: repeat(3, 70px); /* Smaller grid for mobile */
+        grid-gap: 5px;
+    }
+
+    .cell {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+}
+.tic-tac-toe-container.no-float {
+    position: static;
+    transform: none;
+    margin: auto;
+    animation: none;
+}
