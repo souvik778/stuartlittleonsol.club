@@ -3104,7 +3104,7 @@ input:focus, select:focus {
     min-height: 500px; /* Adjusted height for game and scoreboard */
     padding: 25px 20px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #e0f7fa, #80deea, #26c6da);
+    background: linear-gradient(135deg, #f2aaaae2, #707937d4, #f5f5068e);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     animation: gentleFloat 6s ease-in-out infinite alternate;
 }
