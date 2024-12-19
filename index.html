@@ -268,27 +268,87 @@
             invest in the mouse who stole hearts?
         </p>
         <center>
-            <!-- Instead of a normal link, call a JavaScript function on click -->
-            <a href="javascript:void(0);" class="cta-button" onclick="showPresaleSection()">Trade $lilstu</a>
+            <!-- Open Modal on Click -->
+            <a href="javascript:void(0);" class="cta-button" onclick="openTradeModal()">Trade $lilstu</a>
         </center>
     </div>
 </section>
 
-<!-- Hidden container for the iframe -->
-<section class="presale-section" id="presale" style="display:none;">
-    <div class="iframe-container">
-        <!-- You can adjust width and height as needed -->
-        <iframe src="https://jup.ag" width="100%" height="600" frameborder="0"></iframe>
+<!-- Modal Structure -->
+<div id="tradeModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeTradeModal()">&times;</span>
+        <h2>Trade $lilstu</h2>
+        <p>Click the button below to proceed to the swap page.</p>
+        <button onclick="window.open('https://jup.ag/swap/USDT-SOL', '_blank')" class="modal-button">Go to Swap</button>
     </div>
-</section>
+</div>
+
+<!-- Styles for Modal (Add to your CSS) -->
+<style>
+    /* Modal styles */
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        position: relative;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+    }
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .modal-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .modal-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<!-- JavaScript for Modal Functionality -->
 <script>
-    function showPresaleSection() {
-        var presaleSection = document.getElementById('presale');
-        presaleSection.style.display = 'block';
-        // Optionally, you can scroll to the presale section:
-        presaleSection.scrollIntoView({ behavior: 'smooth' });
+    function openTradeModal() {
+        document.getElementById('tradeModal').style.display = 'flex';
+    }
+
+    function closeTradeModal() {
+        document.getElementById('tradeModal').style.display = 'none';
+    }
+
+    // Optional: Close modal when clicking outside the modal content
+    window.onclick = function(event) {
+        var modal = document.getElementById('tradeModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
     }
 </script>
+
+
 
         <main class="content">
             <!-- Hero Section with Stuart Image -->
