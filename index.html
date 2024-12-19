@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StuartLittleOnSol Homepage</title>
     <meta name="$lilstu" content="StuartLittleOnSol">
-    <link rel="icon" href="logo.jpeg">
+    <link rel="icon" href="logo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
@@ -95,9 +95,7 @@
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- TradingView Widget Script -->
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <!--animate.css-->
+   <!--animate.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
           
     <style>
@@ -221,11 +219,9 @@
     <!-- Top Bar -->
     <header class="topbar" role="banner">
         <h1><a href="index.html">StuartLittleOnSol</a></h1>
-    
         <div class="menu-toggle" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="nav-links">☰</div>
         <nav class="nav-links" id="nav-links" aria-hidden="true">
             <a href="#features">Features</a>
-
             <a href="#tokenomics">Tokenomics</a>
             <a href="#map">Roadmap</a>
             <a href="#piechart">Token Distribution</a>
@@ -260,6 +256,7 @@
     </div>
 
 Stuart Little Coin Section -->
+<!-- Stuart Little Coin Section -->
 <section class="why-us-section" id="why_us">
     <div class="transparent-box">
         <h1>Why Stuart Little Coin?</h1>
@@ -268,12 +265,69 @@ Stuart Little Coin Section -->
             this coin will be an easy pick in the memecoin market. Who wouldn’t want to 
             invest in the mouse who stole hearts?
         </p>
+        
         <center>
+          
             <!-- Updated Button to Redirect Directly -->
-            <a href="https://jup.ag/swap/USDT-SOL" class="cta-button" target="_blank">Trade $lilstu</a>
+            <a href="https://jup.ag/swap/SOL-USDC" class="cta-button" target="_blank">Trade $lilstu</a><br>
+     
+          <!-- Chart Toggle Button -->
+          <!--   <button id="toggle-chart-btn">Show Price Chart</button>
         </center>
-    </div>
+           Chart Container (Initially Hidden) -->
+          <div class="price-chart-container" id="price-chart-container" style="display: none;">
+              <!-- DexScreener Embed -->
+              <div id="dexscreener-embed">
+                  <iframe 
+                   src="https://dexscreener.com/solana/DmN1iFy7GMYoXvM7BrgN7VKCnZrdh88EU9iTBJ14wrhv?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"
+                      allowfullscreen>
+                  </iframe>
+              </div>
+          </div>
+   </div>
 </section>
+
+<style>
+    /* Responsive Styling for the DexScreener Embed */
+    #dexscreener-embed {
+        position: relative;
+        width: 100%;
+        /* Increase this padding-bottom for a taller chart. 
+           For example, 150% will make it taller than the original 125%. */
+        padding-bottom: 150%; 
+    }
+
+    @media (min-width: 1400px) {
+        #dexscreener-embed {
+            /* Adjust this too for large screens */
+            padding-bottom: 85%; 
+        }
+    }
+
+    #dexscreener-embed iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border: 0;
+    }
+</style>
+
+<script>
+    // JavaScript for Toggling the Chart
+    document.getElementById('toggle-chart-btn').addEventListener('click', function() {
+        var chartContainer = document.getElementById('price-chart-container');
+        if (chartContainer.style.display === 'none') {
+            chartContainer.style.display = 'block';
+            this.textContent = 'Hide Price Chart';
+        } else {
+            chartContainer.style.display = 'none';
+            this.textContent = 'Show Price Chart';
+        }
+    });
+</script>
+
         <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
@@ -380,13 +434,7 @@ Stuart Little Coin Section -->
                     <p id="calculation-result"></p>
                 </div>
 
-                <!-- Chart Toggle Button -->
-        <!--         <button id="toggle-chart-btn">Show Price Chart</button>
-
-                <!- Chart Container (Initially Hidden) -->
-                <div class="price-chart-container" id="price-chart-container" style="display: none;">
-                    <div id="tradingview-widget"></div>
-                </div>
+               
 
                 <!-- Confirmation Message Container -->
                 <div id="transaction-confirmation" class="transaction-confirmation" style="display: none; margin-top: 20px;">
@@ -452,27 +500,27 @@ Stuart Little Coin Section -->
                     </div>
                     <div class="tokenomics-item">
                         <h3>Public Sale</h3>
-                        <p>35% of total supply allocated for public sale.</p>
+                        <p>30% of total supply allocated for public sale.</p>
                     </div>
                     <div class="tokenomics-item">
                         <h3>Dev and Management</h3>
-                        <p>18% of total supply allocated to the development and management team.</p>
+                        <p>6% of total supply allocated to the development and management team.</p>
                     </div>
                     <div class="tokenomics-item">
                         <h3>Presale</h3>
-                        <p>10% of total supply allocated for presale.</p>
+                        <p>6% of total supply allocated for presale.</p>
                     </div>
                     <div class="tokenomics-item">
                         <h3>Marketing and Promotions</h3>
-                        <p>12% of total supply allocated for marketing and promotions.</p>
+                        <p>6% of total supply allocated for marketing and promotions.</p>
                     </div>
                     <div class="tokenomics-item">
                         <h3>Airdrop (Contest)</h3>
-                        <p>5% of total supply allocated for airdrops and contests.</p>
+                        <p>2% of total supply allocated for airdrops and contests.</p>
                     </div>
                     <div class="tokenomics-item">
                         <h3>Liquidity pool burn</h3>
-                        <p>20% of the tokens will be permanently burnt to enhance price stability, trust, and long-term value.</p>
+                        <p>50% of the tokens will be permanently burnt to enhance price stability, trust, and long-term value.</p>
                     </div>
                 </div>
                 <!-- King Image within Tokenomics Section -->
@@ -591,14 +639,7 @@ Stuart Little Coin Section -->
             <h3>What is StuartLittleOnSol?</h3>
             <p>StuartLittleOnSol is a decentralized token designed for meme enthusiasts, offering secure transactions on Solana, community governance, and a vibrant ecosystem.</p>
         </div>
-        <div class="faq-item">
-            <h3>How to Participate in the Token Presale:</h3>
-            <p>
-                <u>Locate the Contract Address:</u><br>
-                Go to the "Presale Information" section and copy the provided contract address.<br>
-                <u>Make the Payment:</u><br>
-                Open your wallet and paste the contract address. Send the desired amount in Sol to complete your token purchase.</p>
-        </div>
+     
        
         <div class="faq-item">
             <h3>What blockchain is StuartLittleOnSol built on?</h3>
@@ -1052,7 +1093,7 @@ if (presaleSection) {
                     ],
                     datasets: [{
                         label: 'Token Distribution',
-                        data: [35, 18, 10, 12, 5, 20], // Percentages
+                        data: [30, 6, 6, 6, 2, 50], // Percentages
                         backgroundColor: [
                             'rgba(255, 215, 0, 0.9)',   // Public Sale - Gold
                             'rgba(30, 144, 255, 0.9)',  // Dev and Management - Dodger Blue
@@ -1197,7 +1238,7 @@ if (presaleSection) {
 
             /**
              * Displays an error message in the price elements.
-             */
+            
             function displayPriceError() {
                 const priceElements = ['usdc-price-usd', 'sol-price-usd', 'token-price-usd', 'token-price-sol', 'token-price-usdc'];
                 priceElements.forEach(id => {
@@ -1211,7 +1252,7 @@ if (presaleSection) {
             /**
              * Sets up the token calculator functionality.
              */
-            function setupTokenCalculator() {
+         /*   function setupTokenCalculator() {
                 if (!calculateButton || !amountInput || !currencySelect || !calculationResult) {
                     console.error('One or more calculator elements are missing in the DOM.');
                     return;
@@ -1264,12 +1305,12 @@ if (presaleSection) {
                     }
                 });
             }
-
+            */
             /**
              * Validates the input amount.
              * @param {number} amount 
              * @returns {boolean}
-             */
+            
             function isValidAmount(amount) {
                 return typeof amount === 'number' && !isNaN(amount) && amount > 0;
             }
@@ -1279,7 +1320,7 @@ if (presaleSection) {
             fetchPrices(); // Initial fetch when the page loads
             // Update the prices every minute (60000 milliseconds)
             setInterval(fetchPrices, 60000);
-
+ */
             // =============================
             //   SCROLL ANIMATIONS CODE
             // =============================
@@ -1848,7 +1889,7 @@ const playerScoreEl = document.getElementById('playerScore');
 const computerScoreEl = document.getElementById('computerScore');
 const tiesEl = document.getElementById('ties');
 const cells = Array.from(document.querySelectorAll('[data-cell]'));
-const menuToggle = document.querySelector('.hamburger-icon');
+
 const ticTacToeContainer = document.querySelector('.tic-tac-toe-container');
 
 // Game Variables
