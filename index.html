@@ -12,13 +12,9 @@
 
     <!-- Buffer Polyfill via UNPKG (buffer@5.7.1) -->
     <script src="https://cdn.jsdelivr.net/npm/buffer@5.7.1/index.js"></script>
-    <script>
-        // Assign Buffer from the polyfill
-        window.Buffer = window.Buffer || Buffer;
-
-        console.log('Buffer is defined:', typeof Buffer !== 'undefined');
-        console.log('Buffer.from works:', typeof Buffer.from === 'function');
-    </script>
+   <script src="https://unpkg.com/@jup-ag/core@latest/dist/index.umd.js"></script>
+<script src="https://unpkg.com/@jup-ag/wallet-adapter@latest/dist/index.umd.js"></script>
+<script src="https://unpkg.com/@jup-ag/terminal@latest/dist/index.umd.js"></script>
 
     <!-- @solana/web3.js and @solana/spl-token ESM builds -->
     <script type="module">
@@ -253,10 +249,10 @@
     
    
     <!-- Main Container -->
-    <div class="main-container">
-        <br>
+        <div class="main-container">
+      <!--        <br>
         <h1 class="headline">
-            <span class="presale-live">Presale is Live!</span>
+         <span class="presale-live">Presale is Live!</span>
             <button class="scroll-down-btn" onclick="document.querySelector('#presale').scrollIntoView({ behavior: 'smooth' });" aria-label="Scroll Down">
                 Scroll Down
             </button>
@@ -271,9 +267,28 @@
             this coin will be an easy pick in the memecoin market. Who wouldn’t want to 
             invest in the mouse who stole hearts?
         </p>
-      <center> <a href="#invest" class="cta-button"> Trade $lilstu( Available When Launched )</a></center>
+        <center>
+            <!-- Instead of a normal link, call a JavaScript function on click -->
+            <a href="javascript:void(0);" class="cta-button" onclick="showPresaleSection()">Trade $lilstu</a>
+        </center>
     </div>
 </section>
+
+<!-- Hidden container for the iframe -->
+<section class="presale-section" id="presale" style="display:none;">
+    <div class="iframe-container">
+        <!-- You can adjust width and height as needed -->
+        <iframe src="https://jup.ag" width="100%" height="600" frameborder="0"></iframe>
+    </div>
+</section>
+<script>
+    function showPresaleSection() {
+        var presaleSection = document.getElementById('presale');
+        presaleSection.style.display = 'block';
+        // Optionally, you can scroll to the presale section:
+        presaleSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
 
         <main class="content">
             <!-- Hero Section with Stuart Image -->
@@ -281,10 +296,10 @@
                 
                 <img src="stuart.jpg" alt="Stuart Little on Sol" class="hero-image" id="hero-image" loading="lazy">
             </section>
- <section class="presale-section" id="video">
+   <!--<section class="presale-section" id="video">
     <h2>How to get your $lilstu token during presale</h2>
             <!-- Integrated Video with Styling and Animation -->
- <div class="presale-video animate__animated animate__fadeInUp">
+   <!--<div class="presale-video animate__animated animate__fadeInUp">
   
     <iframe 
         src="https://www.youtube.com/embed/RB5lRbm0qjU" 
@@ -292,7 +307,7 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" 
         allowfullscreen>
     </iframe>
-</div>
+</div>-->
 </section>
 <br><br><br>
 <div class="tic-tac-toe-container">
@@ -317,21 +332,21 @@
 </div>
 <br> <br>
            <!-- Presale Information Section -->
-    <section class="presale-section" id="presale">
+   <!--  <section class="presale-section" id="presale">
         <h2>Presale Information</h2>
         <u><p><strong>Presale Softcap:</strong></u> 15 SOL (119 holders- 7 sol remaining)</p>
         <u><p><strong>Token Live:</u></strong> After presale ends</p>
         <u><p><strong>Anticipated Launch Date:</u></strong> 20 December 2024</p>
 
         <!-- Airdrop Vesting Period -->
-        <div class="airdrop-vesting">
+       <!--   <div class="airdrop-vesting">
             <p><strong><u>Airdrop: Vesting Period</u></strong></p>
             <p>&bull; 70% will be airdropped one day before the launch</p><br>
             <p>&bull; 10% will be airdropped each day after the launch</p>
         </div> 
 
         <!-- Contract Address with Copy Button -->
-        <div class="contract-section">
+       <!--   <div class="contract-section">
             <p><strong><u>Contract Address</u></strong></p>
             <div class="copy-container">
                 <div class="contract-address" id="contractAddress">
@@ -344,10 +359,10 @@
 
         <!-- Socials Section -->
 
-                <div class="social-links">
+            <!--         <div class="social-links">
                     <!-- Repeated Social Links for clarity -->
                       <!-- Social Links -->
-            <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
+              <!--   <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
                 <i class="fab fa-linktree"></i>
                 <img src="linktree.png" alt="Linktree Logo" style="width: 20px; height: 20px; margin-left: 5px;">
             </a>
@@ -356,8 +371,8 @@
             <br><br>
         
             
-            <!-- Token Price Calculation Section -->
-            <section class="presale-section" id="token-price">
+          <!--      Token Price Calculation Section -->
+          <!--       <section class="presale-section" id="token-price">
                 <h2>Token Price Calculator</h2>
                 <p><strong>Current Token Price:</strong> 1 $lilstu = <span id="token-price-usd">Loading...</span> USD</p>
                 <p><strong>Token Price in USDC:</strong> <span id="token-price-usdc">Loading...</span> USDC</p>
@@ -366,13 +381,13 @@
 
                 <!-- Calculator Form -->
                 <div class="calculator-container">
-                    <h3>Calculate Tokens You'll Receive</h3>
+           <!--              <h3>Calculate Tokens You'll Receive</h3>
                     <form id="token-calculator" onsubmit="return false;">
                         <label for="amount-input">Enter Amount:</label>
                         <input type="number" id="amount-input" placeholder="Amount in SOL" min="0" step="any" required>
                         <select id="currency-select">
                          <!--  <option value="USDC">USDC</option>-->
-                            <option value="SOL">SOL</option>
+                   <!--          <option value="SOL">SOL</option>
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
                         <br> 
@@ -382,7 +397,7 @@
                 </div>
 
                 <!-- Chart Toggle Button -->
-                <button id="toggle-chart-btn">Show Price Chart</button>
+        <!--         <button id="toggle-chart-btn">Show Price Chart</button>
 
                 <!-- Chart Container (Initially Hidden) -->
                 <div class="price-chart-container" id="price-chart-container" style="display: none;">
@@ -396,19 +411,19 @@
             </section>
 
             <!-- Mobile Presale Section -->
-            <div class="mobile-presale-section">
+        <!--    <div class="mobile-presale-section">
                 <h2>Token Launch Information</h2>
                 <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
                 <div class="presale-content">
                     <!-- Additional Content as Needed -->
-                </div>
+           <!--       </div>
                 <img src="token.png" alt="Token Image" class="token-image">
             </div>
 
             <!-- Presale Popup (Initially Hidden) -->
             <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
                 <button class="close-btn" id="presale-close" aria-label="Close Presale Popup">&times;</button>
-                <h2 id="presale-title">Token Launch Information</h2>
+         <!--      <h2 id="presale-title">Token Launch Information</h2>
                 <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
 
                 <!-- Countdown Timer -->
@@ -437,8 +452,8 @@
 
             <!-- Minimized Presale Popup -->
             <div class="presale-minimized" id="presale-minimized">
-                <button id="presale-minimized-btn" aria-label="Open Presale Popup">
-                    Token Launch Information
+                   <button id="presale-minimized-btn" aria-label="Open Presale Popup">
+               
                 </button>
             </div>
             <br><br>
@@ -722,14 +737,14 @@
             updateCountdown(); // Initial call
 
             // Function to show presale popup
-            const showPresale = () => {
-                if (!presaleShown) {
-                    presalePopup.classList.add("active");
-                    presalePopup.style.display = 'flex'; // Ensure it's displayed
-                    presaleShown = true;
-                    observer.disconnect(); // Stop observing after first trigger
-                }
-            };
+        //    const showPresale = () => {
+         //        if (!presaleShown) {
+         //            presalePopup.classList.add("active");
+          //           presalePopup.style.display = 'flex'; // Ensure it's displayed
+          //           presaleShown = true;
+          //           observer.disconnect(); // Stop observing after first trigger
+          //       }
+          //   };
 
             // Function to hide presale popup (minimize)
             const hidePresale = () => {
