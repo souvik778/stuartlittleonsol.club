@@ -258,7 +258,8 @@
             </button>
         </h1>
     </div>
-<!-- Stuart Little Coin Section -->
+
+Stuart Little Coin Section -->
 <section class="why-us-section" id="why_us">
     <div class="transparent-box">
         <h1>Why Stuart Little Coin?</h1>
@@ -268,88 +269,11 @@
             invest in the mouse who stole hearts?
         </p>
         <center>
-            <!-- Open Modal on Click -->
-            <a href="javascript:void(0);" class="cta-button" onclick="openTradeModal()">Trade $lilstu</a>
+            <!-- Updated Button to Redirect Directly -->
+            <a href="https://jup.ag/swap/USDT-SOL" class="cta-button" target="_blank">Trade $lilstu</a>
         </center>
     </div>
 </section>
-
-<!-- Modal Structure -->
-<div id="tradeModal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close-button" onclick="closeTradeModal()">&times;</span>
-        <h2>Trade $lilstu</h2>
-        <p>Click the button below to proceed to the swap page.</p>
-        <button onclick="window.open('https://jup.ag/swap/USDT-SOL', '_blank')" class="modal-button">Go to Swap</button>
-    </div>
-</div>
-
-<!-- Styles for Modal (Add to your CSS) -->
-<style>
-    /* Modal styles */
-    .modal {
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .modal-content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        position: relative;
-        width: 80%;
-        max-width: 500px;
-        text-align: center;
-    }
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-    }
-    .modal-button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .modal-button:hover {
-        background-color: #0056b3;
-    }
-</style>
-
-<!-- JavaScript for Modal Functionality -->
-<script>
-    function openTradeModal() {
-        document.getElementById('tradeModal').style.display = 'flex';
-    }
-
-    function closeTradeModal() {
-        document.getElementById('tradeModal').style.display = 'none';
-    }
-
-    // Optional: Close modal when clicking outside the modal content
-    window.onclick = function(event) {
-        var modal = document.getElementById('tradeModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-</script>
-
-
-
         <main class="content">
             <!-- Hero Section with Stuart Image -->
             <section class="hero-section animate-on-scroll" id="home">
@@ -358,7 +282,7 @@
             </section>
    <!--<section class="presale-section" id="video">
     <h2>How to get your $lilstu token during presale</h2>
-            <!-- Integrated Video with Styling and Animation -->
+            Integrated Video with Styling and Animation -->
    <!--<div class="presale-video animate__animated animate__fadeInUp">
   
     <iframe 
@@ -398,14 +322,14 @@
         <u><p><strong>Token Live:</u></strong> After presale ends</p>
         <u><p><strong>Anticipated Launch Date:</u></strong> 20 December 2024</p>
 
-        <!-- Airdrop Vesting Period -->
+         Airdrop Vesting Period -->
        <!--   <div class="airdrop-vesting">
             <p><strong><u>Airdrop: Vesting Period</u></strong></p>
             <p>&bull; 70% will be airdropped one day before the launch</p><br>
             <p>&bull; 10% will be airdropped each day after the launch</p>
         </div> 
 
-        <!-- Contract Address with Copy Button -->
+        <!- Contract Address with Copy Button -->
        <!--   <div class="contract-section">
             <p><strong><u>Contract Address</u></strong></p>
             <div class="copy-container">
@@ -417,10 +341,10 @@
             <span class="copy-success" id="copySuccess">Copied!</span>
         </div>
 
-        <!-- Socials Section -->
+        <!-Socials Section -->
 
             <!--         <div class="social-links">
-                    <!-- Repeated Social Links for clarity -->
+                    <!- Repeated Social Links for clarity -->
                       <!-- Social Links -->
               <!--   <a href="https://linktr.ee/lilstuart.chill" target="_blank" aria-label="Linktree">
                 <i class="fab fa-linktree"></i>
@@ -431,7 +355,7 @@
             <br><br>
         
             
-          <!--      Token Price Calculation Section -->
+          <!-      Token Price Calculation Section -->
           <!--       <section class="presale-section" id="token-price">
                 <h2>Token Price Calculator</h2>
                 <p><strong>Current Token Price:</strong> 1 $lilstu = <span id="token-price-usd">Loading...</span> USD</p>
@@ -439,19 +363,19 @@
                 <p><strong>Equivalent in SOL:</strong> <span id="token-price-sol">Loading...</span> SOL</p>
                 <p><strong>USDC Price:</strong> <span id="usdc-price-usd">Loading...</span> USD</p>
 
-                <!-- Calculator Form -->
+                <!- Calculator Form -->
                 <div class="calculator-container">
            <!--              <h3>Calculate Tokens You'll Receive</h3>
                     <form id="token-calculator" onsubmit="return false;">
                         <label for="amount-input">Enter Amount:</label>
                         <input type="number" id="amount-input" placeholder="Amount in SOL" min="0" step="any" required>
                         <select id="currency-select">
-                         <!--  <option value="USDC">USDC</option>-->
+                         <!-  <option value="USDC">USDC</option>-->
                    <!--          <option value="SOL">SOL</option>
                         </select>
                         <button type="button" id="calculate-button">Calculate</button>
                         <br> 
-                     <!--   <button type="button" id="buy-button" class="btn" disabled>Buy</button>-->
+                     <!-   <button type="button" id="buy-button" class="btn" disabled>Buy</button>-->
                     </form>
                     <p id="calculation-result"></p>
                 </div>
@@ -459,7 +383,7 @@
                 <!-- Chart Toggle Button -->
         <!--         <button id="toggle-chart-btn">Show Price Chart</button>
 
-                <!-- Chart Container (Initially Hidden) -->
+                <!- Chart Container (Initially Hidden) -->
                 <div class="price-chart-container" id="price-chart-container" style="display: none;">
                     <div id="tradingview-widget"></div>
                 </div>
@@ -475,18 +399,18 @@
                 <h2>Token Launch Information</h2>
                 <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
                 <div class="presale-content">
-                    <!-- Additional Content as Needed -->
+                    <!- Additional Content as Needed -->
            <!--       </div>
                 <img src="token.png" alt="Token Image" class="token-image">
             </div>
 
-            <!-- Presale Popup (Initially Hidden) -->
+            <!- Presale Popup (Initially Hidden) -->
             <div class="presale-popup" id="presale-popup" aria-labelledby="presale-title" role="dialog" aria-modal="true">
                 <button class="close-btn" id="presale-close" aria-label="Close Presale Popup">&times;</button>
          <!--      <h2 id="presale-title">Token Launch Information</h2>
                 <p>Join the StuartLittleOnSol Presale launching on December 20th!</p>
 
-                <!-- Countdown Timer -->
+                <!- Countdown Timer -->
                 <div class="countdown" id="countdown">
                     <div>
                         <span id="days">0</span>
