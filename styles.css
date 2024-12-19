@@ -2971,7 +2971,7 @@ input:focus, select:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 10px; /* Reduced padding */
+    padding: 25px 10px; /* Reduced padding */
     min-height: auto; /* Removed full viewport height */
     box-sizing: border-box;
 }
@@ -2982,7 +2982,7 @@ input:focus, select:focus {
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 15px;
     padding: 20px; /* Reduced padding */
-    max-width: 800px;
+    max-width: 80%;
     width: 100%;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
